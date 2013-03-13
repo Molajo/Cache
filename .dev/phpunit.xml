@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="Bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="Tests">
+            <directory>./Tests/</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">.././</directory>
+            <exclude>
+                <directory suffix=".php">.././.dev</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>
