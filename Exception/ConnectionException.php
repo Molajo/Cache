@@ -1,6 +1,6 @@
 <?php
 /**
- * Cache Exception
+ * Connection Exception
  *
  * @package   Molajo
  * @copyright 2013 Amy Stephen. All rights reserved.
@@ -10,18 +10,18 @@ namespace Molajo\Cache\Exception;
 
 defined('MOLAJO') or die;
 
-use RuntimeException;
-
+use Exception;
 use Molajo\Cache\Api\ExceptionInterface;
 
 /**
- * Cache Exception
+ * Connection Exception
  *
  * @package   Molajo
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright 2013 Amy Stephen. All rights reserved.
  * @since     1.0
  */
-class CacheException extends RuntimeException implements ExceptionInterface
+class ConnectionException extends Exception implements ExceptionInterface
 {
+
 }

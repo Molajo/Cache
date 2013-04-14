@@ -6,7 +6,7 @@
  * @copyright 2013 Amy Stephen. All rights reserved.
  * @license   MIT
  */
-namespace Molajo\Cache\Exception;
+namespace Molajo\Cache\Api;
 
 defined('MOLAJO') or die;
 

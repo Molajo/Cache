@@ -1,226 +1,404 @@
-**NOT COMPLETE**
 
 =======
-Cache
+Molajo Cache API
 =======
 
 [![Build Status](https://travis-ci.org/Molajo/Cache.png?branch=master)](https://travis-ci.org/Molajo/Cache)
 
-Simple, uniform File and Directory Services API for PHP applications enabling interaction with multiple Cache types
-(ex., Local, Ftp, Github, LDAP, etc.).
+Simple, clean cache API for PHP applications to
+[get](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#get),
+[set] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#set),
+[remove] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#remove),
+[getMultiple] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#getmultiple),
+[setMultiple] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#setmultiple),
+[removeMultiple] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#removemultiple),
+and
+[clear] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#clear),
+cache is the manner. Cache Handlers available include:
+[Apc](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#apc),
+[Database](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#database),
+[Dummy](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#dummy),
+[File](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#file),
+[Memcached](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#memcached),
+[Memory](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#memory),
+[Redis](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#redis),
+[Wincache](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#wincache), and
+[xCache](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#xcache).
 
-## System Requirements ##
+## At a glance ... ##
+First, the application connects to a Cache Handler.
+Then, the application can use that connection to perform cache operations.
 
-* PHP 5.3.3, or above
-* [PSR-0 compliant Autoloader](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md)
-* PHP Framework independent
-* [optional] PHPUnit 3.5+ to execute the test suite (phpunit --version)
-
-## What is Cache? ##
-
-**Cache** provides a common API to read, list, write, rename, delete, copy or move files and folders
-on (and between) filesystems using adapters. In addition, the API enables applications to perform system
-administrative tasks like changing the owner, group, file dates, and file and folder permissions. Benefits
-include a simple, uniform API, ability to copy and move files between filesystems, and an interface
-to fileservices for application support services, like Cache, Logging, Message, and Cache.
-
-## Basic Usage ##
-
-Each **Cache** command shares the same syntax and the same four parameters:
-
-### Cache Request ###
-
+### Example ###
 ```php
-    $adapter = new Molajo/Cache/Adapter($action, $path, $filesystem_type, $options);
-```
-#### Parameters ####
 
-- **$action** valid values: Read, List, Write, Delete, Rename, Copy, Move, GetRelativePath, Chmod, Touch, Metadata;
-- **$path** contains an absolute path from the filesystem root to be used to fulfill the action requested;
-- **$filesystem_type** Identifier for the file system. Examples include Local (default), Ftp, Virtual, Dropbox, etc.;
-- **$options** Associative array of named pair values needed for the specific Action (examples below).
+    // Connect to Cache Handler
+    use Molajo\Cache\Connection;
+    $adapter = new Connection('Memory');
 
-#### Results ####
+    // Use connection for cache operations
+    $cacheItem = $adapter->get('this is the key for a cache item');
+    if ($cacheItem->isHit() === false) {
+        // deal with no cache
+    } else {
+        echo $cacheItem->value; // Cached Value requested by Key
+    }
 
-The output from the filesystem action request, along with relevant metadata, can be accessed from the returned
-object, as follows:
+    $adapter->set('key value', 'cache this value for seconds =>', 1440);
 
-**Action Results:** For any request where data is to be returned, this example shows how to retrieve the output:
+    $adapter->remove('key value');
 
-```php
-    echo $adapter->fs->data;
-```
+    $adapter->clear();
 
-**Metadata** including the file or folder (name), parent, extension, etc., is accessed in this manner:
-
-```php
-    echo $adapter->fs->size;
-    echo $adapter->fs->mime_type;
-    echo $adapter->fs->parent;
-    echo 'etc';
-```
-**Metadata about the Fileystem** filesystem_type, root, persistence, default_directory_permissions,
-default_file_permissions, read_only.
-
-**Metadata about requested path** (be it a file or folder) path, is_absolute, absolute_path, exists, owner,
-group, create_date, access_date, modified_date, is_readable, is_writable, is_executable, is_directory,
-is_file, is_link, type, name, parent, extension, no_extension, size, and mime_type.
-
-Metadata is defined in the [Molajo\Cache\Properties](https://github.com/Molajo/Cache/blob/master/src/Molajo/Cache/Type/CacheType.php) class. The Properties
-class can be extended and customized, as needed, by Cache.
-
-### Cache Commands ###
-
-#### Read ####
-
-To read a specific file from a filesystem:
-
-```php
-    $adapter = new \Molajo\Cache\Adapter('Read', 'location/of/file.txt');
-    echo $adapter->fs->data;
 ```
 
-#### List
+### Requirements and Compliance ###
+ * PHP framework independent, no dependencies
+ * Requires PHP 5.3, or above
+ * [Semantic Versioning](http://semver.org/)
+ * Compliant with:
+    * [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md) and [PSR-1](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md) Namespacing
+    * [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) Coding Standards
+    * [PSR-Cache Interfaces](https://github.com/php-fig/fig-standards/pull/96) (Still in Draft)
+ * [phpDocumentor2] (https://github.com/phpDocumentor/phpDocumentor2)
+ * [phpUnit Testing] (https://github.com/sebastianbergmann/phpunit)
+ * [Travis Continuous Improvement] (https://travis-ci.org/profile/Molajo)
+ * Listed on [Packagist] (http://packagist.org) and installed using [Composer] (http://getcomposer.org/)
+ * Use github to submit [pull requests](https://github.com/Molajo/Cache/pulls) and [features](https://github.com/Molajo/Cache/issues)
 
-To list all files and folders for a given path, limiting the results to those files which
-have the extension types identified:
+## Cache API ##
 
-```php
-    $options = array(
-        'extension'    => 'txt,doc,ppt'
-    );
+Common API for Cache operations:
+[get](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#get),
+[set] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#set),
+[remove] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#remove),
+[getMultiple] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#getmultiple),
+[setMultiple] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#setmultiple),
+[removeMultiple] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#removemultiple),
+and
+[clear] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#clear) methods.
 
-    $adapter = new \Molajo\Cache\Adapter('List', 'directory-name', $options);
-    $results = $adapter->fs->data);
-```
-
-#### Write
-
-To write the information in **$data** to the **Log** filesystem using the **standard** log.
-
-```php
-    $options = array(
-        'data'    => 'Here are the words to write to the file.',
-    );
-    $adapter      = new \Molajo\Cache\Adapter('Write', 'standard', $options, 'Log');
-```
-
-#### Copy
-
-To copy file(s) and folder(s) from a filesystem to a location on the same or a different filesystem.
-
-This example shows how to backup a local file to a remote location.
-
-```php
-    $options = array(
-        'target_directory'       => 'name/of/target/folder',
-        'target_name'            => 'single-file-copy.txt',
-        'replace'                => false,
-        'target_filesystem_type' => 'Cloud'
-    );
-    $adapter = new \Molajo\Cache\Adapter('Copy', 'name/of/source/file', $options);
-```
-
-#### Move
-
-The only difference between the copy and the move is that the files copied are removed from the
-source location after the operation is complete.
-
-This example shows how to move files from a local directory to an archive location on the local filesystem.
+### Get ###
+Retrieves a CacheItem object associated with the key. If the value is not found, an exception is
+thrown.
 
 ```php
-    $options = array(
-        'target_directory'       => '/archive/year2012',
-        'replace'                => false
-    );
+    try {
+        $cacheItem = $adapter->get($key);
 
-    $adapter = new \Molajo\Cache\Adapter('Move', 'current/folder/year2012', $options);
+    } catch (Exception $e) {
+        // deal with the exception
+    }
+
+    if ($cacheItem->isHit() === true) {
+			$cached_value = $cacheItem->getValue();
+    } else {
+			// cache is not available - do what you have to do.
+    }
 ```
 
-#### Delete
+**Parameters**
+- **$key** contains the key value for the requested cache
 
-As with the list, copy, and move, the delete can be used for individual files and it can be used
-to specify a folder and all dependent subfolders and files should be deleted.
+### Set ###
+Stores a value as cache for the specified Key value and number of seconds specified.
 
 ```php
-    $adapter = new \Molajo\Cache\Adapter('Delete', 'name/of/source/folder');
+    try {
+        $adapter->set($key, $value, $ttl);
+
+    } catch (Exception $e) {
+        // deal with the exception
+    }
+
 ```
 
-### Special Purpose File Operations
+**Parameters**
+- **$key** contains the value to use for the cache key
+- **$value** contains the value to be stored as cache
+- **$ttl** "Time to live" which is the number of seconds the cache is considered relevant
 
-### Merged Caches
+### Remove ###
+Removes a cache entry associated with the specified Key value.
 
 ```php
-    $adapter = new \Molajo\Cache\Adapter('List', '/first/location');
-    $data1   = $adapter->fs->data;
+    try {
+        $adapter->remove($key);
 
-    $adapter = new \Molajo\Cache\Adapter('List', '/second/location');
-    $data2   = $adapter->fs->data;
+    } catch (Exception $e) {
+        // deal with the exception
+    }
 
-    $merged  = array_merge($data1, $data2);
 ```
-#### Backup
 
-This shows how to backup a file on one filesystem to another filesystem.
+**Parameters**
+- **$key** contains the value to use for the cache key
+
+### Clear ###
+Remove all cache for this Cache Handler instance.
 
 ```php
-    $options = array(
-        'source_adapter' => 'local',
-        'source_path'    => '/x/y/example',
-        'target_adapter' => 'ftp',
-        'target_path'    => '/x/y/backup',
-        'archive'        => 'zip'
-    );
+    try {
+        $adapter->clear();
 
-    $adapter = new \Molajo\Cache\File($options);
-    $data    = $adapter->backup ();
+    } catch (Exception $e) {
+        // deal with the exception
+    }
+
 ```
 
-#### Download
+**Parameters**
+- **n/a** no parameters are required
 
-This shows how to backup a file on one filesystem to another filesystem.
+
+### getMultiple ###
+Retrieve an array of CacheItem objects for the specified key values.
 
 ```php
-    $options = array(
-        'source_adapter' => 'local',
-        'source_path'    => '/x/y/example',
-        'target_adapter' => 'ftp',
-        'target_path'    => '/x/y/backup',
-        'archive'        => 'zip'
-    );
+    try {
+        $adapter->getMultiple($keys);
 
-    $adapter = new \Molajo\Cache\File($options);
-    $data    = $adapter->backup ();
+    } catch (Exception $e) {
+        // deal with the exception
+    }
+
 ```
 
-#### Ftp Server
+**Parameters**
+- **$keys** an array of key values to use when retrieving CacheItems, returning the set of objects as an array
 
-This shows how to backup a file on one filesystem to another filesystem.
+
+### setMultiple ###
+Uses the associative array of items to store multiple items in cache for specified keys, given the time specified.
 
 ```php
-    $options = array(
-        'source_adapter' => 'local',
-        'source_path'    => '/x/y/example',
-        'target_adapter' => 'ftp',
-        'target_path'    => '/x/y/backup',
-        'archive'        => 'zip'
-    );
+    try {
+        $adapter->setMultiple($items, $ttl);
 
-    $adapter = new \Molajo\Cache\File($options);
-    $data    = $adapter->backup ();
+    } catch (Exception $e) {
+        // deal with the exception
+    }
+
 ```
 
-### Installation
+**Parameters**
+- **$items** an associative array of key, value pairs for which cache items must be created
+- **$ttl** "Time to live" which is the number of seconds the cache is considered relevant
 
-#### Install using Composer from Packagist
 
-**Step 1** Install composer in your project:
+### removeMultiple ###
+Uses the array of key values to delete multiple items currently stored in cache for specified keys.
+
+```php
+    try {
+        $adapter->setMultiple($items, $ttl);
+
+    } catch (Exception $e) {
+        // deal with the exception
+    }
+
+```
+
+**Parameters**
+- **$items** an associative array of key, value pairs for which cache items must be created
+- **$ttl** "Time to live" which is the number of seconds the cache is considered relevant
+
+
+## Cache Adapter Handlers ##
+
+Cache Handlers available include:
+[Apc](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#apc),
+[Database](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#database),
+[Dummy](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#dummy),
+[File](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#file),
+[Memcached](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#memcached),
+[Memory](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#memory),
+[Redis](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#redis),
+[Wincache](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#wincache), and
+[xCache](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#xcache).
+
+### Apc ###
+APC (Alternative PHP Cache) comes standard with PHP. An APC Cache Handler is available
+with *Molajo Cache* and can be used, as follows.
+
+```php
+        $this->options = array();
+
+        // Standard Cache Options
+        $this->options['cache_service']       = 1;
+        $this->options['cache_time']          = 1440;
+
+        $this->handler = new Connection('Apc', $this->options);
+
+        // Use the cache handler normally for cache operations
+
+```
+
+### Database ###
+Before using the *Database Cache Handler*, a table must be available with four columns:
+id (identity column), key (varchar(255)), value (text) and expiration (integer). When instantiating
+the Cache Handler, pass in the database connection, the name of the database table for cache,
+the value for the RDBMS quote and name quote, as shown in this example.
+
+```php
+        $this->options = array();
+
+        // Standard Cache Options
+        $this->options['cache_service']       = 1;
+        $this->options['cache_time']          = 1440;
+
+        // Specific to the Database Handler
+        $this->options['database_connection'] = $connection;
+        $this->options['database_table']      = 'xyz_cache_table';
+        $this->options['database_quote']      = "'";
+        $this->options['database_namequote']  = '`';
+
+        $this->handler = new Connection('Database', $this->options);
+
+        // Use the cache handler normally for cache operations
+
+```
+
+### Dummy ###
+The *Dummy Cache Handler* can be used for testing purpose. It does not really cache data.
+Use, as follows:
+
+```php
+        $this->options = array();
+
+        // Standard Cache Options
+        $this->options['cache_service']       = 1;
+        $this->options['cache_time']          = 1440;
+
+        $this->handler = new Connection('Dummy', $this->options);
+
+        // Use the cache handler normally for cache operations
+
+```
+
+### File ###
+The *File Cache Handler* can be used to turn the local filesystem into a caching device.
+Use, as follows:
+
+```php
+        $this->options = array();
+
+        // Standard Cache Options
+        $this->options['cache_service']       = 1;
+        $this->options['cache_time']          = 1440;
+
+        // Specific to the File Handler
+        $this->options['cache_handler']       = '/Absolute/Path/To/Cache/Folder;
+
+        $this->handler = new Connection('File', $this->options);
+
+        // Use the cache handler normally for cache operations
+
+```
+### Memcached ###
+The *Memcached Cache Handler* requires the `memcached` PHP extension be loaded and that the `Memcached`
+ class exists. For more information, see [Memcached in the PHP Manual](http://us1.php.net/manual/en/book.memcached.php).
+Use, as follows:
+
+```php
+        $this->options = array();
+
+        // Standard Cache Options
+        $this->options['cache_service']       = 1;
+        $this->options['cache_time']          = 1440;
+
+        // Specific to the Memcached Handler
+        $this->options['memcached_pool']         = $connection;
+        $this->options['memcached_compression']  = 'xyz_cache_table';
+        $this->options['memcached_servers']      = "'";
+
+        $this->handler = new Connection('File', $this->options);
+
+        // Use the cache handler normally for cache operations
+
+```
+
+### Memory ###
+The *Memory Cache Handler* can be used storing the variables in memory. This can be used with Sessions
+to create persistence, if desired. Use, as follows:
+
+```php
+        $this->options = array();
+
+        // Standard Cache Options
+        $this->options['cache_service']       = 1;
+        $this->options['cache_time']          = 1440;
+
+        $this->handler = new Connection('Memory', $this->options);
+
+        // Use the cache handler normally for cache operations
+
+```
+
+### Redis ###
+
+The *Redis Cache Handler* can be used storing the variables in memory. This can be used with Sessions
+to create persistence, if desired. Use, as follows:
+
+```php
+        $this->options = array();
+
+        // Standard Cache Options
+        $this->options['cache_service']       = 1;
+        $this->options['cache_time']          = 1440;
+
+        $this->handler = new Connection('Memory', $this->options);
+
+        // Use the cache handler normally for cache operations
+
+```
+
+### Wincache ###
+The *Wincache Cache Handler* requires the PHP extension `wincache` is loaded and that `wincache_ucache_get` is callable.
+For more information, see [Windows Cache for PHP.](http://us1.php.net/manual/en/book.wincache.php). Besides
+using the Windows Operating System, there are no other configuration options required to use `Wincache`.
+
+```php
+        $this->options = array();
+
+        // Standard Cache Options
+        $this->options['cache_service']       = 1;
+        $this->options['cache_time']          = 1440;
+
+        $this->handler = new Connection('Memory', $this->options);
+
+        // Use the cache handler normally for cache operations
+
+```
+
+### xCache ###
+
+The *xCache Handler* requires the PHP extension `xcache` is loaded and that `xcache_get` is callable.
+For more information, see [Windows Cache for PHP.](http://us1.php.net/manual/en/book.wincache.php). Besides
+using the Windows Operating System, there are no other configuration options required to use `Wincache`.
+
+```php
+        $this->options = array();
+
+        // Standard Cache Options
+        $this->options['cache_service']       = 1;
+        $this->options['cache_time']          = 1440;
+
+        $this->handler = new Connection('Memory', $this->options);
+
+        // Use the cache handler normally for cache operations
+
+```
+
+## Install using Composer from Packagist ##
+
+### Step 1: Install composer in your project ###
 
 ```php
     curl -s https://getcomposer.org/installer | php
 ```
 
-**Step 2** Create a **composer.json** file in your project root:
+### Step 2: Create a **composer.json** file in your project root ###
 
 ```php
 {
@@ -230,69 +408,19 @@ This shows how to backup a file on one filesystem to another filesystem.
 }
 ```
 
-**Step 3** Install via composer:
+### Step 3: Install via composer ###
 
 ```php
     php composer.phar install
 ```
 
-**Step 4** Add this line to your application’s **index.php** file:
-
-```php
-    require 'vendor/autoload.php';
-```
-
-This instructs PHP to use Composer’s autoloader for **Cache** project dependencies.
-
-#### Or, Install Manually
-
-Download and extract **Cache**.
-
-Copy the Molajo folder (first subfolder of src) into your Vendor directory.
-
-Register Molajo\Cache\ subfolder in your autoload process.
-
-About
-=====
-
-Molajo Project adopted the following:
-
- * [Semantic Versioning](http://semver.org/)
- * [PSR-0 Autoloader Interoperability](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md)
- * [PSR-1](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md)
- and [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
- * [phpDocumentor2] (https://github.com/phpDocumentor/phpDocumentor2)
- * [phpUnit Testing] (https://github.com/sebastianbergmann/phpunit)
- * [Travis Continuous Improvement] (https://travis-ci.org/profile/Molajo)
- * [Packagist] (https://packagist.org)
-
-
-Submitting pull requests and features
-------------------------------------
-
-Pull requests [GitHub](https://github.com/Molajo/Fileservices/pulls)
-
-Features [GitHub](https://github.com/Molajo/Fileservices/issues)
-
 Author
 ------
 
 Amy Stephen - <AmyStephen@gmail.com> - <http://twitter.com/AmyStephen><br />
-See also the list of [contributors](https://github.com/Molajo/Fileservices/contributors) participating in this project.
+See also the list of [contributors](https://github.com/Molajo/Cache/contributors) participating in this project.
 
 License
 -------
 
 **Molajo Cache** is licensed under the MIT License - see the `LICENSE` file for details
-
-Acknowledgements
-----------------
-
-**W3C File API: Directories and System** [W3C Working Draft 17 April 2012 → ](http://www.w3.org/TR/file-system-api/)
-specifications were followed, as closely as possible.
-
-More Information
-----------------
-- [Usage](/Cache/doc/usage.md)
-- [Extend](/Cache/doc/extend.md)
-- [Specifications](/Cache/doc/specifications.md)

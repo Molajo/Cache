@@ -18,13 +18,12 @@ defined('MOLAJO') or die;
  * @copyright 2013 Amy Stephen. All rights reserved.
  * @since     1.0
  */
-class CacheTest2 extends \PHPUnit_Framework_TestCase {
-
+class CacheFile2Test extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var Cache Object
      */
     protected $cache;
-
 
     /**
      * @var Cache Object
@@ -51,7 +50,7 @@ class CacheTest2 extends \PHPUnit_Framework_TestCase {
     /**
      * Return cached or parameter value
      *
-     * @covers Molajo\Cache\Type\FileCache::get
+     * @covers Molajo\Cache\Handler\File::get
      */
     public function testRemoveExpired()
     {

@@ -11,8 +11,8 @@ namespace Molajo\Cache;
 defined('MOLAJO') or die;
 
 use Exception;
-use Molajo\Cache\Exception\CacheException;
-use Molajo\Cache\Adapter\CacheInterface;
+use Molajo\Cache\Exception\AdapterException;
+use Molajo\Cache\Api\CacheInterface;
 
 /**
  * Adapter for Cache
@@ -22,38 +22,48 @@ use Molajo\Cache\Adapter\CacheInterface;
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  * @since     1.0
  */
-Class Adapter implements CacheInterface
+class Adapter implements CacheInterface
 {
     /**
-     * Cache Type
+     * Cache Adapter Handler
      *
      * @var     object
      * @since   1.0
      */
-    public $ct;
+    public $adapterHandler;
 
     /**
-     * Initialise Cache when activated
+     * Constructor
      *
-     * @param   int    $cache_service
-     * @param   string $cache_folder
-     * @param   int    $cache_time
-     * @param   string $cache_type
+     * @param   CacheInterface  $cache
+     * @param   array           $options
      *
-     * @return  bool|CacheInterface
      * @since   1.0
-     * @throws  CacheException
      */
-    public function __construct($cache_service = 1, $cache_folder = 'Cache', $cache_time = 900, $cache_type = 'File')
+    public function __construct(CacheInterface $cache)
     {
-        $cache_type = 'Molajo\\Cache\\Type\\' . ucfirst(strtolower($cache_type)) . 'Cache';
+        $this->adapterHandler = $cache;
+    }
 
+    /**
+     * Connect to the Cache Adapter Handler
+     *
+     * @param   array $options
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  AdapterException
+     * @api
+     */
+    public function connect($options = array())
+    {
         try {
-            $this->ct = new $cache_type($cache_service, $cache_folder, $cache_time, $cache_type);
+            $this->adapterHandler->connect($options);
 
         } catch (Exception $e) {
-            throw new CacheException
-            ('Cache: new instance failed ' . $cache_type . $e->getMessage());
+
+            throw new AdapterException
+            ('Cache: Caught Exception: ' . $e->getMessage());
         }
 
         return $this;
@@ -62,66 +72,95 @@ Class Adapter implements CacheInterface
     /**
      * Return cached or parameter value
      *
-     * @param   string $key      md5 name uniquely identifying content
+     * @param  string $key md5 name uniquely identifying content
      *
-     * @return  bool|mixed       cache for this key that has not been serialized
+     * @return  bool|CacheItem cache for this key that has not been serialized
      * @since   1.0
-     * @throws  CacheException
+     * @throws  AdapterException
      */
     public function get($key)
     {
-        return $this->ct->get($key);
+        return $this->adapterHandler->get($key);
     }
 
     /**
-     * Create a cache entry or set a parameter value
+     * Create a cache entry
      *
-     * @param   string       $key    md5 name uniquely identifying content
-     * @param   mixed        $value  Data to be serialized and then saved as cache
-     * @param   null|integer $ttl
+     * @param string       $key   md5 name uniquely identifying content
+     * @param mixed        $value Data to be serialized and then saved as cache
+     * @param null|integer $ttl
      *
-     * @return  object      CacheInterface
+     * @return  object CacheInterface
      * @since   1.0
-     * @throws  CacheException
+     * @throws  AdapterException
      */
-    public function set($key, $value, $ttl = null)
+    public function set($key, $value, $ttl = 0)
     {
-        return $this->ct->set($key, $value, $ttl);
-    }
-
-    /**
-     * Remove cache if it has expired
-     *
-     * @return  bool    true (expired) false (did not expire)
-     * @since   1.0
-     */
-    public function removeExpired()
-    {
-        return $this->ct->removeExpired();
+        return $this->adapterHandler->set($key, $value, $ttl);
     }
 
     /**
      * Clear all cache
      *
-     * @return  object  CacheInterface
+     * @return  object CacheInterface
      * @since   1.0
      */
     public function clear()
     {
-        return $this->ct->clear();
+        return $this->adapterHandler->clear();
     }
 
     /**
      * Remove cache for specified $key value
      *
-     * @param   string  $key  md5 name uniquely identifying content
+     * @param string $key md5 name uniquely identifying content
      *
-     * @return  object  CacheInterface
+     * @return  object CacheInterface
      * @since   1.0
-     * @throws  CacheException
+     * @throws  AdapterException
      */
     public function remove($key = null)
     {
-        return $this->ct->remove($key);
+        return $this->adapterHandler->remove($key);
+    }
+
+    /**
+     * Get multiple CacheItems by Key
+     *
+     * @param   array $keys
+     *
+     * @return  array
+     * @since   1.0
+     */
+    public function getMultiple($keys = array())
+    {
+        return $this->adapterHandler->getMultiple($keys);
+    }
+
+    /**
+     * Create a set of cache entries
+     *
+     * @param   array         $items
+     * @param   null|integer  $ttl
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    public function setMultiple($items = array(), $ttl = null)
+    {
+        return $this->adapterHandler->setMultiple($items, $ttl);
+    }
+
+    /**
+     * Remove a set of cache entries
+     *
+     * @param   array  $keys
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    public function removeMultiple($keys = array())
+    {
+        return $this->adapterHandler->removeMultiple($keys);
     }
 }

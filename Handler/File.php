@@ -1,19 +1,20 @@
 <?php
 /**
- * FileCache
+ * File
  *
  * @package   Molajo
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright 2013 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Cache\Type;
+namespace Molajo\Cache\Handler;
 
 defined('MOLAJO') or die;
 
-use DirectoryIterator;
 use Exception;
-use Molajo\Cache\Exception\CacheException;
-use Molajo\Cache\Adapter\CacheInterface;
+use DirectoryIterator;
+use Molajo\Cache\CacheItem;
+use Molajo\Cache\Exception\FileHandlerException;
+use Molajo\Cache\Api\CacheInterface;
 
 /**
  * File Cache
@@ -23,109 +24,70 @@ use Molajo\Cache\Adapter\CacheInterface;
  * @copyright 2013 Amy Stephen. All rights reserved.
  * @since     1.0
  */
-Class FileCache implements CacheInterface
+class File extends AbstractHandler implements CacheInterface
 {
     /**
-     * Cache Type
+     * Cache Path from Root
      *
      * @var    string
      * @since  1.0
      */
-    protected $cache_type = 'File';
+    protected $cache_folder;
 
     /**
-     * Cache
+     * constructor
      *
-     * @var    string
-     * @since  1.0
-     */
-    protected $cache_service = false;
-
-    /**
-     * Cache Path
+     * @param   string  $cache_handler
      *
-     * @var    string
-     * @since  1.0
-     */
-    protected $cache_folder = 'Cache';
-
-    /**
-     * Cache Handler
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $cache_handler = '';
-
-    /**
-     * Cache Time
-     *
-     * @var    Integer
-     * @since  1.0
-     */
-    protected $cache_time = 900;
-
-    /**
-     * Initialise Cache when activated
-     *
-     * @param   int    $cache_service
-     * @param   string $cache_folder
-     * @param   int    $cache_time
-     *
-     * @return  bool|Cache
      * @since   1.0
-     * @throws  CacheException
      */
-    public function __construct($cache_service = 1, $cache_folder = 'Cache', $cache_time = 900, $cache_type = 'File')
+    public function __construct($cache_handler = 'File')
     {
-        $cache_type = ucfirst(strtolower($cache_type));
+        $this->cache_handler = ucfirst(strtolower($cache_handler));
+    }
 
-        if ((int) $cache_service === 0) {
-            $this->cache_service = 0;
-            return $this;
-        }
+    /**
+     * Connect to the Cache
+     *
+     * @param   array $options
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  FileHandlerException
+     * @api
+     */
+    public function connect($options = array())
+    {
+        parent::connect($options);
 
-        $this->cache_service = 1;
+        try {
 
-        $this->cache_folder = $cache_folder;
+            $this->cache_folder = null;
+            if (isset($options['cache_folder'])) {
+                $this->cache_folder = $options['cache_folder'];
+            }
 
-        if (is_dir($this->cache_folder)) {
-
-        } else {
-
-            try {
+            if (is_dir($this->cache_folder) === true) {
+            } else {
                 mkdir($this->cache_folder);
-            } catch (Exception $e) {
-                throw new CacheException
-                ('Cache: mkdir failed ' . $this->cache_folder . $e->getMessage());
             }
 
-            try {
-                chmod(($this->cache_folder), 0755);
-            } catch (Exception $e) {
-                throw new CacheException
-                ('Cache: Chmod failed ' . $this->cache_folder . $e->getMessage());
-            }
+        } catch (Exception $e) {
+            throw new FileHandlerException
+            ('Cache: Failed creating File Handler Folder ' . $this->cache_folder . $e->getMessage());
         }
-
-        $this->cache_time = (int) $cache_time;
-        if ((int) $this->cache_time === 0) {
-            $this->cache_service = 900;
-        }
-
-        $this->removeExpired();
 
         return $this;
     }
 
     /**
-     * Return cached or parameter value
+     * Return cached value
      *
-     * @param   string $key      md5 name uniquely identifying content
+     * @param   string  $key
      *
-     * @return  bool|mixed        cache for this key that has not been serialized
+     * @return  bool|CacheItem
      * @since   1.0
-     * @throws  CacheException
+     * @throws  FileHandlerException
      */
     public function get($key)
     {
@@ -134,27 +96,35 @@ Class FileCache implements CacheInterface
         }
 
         try {
+
+            $exists = false;
+            $value = null;
+
             if (file_exists($this->cache_folder . '/' . $key) === true) {
-                return unserialize(file_get_contents($this->cache_folder . '/' . $key));
+                $exists = true;
+                $value = unserialize(file_get_contents($this->cache_folder . '/' . $key));
             }
+
         } catch (Exception $e) {
-            throw new CacheException
+            throw new FileHandlerException
             ('Cache: Get Failed for File ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
+
+        return new CacheItem($key, $value, $exists);
     }
 
     /**
-     * Create a cache entry or set a parameter value
+     * Create a cache entry
      *
-     * @param   string       $key    md5 name uniquely identifying content
-     * @param   mixed        $value  Data to be serialized and then saved as cache
+     * @param   string       $key   md5 name uniquely identifying content
+     * @param   mixed        $value Data to be serialized and then saved as cache
      * @param   null|integer $ttl
      *
-     * @return  bool|Cache
+     * @return  $this
      * @since   1.0
-     * @throws  CacheException
+     * @throws  FileHandlerException
      */
-    public function set($key = null, $value, $ttl = null)
+    public function set($key = null, $value, $ttl = 0)
     {
         if ($this->cache_service == 0) {
             return false;
@@ -172,22 +142,25 @@ Class FileCache implements CacheInterface
             if (file_exists($this->cache_folder . '/' . $key) === true) {
                 return $this;
             }
+
         } catch (Exception $e) {
-            throw new CacheException
+            throw new FileHandlerException
             ('Cache: Set file exists check Failed for File ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
         try {
             file_put_contents($this->cache_folder . '/' . $key, serialize($value));
+
         } catch (Exception $e) {
-            throw new CacheException
+            throw new FileHandlerException
             ('Cache: file_put_contents failed for ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
         try {
             chmod(($this->cache_folder . '/' . $key), 0644);
+
         } catch (Exception $e) {
-            throw new CacheException
+            throw new FileHandlerException
             ('Cache: Chmod failed ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
@@ -197,10 +170,10 @@ Class FileCache implements CacheInterface
     /**
      * Remove cache if it has expired
      *
-     * @return  bool    true (expired) false (did not expire)
+     * @return  $this
      * @since   1.0
      */
-    public function removeExpired()
+    protected function removeExpired()
     {
         foreach (new DirectoryIterator($this->cache_folder) as $file) {
 
@@ -229,7 +202,7 @@ Class FileCache implements CacheInterface
     /**
      * Clear all cache
      *
-     * @return  Cache
+     * @return  $this
      * @since   1.0
      */
     public function clear()
@@ -237,7 +210,7 @@ Class FileCache implements CacheInterface
         foreach (new DirectoryIterator($this->cache_folder) as $file) {
             if ($file->isDot()) {
             } else {
-                $this->remove($file->getPathname());
+                $this->remove($file->getBasename());
             }
         }
 
@@ -247,11 +220,11 @@ Class FileCache implements CacheInterface
     /**
      * Remove cache for specified $key value
      *
-     * @param   string $key  md5 name uniquely identifying content
+     * @param string $key
      *
-     * @return  object
+     * @return  $this
      * @since   1.0
-     * @throws  CacheException
+     * @throws  FileHandlerException
      */
     public function remove($key = null)
     {
@@ -260,10 +233,23 @@ Class FileCache implements CacheInterface
                 unlink($this->cache_folder . '/' . $key);
             }
         } catch (Exception $e) {
-            throw new CacheException
+            throw new FileHandlerException
             ('Cache: Remove file failed ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
+        return $this;
+    }
+
+    /**
+     * Close the Connection
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  FileHandlerException
+     * @api
+     */
+    public function close()
+    {
         return $this;
     }
 }
