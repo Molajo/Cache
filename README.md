@@ -32,19 +32,31 @@ Then, the application can use that connection to perform cache operations.
 ### Example ###
 ```php
 
-    // Connect to Cache Handler
-    use Molajo\Cache\Connection;
-    $adapter = new Connection('Memory');
+    // Instantiate Cache Handler
+    use Molajo\Cache\Adapter\File as FileCache;
+    $adapter_handler = new FileCache();
 
-    // Use connection for cache operations
+    // Set Options needed for the specific cache desired
+    $options = array();
+    $options['cache_folder']  = SITE_BASE_PATH . '/' . $application->get('system_cache_folder', 'cache');
+    $options['cache_time']    = $application->get('system_cache_time', 900);
+    $options['cache_handler'] = $application->get('cache_handler', 'File');
+
+    // Instantiate Cache Adapter, passing in Handler and Options
+    use Molajo\Cache\Adapter;
+    $adapter = new Adapter($adapter_handler, $options);
+
+    // Use the Adapter to Get, Set, Remove and Clear Cache
     $cacheItem = $adapter->get('this is the key for a cache item');
+
+    // Use the CacheItem Object to handle the response
     if ($cacheItem->isHit() === false) {
         // deal with no cache
     } else {
         echo $cacheItem->value; // Cached Value requested by Key
     }
 
-    $adapter->set('key value', 'cache this value for seconds =>', 1440);
+    $adapter->set('key value', 'cache this value for seconds =>', 86400);
 
     $adapter->remove('key value');
 
@@ -91,11 +103,12 @@ thrown.
     }
 
     if ($cacheItem->isHit() === true) {
-			$cached_value = $cacheItem->getValue();
+        $cached_value = $cacheItem->getValue();
     } else {
-			// cache is not available - do what you have to do.
+        // cache is not available - do what you have to do.
     }
 ```
+
 
 **Parameters**
 - **$key** contains the key value for the requested cache
@@ -226,9 +239,7 @@ with *Molajo Cache* and can be used, as follows.
 
         // Standard Cache Options
         $this->options['cache_service']       = 1;
-        $this->options['cache_time']          = 1440;
-
-        $this->handler = new Connection('Apc', $this->options);
+        $this->options['cache_time']          = 86400;
 
         // Use the cache handler normally for cache operations
 
@@ -245,15 +256,13 @@ the value for the RDBMS quote and name quote, as shown in this example.
 
         // Standard Cache Options
         $this->options['cache_service']       = 1;
-        $this->options['cache_time']          = 1440;
+        $this->options['cache_time']          = 86400;
 
         // Specific to the Database Handler
         $this->options['database_connection'] = $connection;
         $this->options['database_table']      = 'xyz_cache_table';
         $this->options['database_quote']      = "'";
         $this->options['database_namequote']  = '`';
-
-        $this->handler = new Connection('Database', $this->options);
 
         // Use the cache handler normally for cache operations
 
@@ -268,9 +277,7 @@ Use, as follows:
 
         // Standard Cache Options
         $this->options['cache_service']       = 1;
-        $this->options['cache_time']          = 1440;
-
-        $this->handler = new Connection('Dummy', $this->options);
+        $this->options['cache_time']          = 86400;
 
         // Use the cache handler normally for cache operations
 
@@ -285,16 +292,12 @@ Use, as follows:
 
         // Standard Cache Options
         $this->options['cache_service']       = 1;
-        $this->options['cache_time']          = 1440;
+        $this->options['cache_time']          = 86400;
 
         // Specific to the File Handler
         $this->options['cache_handler']       = '/Absolute/Path/To/Cache/Folder;
-
-        $this->handler = new Connection('File', $this->options);
-
-        // Use the cache handler normally for cache operations
-
 ```
+
 ### Memcached ###
 The *Memcached Cache Handler* requires the `memcached` PHP extension be loaded and that the `Memcached`
  class exists. For more information, see [Memcached in the PHP Manual](http://us1.php.net/manual/en/book.memcached.php).
@@ -305,16 +308,12 @@ Use, as follows:
 
         // Standard Cache Options
         $this->options['cache_service']       = 1;
-        $this->options['cache_time']          = 1440;
+        $this->options['cache_time']          = 86400;
 
         // Specific to the Memcached Handler
         $this->options['memcached_pool']         = $connection;
         $this->options['memcached_compression']  = 'xyz_cache_table';
         $this->options['memcached_servers']      = "'";
-
-        $this->handler = new Connection('File', $this->options);
-
-        // Use the cache handler normally for cache operations
 
 ```
 
@@ -327,11 +326,7 @@ to create persistence, if desired. Use, as follows:
 
         // Standard Cache Options
         $this->options['cache_service']       = 1;
-        $this->options['cache_time']          = 1440;
-
-        $this->handler = new Connection('Memory', $this->options);
-
-        // Use the cache handler normally for cache operations
+        $this->options['cache_time']          = 86400;
 
 ```
 
@@ -345,11 +340,7 @@ to create persistence, if desired. Use, as follows:
 
         // Standard Cache Options
         $this->options['cache_service']       = 1;
-        $this->options['cache_time']          = 1440;
-
-        $this->handler = new Connection('Memory', $this->options);
-
-        // Use the cache handler normally for cache operations
+        $this->options['cache_time']          = 86400;
 
 ```
 
@@ -363,11 +354,7 @@ using the Windows Operating System, there are no other configuration options req
 
         // Standard Cache Options
         $this->options['cache_service']       = 1;
-        $this->options['cache_time']          = 1440;
-
-        $this->handler = new Connection('Memory', $this->options);
-
-        // Use the cache handler normally for cache operations
+        $this->options['cache_time']          = 86400;
 
 ```
 
@@ -382,11 +369,9 @@ using the Windows Operating System, there are no other configuration options req
 
         // Standard Cache Options
         $this->options['cache_service']       = 1;
-        $this->options['cache_time']          = 1440;
+        $this->options['cache_time']          = 86400;
 
         $this->handler = new Connection('Memory', $this->options);
-
-        // Use the cache handler normally for cache operations
 
 ```
 
@@ -417,8 +402,7 @@ using the Windows Operating System, there are no other configuration options req
 Author
 ------
 
-Amy Stephen - <AmyStephen@gmail.com> - <http://twitter.com/AmyStephen><br />
-See also the list of [contributors](https://github.com/Molajo/Cache/contributors) participating in this project.
+Amy Stephen - <AmyStephen@gmail.com> - <http://twitter.com/AmyStephen>
 
 License
 -------

@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache;
 
-defined('MOLAJO') or die;
-
 use Molajo\Cache\Api\CacheItemInterface;
 
 /**
@@ -28,7 +26,7 @@ Class CacheItem implements CacheItemInterface
      * @var     string
      * @since   1.0
      */
-    protected $key;
+    public $key;
 
     /**
      * Cache Hit
@@ -36,7 +34,7 @@ Class CacheItem implements CacheItemInterface
      * @var     bool
      * @since   1.0
      */
-    protected $isHit;
+    public $isHit;
 
     /**
      * Cache Value
@@ -44,14 +42,14 @@ Class CacheItem implements CacheItemInterface
      * @var     mixed
      * @since   1.0
      */
-    protected $value;
+    public $value;
 
     /**
      * Constructor
      *
-     * @param  string   $key
-     * @param  null     $value
-     * @param  bool     $isHit
+     * @param  string $key
+     * @param  null   $value
+     * @param  bool   $isHit
      *
      * @since  1.0
      */
@@ -87,7 +85,7 @@ Class CacheItem implements CacheItemInterface
     /**
      * Get the Value associated with this Cache Item
      *
-     * @param   null|mixed  $value
+     * @param   null|mixed $value
      *
      * @return  $this
      * @since   1.0

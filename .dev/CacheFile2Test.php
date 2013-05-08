@@ -8,7 +8,7 @@
  */
 namespace Molajo\Cache\Test;
 
-defined('MOLAJO') or die;
+
 
 /**
  * Cache Test
@@ -37,10 +37,10 @@ class CacheFile2Test extends \PHPUnit_Framework_TestCase
     {
         $class = 'Molajo\\Cache\\Adapter';
 
-        $cache_service = 1;
+        $cache_service      = 1;
         $this->cache_folder = BASE_FOLDER . '/.dev/Data';
-        $cache_time = 9;
-        $cache_type = 'File';
+        $cache_time         = 9;
+        $cache_type         = 'File';
 
         $this->cache = new $class($cache_service, $this->cache_folder, $cache_time, $cache_type);
 

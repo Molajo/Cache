@@ -8,7 +8,7 @@
  */
 namespace Molajo\Cache\Handler;
 
-defined('MOLAJO') or die;
+
 
 use Molajo\Cache\CacheItem;
 use Molajo\Cache\Api\CacheInterface;
@@ -25,15 +25,15 @@ use Molajo\Cache\Exception\DummyHandlerException;
 class Dummy extends AbstractHandler implements CacheInterface
 {
     /**
-     * constructor
+     * Constructor
      *
-     * @param   string  $cache_handler
+     * @param   string $cache_handler
      *
      * @since   1.0
      */
     public function __construct($cache_handler = 'Dummy')
     {
-        $this->cache_handler = ucfirst(strtolower($cache_handler));
+        parent::__construct($cache_handler);
     }
 
     /**
@@ -54,7 +54,7 @@ class Dummy extends AbstractHandler implements CacheInterface
     /**
      * Return cached value
      *
-     * @param   string  $key
+     * @param   string $key
      *
      * @return  bool|CacheItem
      * @since   1.0
@@ -68,9 +68,9 @@ class Dummy extends AbstractHandler implements CacheInterface
     /**
      * Create a cache entry
      *
-     * @param   null     $key
-     * @param   null     $value
-     * @param   integer  $ttl
+     * @param   null    $key
+     * @param   null    $value
+     * @param   integer $ttl (number of seconds)
      *
      * @return  $this
      * @since   1.0

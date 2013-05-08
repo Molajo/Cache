@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Exception;
 
-defined('MOLAJO') or die;
-
 use RuntimeException;
 
 use Molajo\Cache\Api\ExceptionInterface;

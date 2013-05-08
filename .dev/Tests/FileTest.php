@@ -8,9 +8,8 @@
  */
 namespace Molajo\Cache\Test;
 
-defined('MOLAJO') or die;
-
-use Molajo\Cache\Connection;
+use Molajo\Cache\Handler\File as FileCache;
+use Molajo\Cache\Adapter;
 
 /**
  * Cache Test
@@ -46,13 +45,15 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->options = array();
+        $adapter_handler = new FileCache();
 
+        $this->options                  = array();
         $this->options['cache_service'] = 1;
         $this->options['cache_folder']  = BASE_FOLDER . '/.dev/Cache';
-        $this->options['cache_time']    = 900;
+        $this->options['cache_time']    = 600; //ten minutes
+        $this->options['cache_handler'] = 'File';
 
-        $this->adapter = new Connection('File', $this->options);
+        $this->adapter = new Adapter($adapter_handler, $this->options);
 
         return $this;
     }
@@ -75,7 +76,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * Create a cache entry
      *
-     * @covers Molajo\Cache\Handler\File::connect
+     * @covers  Molajo\Cache\Handler\File::connect
      *
      * @return  $this
      * @since   1.0
@@ -93,7 +94,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * Create a cache entry
      *
-     * @covers Molajo\Cache\Handler\File::get
+     * @covers  Molajo\Cache\Handler\File::get
      *
      * @return  $this
      * @since   1.0
@@ -259,8 +260,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * Create a set of cache entries
      *
-     * @param   array         $items
-     * @param   null|integer  $ttl
+     * @param   array        $items
+     * @param   null|integer $ttl
      *
      * @return  $this
      * @since   1.0
@@ -284,7 +285,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         foreach (new \DirectoryIterator($this->options['cache_folder']) as $file) {
             if ($file->isDot()) {
             } else {
-                $count++;
+                $count ++;
             }
         }
 
@@ -294,7 +295,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * Remove a set of cache entries
      *
-     * @param   array  $keys
+     * @param   array $keys
      *
      * @return  $this
      * @since   1.0
@@ -351,7 +352,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         foreach (new \DirectoryIterator($this->options['cache_folder']) as $file) {
             if ($file->isDot()) {
             } else {
-                $count++;
+                $count ++;
             }
         }
 

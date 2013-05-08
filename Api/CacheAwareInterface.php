@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Api;
 
-defined('MOLAJO') or die;
-
 use Molajo\Cache\Exception\CacheException;
 
 /**

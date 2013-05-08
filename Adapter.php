@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache;
 
-defined('MOLAJO') or die;
-
 use Exception;
 use Molajo\Cache\Exception\AdapterException;
 use Molajo\Cache\Api\CacheInterface;
@@ -30,19 +28,20 @@ class Adapter implements CacheInterface
      * @var     object
      * @since   1.0
      */
-    public $adapterHandler;
+    protected $adapterHandler;
 
     /**
      * Constructor
      *
-     * @param   CacheInterface  $cache
-     * @param   array           $options
+     * @param   CacheInterface $cache
+     * @param   array          $options
      *
      * @since   1.0
      */
-    public function __construct(CacheInterface $cache)
+    public function __construct(CacheInterface $cache, $options)
     {
         $this->adapterHandler = $cache;
+        $this->connect($options);
     }
 
     /**
@@ -84,17 +83,17 @@ class Adapter implements CacheInterface
     }
 
     /**
-     * Create a cache entry
+     * Persist data in cache
      *
-     * @param string       $key   md5 name uniquely identifying content
-     * @param mixed        $value Data to be serialized and then saved as cache
-     * @param null|integer $ttl
+     * @param   string  $key
+     * @param   mixed   $value
+     * @param   integer $ttl (number of seconds)
      *
-     * @return  object CacheInterface
+     * @return  bool
      * @since   1.0
      * @throws  AdapterException
      */
-    public function set($key, $value, $ttl = 0)
+    public function set($key = null, $value, $ttl = 0)
     {
         return $this->adapterHandler->set($key, $value, $ttl);
     }
@@ -140,8 +139,8 @@ class Adapter implements CacheInterface
     /**
      * Create a set of cache entries
      *
-     * @param   array         $items
-     * @param   null|integer  $ttl
+     * @param   array        $items
+     * @param   null|integer $ttl
      *
      * @return  $this
      * @since   1.0
@@ -154,7 +153,7 @@ class Adapter implements CacheInterface
     /**
      * Remove a set of cache entries
      *
-     * @param   array  $keys
+     * @param   array $keys
      *
      * @return  $this
      * @since   1.0

@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Api;
 
-defined('MOLAJO') or die;
-
 use Molajo\Cache\Exception\AdapterException;
 
 /**
@@ -31,7 +29,6 @@ interface ConnectionInterface
      * @return  $this
      * @since   1.0
      * @throws  AdapterException
-     * @api
      */
     public function connect($options = array());
 
@@ -41,7 +38,6 @@ interface ConnectionInterface
      * @return  $this
      * @since   1.0
      * @throws  AdapterException
-     * @api
      */
     public function close();
 }

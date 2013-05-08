@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Handler;
 
-defined('MOLAJO') or die;
-
 use Exception;
 use Molajo\Cache\CacheItem;
 use Molajo\Cache\Api\CacheInterface;
@@ -26,15 +24,15 @@ use Molajo\Cache\Exception\RedisHandlerException;
 class Redis extends AbstractHandler implements CacheInterface
 {
     /**
-     * constructor
+     * Constructor
      *
-     * @param   string  $cache_handler
+     * @param   string $cache_handler
      *
      * @since   1.0
      */
     public function __construct($cache_handler = 'Redis')
     {
-        $this->cache_handler = ucfirst(strtolower($cache_handler));
+        parent::__construct($cache_handler);
     }
 
     /**
@@ -55,7 +53,7 @@ class Redis extends AbstractHandler implements CacheInterface
     /**
      * Return cached value
      *
-     * @param   string  $key
+     * @param   string $key
      *
      * @return  bool|CacheItem
      * @since   1.0
@@ -83,9 +81,9 @@ class Redis extends AbstractHandler implements CacheInterface
     /**
      * Create a cache entry
      *
-     * @param   null     $key
-     * @param   null     $value
-     * @param   integer  $ttl
+     * @param   null    $key
+     * @param   null    $value
+     * @param   integer $ttl (number of seconds)
      *
      * @return  $this
      * @since   1.0
@@ -101,11 +99,11 @@ class Redis extends AbstractHandler implements CacheInterface
             $key = md5($value);
         }
 
-        if ((int) $ttl == 0) {
-            $ttl = (int) $this->cache_time;
+        if ((int)$ttl == 0) {
+            $ttl = (int)$this->cache_time;
         }
 
-        $results = apc_store($key, $value, (int) $ttl);
+        $results = apc_store($key, $value, (int)$ttl);
         if ($results === false) {
             throw new RedisHandlerException
             ('Cache APC Handler: Set failed for Key: ' . $key);

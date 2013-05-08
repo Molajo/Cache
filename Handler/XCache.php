@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Handler;
 
-defined('MOLAJO') or die;
-
 use XCache as phpXCache;
 use Exception;
 use Molajo\Cache\Exception\XCacheHandlerException;
@@ -25,9 +23,8 @@ use Molajo\Cache\Api\CacheInterface;
  */
 class XCache extends AbstractHandler implements CacheInterface
 {
-
     /**
-     * constructor
+     * Constructor
      *
      * @param  string $cache_handler
      *
@@ -35,7 +32,7 @@ class XCache extends AbstractHandler implements CacheInterface
      */
     public function __construct($cache_handler = 'XCache')
     {
-        $this->cache_handler = ucfirst(strtolower($cache_handler));
+        parent::__construct($cache_handler);
     }
 
     /**
@@ -91,7 +88,7 @@ class XCache extends AbstractHandler implements CacheInterface
     /**
      * Return cached value
      *
-     * @param   string  $key
+     * @param   string $key
      *
      * @return  null|mixed cached value
      * @since   1.0
@@ -112,7 +109,7 @@ class XCache extends AbstractHandler implements CacheInterface
                 $exists = true;
 
             } elseif (phpXCache::RES_NOTFOUND == $results) {
-                $exists = false;
+                $exists  = false;
                 $results = null;
 
             } else {
@@ -135,9 +132,9 @@ class XCache extends AbstractHandler implements CacheInterface
     /**
      * Create a cache entry
      *
-     * @param   null     $key
-     * @param   null     $value
-     * @param   integer  $ttl
+     * @param   null    $key
+     * @param   null    $value
+     * @param   integer $ttl (number of seconds)
      *
      * @return  $this
      * @since   1.0
@@ -153,14 +150,14 @@ class XCache extends AbstractHandler implements CacheInterface
             $key = md5($value);
         }
 
-        if ((int) $ttl == 0) {
-            $ttl = (int) $this->cache_time;
+        if ((int)$ttl == 0) {
+            $ttl = (int)$this->cache_time;
         }
 
 
-        $results = apc_store($key, $value, (int) $ttl);
+        $results = apc_store($key, $value, (int)$ttl);
 
-        $this->xcache->set($key, $value, (int) $ttl);
+        $this->xcache->set($key, $value, (int)$ttl);
 
         $results = $this->xcache->getResultCode();
 

@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Api;
 
-defined('MOLAJO') or die;
-
 /**
  * Exception Interface
  *

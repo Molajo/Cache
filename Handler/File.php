@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Handler;
 
-defined('MOLAJO') or die;
-
 use Exception;
 use DirectoryIterator;
 use Molajo\Cache\CacheItem;
@@ -35,15 +33,15 @@ class File extends AbstractHandler implements CacheInterface
     protected $cache_folder;
 
     /**
-     * constructor
+     * Constructor
      *
-     * @param   string  $cache_handler
+     * @param   string $cache_handler
      *
      * @since   1.0
      */
     public function __construct($cache_handler = 'File')
     {
-        $this->cache_handler = ucfirst(strtolower($cache_handler));
+        parent::__construct($cache_handler);
     }
 
     /**
@@ -61,8 +59,8 @@ class File extends AbstractHandler implements CacheInterface
         parent::connect($options);
 
         try {
-
             $this->cache_folder = null;
+
             if (isset($options['cache_folder'])) {
                 $this->cache_folder = $options['cache_folder'];
             }
@@ -83,7 +81,7 @@ class File extends AbstractHandler implements CacheInterface
     /**
      * Return cached value
      *
-     * @param   string  $key
+     * @param   string $key
      *
      * @return  bool|CacheItem
      * @since   1.0
@@ -98,11 +96,11 @@ class File extends AbstractHandler implements CacheInterface
         try {
 
             $exists = false;
-            $value = null;
+            $value  = null;
 
             if (file_exists($this->cache_folder . '/' . $key) === true) {
                 $exists = true;
-                $value = unserialize(file_get_contents($this->cache_folder . '/' . $key));
+                $value  = unserialize(file_get_contents($this->cache_folder . '/' . $key));
             }
 
         } catch (Exception $e) {
@@ -127,7 +125,8 @@ class File extends AbstractHandler implements CacheInterface
     public function set($key = null, $value, $ttl = 0)
     {
         if ($this->cache_service == 0) {
-            return false;
+            throw new FileHandlerException
+            ('Cache: Not enabled by the application.');
         }
 
         if ($key === null) {

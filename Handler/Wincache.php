@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Handler;
 
-defined('MOLAJO') or die;
-
 use Wincache as phpWincache;
 use Exception;
 use Molajo\Cache\Exception\WincacheHandlerException;
@@ -35,15 +33,15 @@ class Wincache extends AbstractHandler implements CacheInterface
     protected $wincache;
 
     /**
-     * constructor
+     * Constructor
      *
-     * @param  string  $cache_handler
+     * @param  string $cache_handler
      *
      * @since  1.0
      */
     public function __construct($cache_handler = 'Wincache')
     {
-        $this->cache_handler = ucfirst(strtolower($cache_handler));
+        parent::__construct($cache_handler);
     }
 
     /**
@@ -72,7 +70,7 @@ class Wincache extends AbstractHandler implements CacheInterface
     /**
      * Return cached value
      *
-     * @param   string  $key
+     * @param   string $key
      *
      * @return  null|mixed cached value
      * @since   1.0
@@ -103,8 +101,8 @@ class Wincache extends AbstractHandler implements CacheInterface
      * Create a cache entry
      *
      * @param   string  $key
-     * @param   mixed     $value
-     * @param   integer   $ttl
+     * @param   mixed   $value
+     * @param   integer $ttl (number of seconds)
      *
      * @return  $this
      * @since   1.0
@@ -120,11 +118,11 @@ class Wincache extends AbstractHandler implements CacheInterface
             $key = md5($value);
         }
 
-        if ((int) $ttl == 0) {
-            $ttl = (int) $this->cache_time;
+        if ((int)$ttl == 0) {
+            $ttl = (int)$this->cache_time;
         }
 
-        $results = wincache_ucache_add($key, $value, (int) $ttl);
+        $results = wincache_ucache_add($key, $value, (int)$ttl);
 
         if ($results === true) {
         } else {

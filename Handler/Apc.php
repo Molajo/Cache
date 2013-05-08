@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Handler;
 
-defined('MOLAJO') or die;
-
 use Exception;
 use Molajo\Cache\CacheItem;
 use Molajo\Cache\Api\CacheInterface;
@@ -26,7 +24,7 @@ use Molajo\Cache\Exception\ApcHandlerException;
 class Apc extends AbstractHandler implements CacheInterface
 {
     /**
-     * constructor
+     * Constructor
      *
      * @param   string $cache_handler
      *
@@ -34,7 +32,7 @@ class Apc extends AbstractHandler implements CacheInterface
      */
     public function __construct($cache_handler = 'Apc')
     {
-        $this->cache_handler = ucfirst(strtolower($cache_handler));
+        parent::__construct($cache_handler);
     }
 
     /**
@@ -54,7 +52,7 @@ class Apc extends AbstractHandler implements CacheInterface
     /**
      * Return cached value
      *
-     * @param   string  $key
+     * @param   string $key
      *
      * @return  bool|CacheItem
      * @since   1.0
@@ -67,10 +65,8 @@ class Apc extends AbstractHandler implements CacheInterface
         }
 
         try {
-            $exists = \apc_exists($key);
-
-            $value = \apc_fetch($key);
-
+            $exists = apc_exists($key);
+            $value = apc_fetch($key);
             return new CacheItem($key, $value, $exists);
 
         } catch (Exception $e) {
@@ -82,9 +78,9 @@ class Apc extends AbstractHandler implements CacheInterface
     /**
      * Create a cache entry
      *
-     * @param   null     $key
-     * @param   null     $value
-     * @param   integer  $ttl
+     * @param   null    $key
+     * @param   null    $value
+     * @param   integer $ttl (number of seconds)
      *
      * @return  $this
      * @since   1.0
@@ -100,11 +96,11 @@ class Apc extends AbstractHandler implements CacheInterface
             $key = md5($value);
         }
 
-        if ((int) $ttl == 0) {
-            $ttl = (int) $this->cache_time;
+        if ((int)$ttl == 0) {
+            $ttl = (int)$this->cache_time;
         }
 
-        $results = \apc_add($key, $value, (int) $ttl);
+        $results = apc_add($key, $value, (int)$ttl);
 
         if ($results === false) {
             throw new ApcHandlerException
@@ -117,7 +113,7 @@ class Apc extends AbstractHandler implements CacheInterface
     /**
      * Remove cache for specified $key value
      *
-     * @param   string  $key
+     * @param   string $key
      *
      * @return  object
      * @since   1.0
@@ -125,7 +121,7 @@ class Apc extends AbstractHandler implements CacheInterface
      */
     public function remove($key = null)
     {
-        $results = \apc_delete($key);
+        $results = apc_delete($key);
 
         if ($results === false) {
             throw new ApcHandlerException
@@ -143,6 +139,6 @@ class Apc extends AbstractHandler implements CacheInterface
      */
     public function clear()
     {
-        return \apc_clear_cache('user');
+        return apc_clear_cache('user');
     }
 }

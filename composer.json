@@ -1,38 +1,28 @@
 {
-    "name":"molajo/cache",
-    "type":"molajo-bundle",
-    "description":"Molajo Cache: File and Directory Services supports various Caches using Adapters, PHP platform independent",
-    "keywords":["Cache", "Molajo", "PSR-0"],
-    "homepage":"http://github.com/Molajo/Cache",
-    "license":"MIT",
-    "authors":[
+    "name": "molajo/cache",
+    "type": "molajo-bundle",
+    "description": "Cache API for PHP applications with APC, Database, File, Memcached, in-memory, Redis, Wincache, and xCache handlers.",
+    "keywords": ["Cache", "Molajo", "PSR-0", "APC", "Memcached", "Redis", "Wincache", "xCache"],
+    "homepage": "http://github.com/Molajo/Cache",
+    "license": "MIT",
+    "authors": [
         {
-            "name":"Amy Stephen",
-            "email":"AmyStephen@gmail.com",
-            "homepage":"http://AmyStephen.github.com"
-        },
-        {
-            "name":"Other Contributors",
-            "homepage":"http://github.com/Molajo/Cache/contributors"
+            "name": "Amy Stephen",
+            "email": "AmyStephen@gmail.com",
+            "homepage": "http://AmyStephen.github.com"
         }
     ],
-    "require":{
-        "php":">=5.3.3"
+    "require": {
+        "php": ">=5.3.3"
     },
-
-    "support":{
-        "email":"hello@molajo.org",
-        "irc":"irc://irc.freenode.org/molajo"
+    "support": {
+        "email": "hello@molajo.org",
+        "irc": "irc://irc.freenode.org/molajo"
     },
-    "autoload":{
-        "psr-0":{
-            "Molajo\\Cache":"./"
-        }
-    },
-    "minimum-stability":"dev",
-    "extra":{
-        "branch-alias":{
-            "dev-master":"1.0.x-dev"
+    "target-dir": "Molajo/Cache",
+    "autoload": {
+        "psr-0": {
+            "Molajo": "./"
         }
     }
 }

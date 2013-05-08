@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Handler;
 
-defined('MOLAJO') or die;
-
 use Exception;
 use Molajo\Cache\CacheItem;
 use Molajo\Cache\Api\CacheInterface;
@@ -34,15 +32,15 @@ class Memory extends AbstractHandler implements CacheInterface
     protected $cache_container = array();
 
     /**
-     * constructor
+     * Constructor
      *
-     * @param  string  $cache_handler
+     * @param  string $cache_handler
      *
      * @since  1.0
      */
     public function __construct($cache_handler = 'Memory')
     {
-        $this->cache_handler = ucfirst(strtolower($cache_handler));
+        parent::__construct($cache_handler);
     }
 
     /**
@@ -67,7 +65,7 @@ class Memory extends AbstractHandler implements CacheInterface
     /**
      * Return cached value
      *
-     * @param   string  $key
+     * @param   string $key
      *
      * @return  CacheItem
      * @since   1.0
@@ -81,13 +79,13 @@ class Memory extends AbstractHandler implements CacheInterface
 
         try {
 
-            $value = null;
+            $value  = null;
             $exists = false;
 
             if (isset($this->cache_container[$key])) {
                 $entry  = $this->cache_container[$key];
                 $exists = true;
-                $value = $entry->value;
+                $value  = $entry->value;
             }
 
             return new CacheItem($key, $value, $exists);
@@ -101,9 +99,9 @@ class Memory extends AbstractHandler implements CacheInterface
     /**
      * Create a cache entry
      *
-     * @param   null     $key
-     * @param   null     $value
-     * @param   integer  $ttl
+     * @param   null    $key
+     * @param   null    $value
+     * @param   integer $ttl (number of seconds)
      *
      * @return  $this
      * @since   1.0
@@ -119,14 +117,14 @@ class Memory extends AbstractHandler implements CacheInterface
             $key = md5($value);
         }
 
-        if ((int) $ttl == 0) {
-            $ttl = (int) $this->cache_time;
+        if ((int)$ttl == 0) {
+            $ttl = (int)$this->cache_time;
         }
 
         try {
 
-            $entry = new \stdClass();
-            $entry->value = $value;
+            $entry          = new \stdClass();
+            $entry->value   = $value;
             $entry->expires = $ttl;
 
             $this->cache_container[$key] = $entry;

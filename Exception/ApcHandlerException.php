@@ -8,13 +8,11 @@
  */
 namespace Molajo\Cache\Exception;
 
-defined('MOLAJO') or die;
-
 use Exception;
 use Molajo\Cache\Api\ExceptionInterface;
 
 /**
- * Apc Handler Exception 
+ * Apc Handler Exception
  *
  * @package   Molajo
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License

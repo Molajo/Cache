@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Api;
 
-defined('MOLAJO') or die;
-
 use Molajo\Cache\Exception\CacheException;
 
 /**
@@ -42,6 +40,7 @@ interface CacheItemInterface
      * True or false value as to whether or not the item exists in current cache
      *
      * @return boolean
+     * @since   1.0
      */
     public function isHit();
 

@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Handler;
 
-defined('MOLAJO') or die;
-
 use Molajo\Cache\CacheItem;
 use Molajo\Cache\Api\CacheInterface;
 use Molajo\Cache\Exception\AbstractHandlerException;
@@ -46,18 +44,10 @@ abstract class AbstractHandler implements CacheInterface
      * @var    Integer
      * @since  1.0
      */
-    protected $cache_time = 1440;
+    protected $cache_time = 86400;
 
     /**
-     * Cache Prefix
-     *
-     * @var    String
-     * @since  1.0
-     */
-    protected $cache_prefix = 'molajo_';
-
-    /**
-     * constructor
+     * Constructor
      *
      * @param  string $cache_handler
      *
@@ -71,7 +61,7 @@ abstract class AbstractHandler implements CacheInterface
     /**
      * Connect to Cache
      *
-     * @param   array  $options
+     * @param   array $options
      *
      * @return  $this
      * @since   1.0
@@ -79,19 +69,14 @@ abstract class AbstractHandler implements CacheInterface
      */
     public function connect($options = array())
     {
-        $this->cache_service = 1;
+        $this->cache_service = false;
         if (isset($options['cache_service'])) {
-            $this->cache_service = $options['cache_service'];
+            $this->cache_service = (boolean)$options['cache_service'];
         }
 
-        $this->cache_time = 1440;
+        $this->cache_time = 86400;
         if (isset($options['cache_time'])) {
             $this->cache_time = $options['cache_time'];
-        }
-
-        $this->cache_prefix = 'molajo_';
-        if (isset($options['cache_prefix'])) {
-            $this->cache_prefix = $options['cache_prefix'];
         }
 
         return $this;
@@ -100,7 +85,7 @@ abstract class AbstractHandler implements CacheInterface
     /**
      * Return cached value
      *
-     * @param   string  $key
+     * @param   string $key
      *
      * @return  CacheItem
      * @since   1.0
@@ -114,9 +99,9 @@ abstract class AbstractHandler implements CacheInterface
     /**
      * Create a cache entry
      *
-     * @param   string   $key
-     * @param   mixed    $value
-     * @param   integer  $ttl
+     * @param   string  $key
+     * @param   mixed   $value
+     * @param   integer $ttl (number of seconds)
      *
      * @return  $this
      * @since   1.0
@@ -127,10 +112,10 @@ abstract class AbstractHandler implements CacheInterface
         return $this;
     }
 
-/**
+    /**
      * Remove cache for specified $key value
      *
-     * @param   string  $key
+     * @param   string $key
      *
      * @return  $this
      * @since   1.0
@@ -176,8 +161,8 @@ abstract class AbstractHandler implements CacheInterface
     /**
      * Create a set of cache entries
      *
-     * @param   array         $items
-     * @param   null|integer  $ttl
+     * @param   array        $items
+     * @param   null|integer $ttl
      *
      * @return  $this
      * @since   1.0
@@ -197,7 +182,7 @@ abstract class AbstractHandler implements CacheInterface
     /**
      * Remove a set of cache entries
      *
-     * @param   array  $keys
+     * @param   array $keys
      *
      * @return  $this
      * @since   1.0

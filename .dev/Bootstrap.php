@@ -6,14 +6,6 @@
  * @copyright 2013 Amy Stephen. All rights reserved.
  * @license   MIT
  */
-define('MOLAJO', 'This is a Molajo Distribution');
-
-if (substr($_SERVER['DOCUMENT_ROOT'], - 1) == '/') {
-    define('ROOT_FOLDER', $_SERVER['DOCUMENT_ROOT']);
-} else {
-    define('ROOT_FOLDER', $_SERVER['DOCUMENT_ROOT'] . '/');
-}
-
 $base = substr(__DIR__, 0, strlen(__DIR__) - 5);
 
 define('BASE_FOLDER', $base);
@@ -21,11 +13,10 @@ define('BASE_FOLDER', $base);
 $classMap = array(
     'Molajo\\Cache\\Adapter'                              => BASE_FOLDER . '/Adapter.php',
     'Molajo\\Cache\\CacheItem'                            => BASE_FOLDER . '/CacheItem.php',
-    'Molajo\\Cache\\Connection'                           => BASE_FOLDER . '/Connection.php',
     'Molajo\\Cache\\Exception\\AbstractHandlerException'  => BASE_FOLDER . '/Exception/AbstractHandlerException.php',
     'Molajo\\Cache\\Exception\\AdapterException'          => BASE_FOLDER . '/Exception/AdapterException.php',
+    'Molajo\\Cache\\Exception\\ApcHandlerException'       => BASE_FOLDER . '/Exception/ApcHandlerException.php',
     'Molajo\\Cache\\Exception\\CacheException'            => BASE_FOLDER . '/Exception/CacheException.php',
-    'Molajo\\Cache\\Exception\\ConnectionException'       => BASE_FOLDER . '/Exception/ConnectionException.php',
     'Molajo\\Cache\\Exception\\DatabaseHandlerException'  => BASE_FOLDER . '/Exception/DatabaseHandlerException.php',
     'Molajo\\Cache\\Exception\\DummyHandlerException'     => BASE_FOLDER . '/Exception/DummyHandlerException.php',
     'Molajo\\Cache\\Exception\\FileHandlerException'      => BASE_FOLDER . '/Exception/FileHandlerException.php',

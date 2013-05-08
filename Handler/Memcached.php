@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Handler;
 
-defined('MOLAJO') or die;
-
 use Exception;
 use Memcached as phpMemcached;
 use Molajo\Cache\Exception\MemcachedHandlerException;
@@ -35,7 +33,7 @@ class Memcached extends AbstractHandler implements CacheInterface
     protected $memcached;
 
     /**
-     * constructor
+     * Constructor
      *
      * @param  string $cache_handler
      *
@@ -43,7 +41,7 @@ class Memcached extends AbstractHandler implements CacheInterface
      */
     public function __construct($cache_handler = 'Memcached')
     {
-        $this->cache_handler = ucfirst(strtolower($cache_handler));
+        parent::__construct($cache_handler);
     }
 
     /**
@@ -100,7 +98,7 @@ class Memcached extends AbstractHandler implements CacheInterface
     /**
      * Return cached value
      *
-     * @param   string  $key
+     * @param   string $key
      *
      * @return  null|mixed cached value
      * @since   1.0
@@ -142,9 +140,9 @@ class Memcached extends AbstractHandler implements CacheInterface
     /**
      * Create a cache entry
      *
-     * @param   null     $key
-     * @param   null     $value
-     * @param   integer  $ttl
+     * @param   null    $key
+     * @param   null    $value
+     * @param   integer $ttl (number of seconds)
      *
      * @return  $this
      * @since   1.0
@@ -160,11 +158,11 @@ class Memcached extends AbstractHandler implements CacheInterface
             $key = md5($value);
         }
 
-        if ((int) $ttl == 0) {
-            $ttl = (int) $this->cache_time;
+        if ((int)$ttl == 0) {
+            $ttl = (int)$this->cache_time;
         }
 
-        $results = $this->memcached->set($key, $value, (int) $ttl);
+        $results = $this->memcached->set($key, $value, (int)$ttl);
 
         if (phpMemcached::RES_SUCCESS == $results) {
         } else {

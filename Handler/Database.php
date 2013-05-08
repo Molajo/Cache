@@ -8,7 +8,7 @@
  */
 namespace Molajo\Cache\Handler;
 
-defined('MOLAJO') or die;
+
 
 use Exception;
 use Molajo\Cache\CacheItem;
@@ -73,15 +73,15 @@ class Database extends AbstractHandler implements CacheInterface
     protected $sql = "'";
 
     /**
-     * constructor
+     * Constructor
      *
-     * @param   string  $cache_handler
+     * @param   string $cache_handler
      *
      * @since   1.0
      */
     public function __construct($cache_handler = 'Database')
     {
-        $this->cache_handler = ucfirst(strtolower($cache_handler));
+        parent::__construct($cache_handler);
     }
 
     /**
@@ -97,7 +97,7 @@ class Database extends AbstractHandler implements CacheInterface
     {
         parent::connect($options);
 
-        $this->cache_time = 1440;
+        $this->cache_time = 86400;
         if (isset($options['cache_time'])) {
             $this->cache_time = $options['cache_time'];
         }
@@ -128,7 +128,7 @@ class Database extends AbstractHandler implements CacheInterface
     /**
      * Return cached value
      *
-     * @param   string  $key
+     * @param   string $key
      *
      * @return  bool|CacheItem
      * @since   1.0
@@ -174,9 +174,9 @@ class Database extends AbstractHandler implements CacheInterface
     /**
      * Create a cache entry
      *
-     * @param   null     $key
-     * @param   null     $value
-     * @param   integer  $ttl
+     * @param   null    $key
+     * @param   null    $value
+     * @param   integer $ttl (number of seconds)
      *
      * @return  $this
      * @since   1.0
@@ -289,55 +289,5 @@ class Database extends AbstractHandler implements CacheInterface
         $this->setQuery($sql)->execute();
 
         return $this;
-    }
-
-    /**
-     * Set the Database Query
-     *
-     * @return  $this
-     * @since   1.0
-     * @throws  DatabaseHandlerException
-     */
-    public function setQuery($sql)
-    {
-        $this->sql = $sql;
-
-        return $this;
-    }
-
-    /**
-     * Quote with Database Character
-     *
-     * @return  string
-     * @since   1.0
-     * @throws  DatabaseHandlerException
-     */
-    public function quote($value)
-    {
-        return $this->database_quote . $value . $this->database_quote;
-    }
-
-    /**
-     * Quote Name with Database Character
-     *
-     * @return  string
-     * @since   1.0
-     * @throws  DatabaseHandlerException
-     */
-    public function quoteName($value)
-    {
-        return $this->database_namequote . $value . $this->database_namequote;
-    }
-
-    /**
-     * Quote Value with Database Quote Character
-     *
-     * @return  mixed
-     * @since   1.0
-     * @throws  DatabaseHandlerException
-     */
-    public function execute()
-    {
-        return $this->database_connection->execute($this->sql);
     }
 }

@@ -8,7 +8,7 @@
  */
 namespace Molajo\Cache\Api;
 
-defined('MOLAJO') or die;
+
 
 use Molajo\Cache\Exception\CacheException;
 
@@ -36,9 +36,9 @@ interface CacheInterface
     /**
      * Persist data in cache
      *
-     * @param   string   $key
-     * @param   mixed    $value
-     * @param   integer  $ttl (seconds)
+     * @param   string  $key
+     * @param   mixed   $value
+     * @param   integer $ttl (number of seconds)
      *
      * @return  bool
      * @since   1.0
@@ -78,8 +78,8 @@ interface CacheInterface
     /**
      * Create a set of cache entries
      *
-     * @param   array         $items
-     * @param   null|integer  $ttl
+     * @param   array        $items
+     * @param   null|integer $ttl
      *
      * @return  $this
      * @since   1.0
@@ -89,7 +89,7 @@ interface CacheInterface
     /**
      * Remove a set of cache entries
      *
-     * @param   array  $keys
+     * @param   array $keys
      *
      * @return  $this
      * @since   1.0
