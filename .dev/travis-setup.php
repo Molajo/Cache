@@ -31,8 +31,8 @@ if (isset($argv[1]) && 'APC' === strtoupper($argv[1])) {
     $installer->install('xcache');
 }
 
-$installer->install('memcache');
-$installer->install('memcached');
+//$installer->install('memcache');
+//$installer->install('memcached');
 
 class PhpExtensions
 {
