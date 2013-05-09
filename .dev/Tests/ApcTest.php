@@ -240,6 +240,100 @@ class ApcTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(2, count($items));
     }
+
+
+    /**
+     * Create a set of cache entries
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    public function testSetMultiple()
+    {
+        $items = array();
+
+        $value = 'dog';
+
+        $items['stuff1'] = md5($value);
+        $items['stuff2'] = md5($value);
+        $items['stuff3'] = md5($value);
+        $items['stuff4'] = md5($value);
+        $items['stuff5'] = md5($value);
+        $items['stuff6'] = md5($value);
+
+        $this->adapter->setMultiple($items);
+
+        $value = 'stuff5';
+        $key   = md5($value);
+
+        $results = $this->adapter->get($key);
+
+        $this->assertEquals($value, $results->getValue());
+    }
+
+    /**
+     * Remove a set of cache entries
+     *
+     * @param   array $keys
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    public function testRemoveMultiple()
+    {
+        $keys = array();
+
+        $value = 'Stuff1';
+        $key   = md5($value);
+        $this->adapter->set($key, $value, $ttl = 0);
+        $keys[] = $key;
+
+        $value = 'Stuff2';
+        $key   = md5($value);
+        $this->adapter->set($key, $value, $ttl = 0);
+
+        $value = 'Stuff3';
+        $key   = md5($value);
+        $this->adapter->set($key, $value, $ttl = 0);
+
+        $value = 'Stuff4';
+        $key   = md5($value);
+        $this->adapter->set($key, $value, $ttl = 0);
+
+        $value = 'Stuff5';
+        $key   = md5($value);
+        $this->adapter->set($key, $value, $ttl = 0);
+
+        $value = 'Stuff6';
+        $key   = md5($value);
+        $this->adapter->set($key, $value, $ttl = 0);
+
+        $value = 'Stuff7';
+        $key   = md5($value);
+        $this->adapter->set($key, $value, $ttl = 0);
+
+        $value = 'Stuff8';
+        $key   = md5($value);
+        $this->adapter->set($key, $value, $ttl = 0);
+
+        $value = 'Stuff9';
+        $key   = md5($value);
+        $this->adapter->set($key, $value, $ttl = 0);
+
+        $value = 'Stuff10';
+        $key   = md5($value);
+        $this->adapter->set($key, $value, $ttl = 0);
+        $keys[] = $key;
+
+        $this->adapter->removeMultiple($keys);
+
+        $count = 0;
+        foreach ($keys as $key) {
+            $results = $this->adapter->get($key);
+            $this->assertFalse($results->isHit());
+        }
+    }
+
     /**
      * Tears Down
      *
