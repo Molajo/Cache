@@ -66,7 +66,7 @@ class ApcTest extends \PHPUnit_Framework_TestCase
      */
     public function testConnect()
     {
-        $this->assertTrue(file_exists());
+        $this->assertTrue(is_object($this->adapter));
 
         return $this;
     }
