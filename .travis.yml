@@ -8,7 +8,7 @@ notifications:
   email: amystephen@gmail.com
 
 
-before_script: php ./bin/travis-setup.php apc
+before_script: php .dev/travis-setup.php apc
 
 script:
  phpunit  -c .dev/phpunit.xml
