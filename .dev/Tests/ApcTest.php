@@ -235,12 +235,9 @@ class ApcTest extends \PHPUnit_Framework_TestCase
         $key   = md5($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
-        echo '<pre>';
-        var_dump($keys);
 
         $items = $this->adapter->getMultiple($keys);
-echo '<pre>';
-var_dump($items);
+
         $this->assertEquals(2, count($items));
     }
 
@@ -286,44 +283,44 @@ var_dump($items);
     {
         $keys = array();
 
-        $value = 'Stuff1';
+        $value = 'MoreStuff1';
         $key   = md5($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
-        $value = 'Stuff2';
+        $value = 'MoreStuff2';
         $key   = md5($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
-        $value = 'Stuff3';
+        $value = 'MoreStuff3';
         $key   = md5($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
-        $value = 'Stuff4';
+        $value = 'MoreStuff4';
         $key   = md5($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
-        $value = 'Stuff5';
+        $value = 'MoreStuff5';
         $key   = md5($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
-        $value = 'Stuff6';
+        $value = 'MoreStuff6';
         $key   = md5($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
-        $value = 'Stuff7';
+        $value = 'MoreStuff7';
         $key   = md5($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
-        $value = 'Stuff8';
+        $value = 'MoreStuff8';
         $key   = md5($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
-        $value = 'Stuff9';
+        $value = 'MoreStuff9';
         $key   = md5($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
-        $value = 'Stuff10';
+        $value = 'MoreStuff10';
         $key   = md5($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
