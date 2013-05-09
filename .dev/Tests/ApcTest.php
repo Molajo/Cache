@@ -235,9 +235,12 @@ class ApcTest extends \PHPUnit_Framework_TestCase
         $key   = md5($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
+        echo '<pre>';
+        var_dump($keys);
 
         $items = $this->adapter->getMultiple($keys);
-
+echo '<pre>';
+var_dump($items);
         $this->assertEquals(2, count($items));
     }
 
@@ -268,7 +271,7 @@ class ApcTest extends \PHPUnit_Framework_TestCase
 
         $results = $this->adapter->get($key);
 
-        $this->assertEquals('dog', $results->getValue());
+        $this->assertEquals($value, $results->getValue());
     }
 
     /**
