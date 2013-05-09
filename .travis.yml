@@ -1,9 +1,8 @@
 language: php
 
 php:
-  - 5.3.3
+  - 5.3
   - 5.4
-  - 5.5
 
 notifications:
   irc: "irc.freenode.org#molajo"
@@ -11,6 +10,7 @@ notifications:
     - amystephen@gmail.com
 
 before_script:
-  - php .dev/SetupTravisCI.php
+  - php .dev/PhpExtensions.php
+  
 script:
  - phpunit  -c .dev/phpunit.xml
