@@ -7,11 +7,13 @@ notifications:
   irc: "irc.freenode.org#molajo"
   email: amystephen@gmail.com
 
-services:
-  - memcached
 
 before_script:
-  if [[ "$TRAVIS_PHP_VERSION" == "5.3" ]]; then installPhpModule -y apc; fi
+  - installPhpModule redis
+  - installPhpModule -y memcache
+  - installPhpModule redis
+  - if [[ "$TRAVIS_PHP_VERSION" == "5.3" ]]; then installPhpModule -y apc; fi
 
 script:
+ - phpLint all
  - phpunit  -c .dev/phpunit.xml
