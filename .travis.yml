@@ -9,10 +9,9 @@ notifications:
 
 
 before_script:
-  - installPhpModule redis
-  - installPhpModule -y memcache
-  - installPhpModule redis
-  - if [[ "$TRAVIS_PHP_VERSION" == "5.3" ]]; then installPhpModule -y apc; fi
+ - pecl install pear/PHP_CodeSniffer
+ - phpenv rehash
+ - phpenv config-add .dev/myconfig.ini
 
 script:
  - phpLint all
