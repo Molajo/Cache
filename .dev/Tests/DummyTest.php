@@ -8,7 +8,7 @@
  */
 namespace Molajo\Cache\Test;
 
-use Molajo\Cache\Handler\Apc as ApcCache;
+use Molajo\Cache\Handler\Dummy as DummyCache;
 use Molajo\Cache\Adapter;
 
 /**
@@ -19,7 +19,7 @@ use Molajo\Cache\Adapter;
  * @copyright 2013 Amy Stephen. All rights reserved.
  * @since     1.0
  */
-class ApcTest extends \PHPUnit_Framework_TestCase
+class DummyTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Adapter
@@ -45,7 +45,7 @@ class ApcTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $adapter_handler = new ApcCache();
+        $adapter_handler = new DummyCache();
 
         $this->options                  = array();
         $this->options['cache_service'] = true;
@@ -74,8 +74,8 @@ class ApcTest extends \PHPUnit_Framework_TestCase
     /**
      * Create a cache entry
      *
-     * @covers  Molajo\Cache\Handler\Apc::get
-     * @covers  Molajo\Cache\Handler\Apc::set
+     * @covers  Molajo\Cache\Handler\Dummy::get
+     * @covers  Molajo\Cache\Handler\Dummy::set
      *
      * @return  $this
      * @since   1.0
@@ -92,7 +92,7 @@ class ApcTest extends \PHPUnit_Framework_TestCase
 
         $results = $this->adapter->get($key);
 
-        $this->assertEquals($value, $results->getValue());
+        $this->assertTrue(is_object($results));
     }
 
     /**
@@ -238,7 +238,7 @@ class ApcTest extends \PHPUnit_Framework_TestCase
 
         $items = $this->adapter->getMultiple($keys);
 
-        $this->assertEquals(2, count($items));
+        $this->assertTrue(is_object($items));
     }
 
 
@@ -263,12 +263,12 @@ class ApcTest extends \PHPUnit_Framework_TestCase
 
         $this->adapter->setMultiple($items);
 
-        $key   = 'stuff3';
-        $value = md5('dog');
+        $value = 'dog';
+        $key   = md5($value);
 
         $results = $this->adapter->get($key);
 
-        $this->assertEquals('dog', $results->getValue());
+        $this->assertTrue(is_object($results));
     }
 
     /**
