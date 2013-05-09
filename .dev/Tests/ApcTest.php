@@ -66,7 +66,7 @@ class ApcTest extends \PHPUnit_Framework_TestCase
      */
     public function testConnect()
     {
-        $this->assertTrue(file_exists($this->options['cache_folder']));
+        $this->assertTrue(file_exists());
 
         return $this;
     }
@@ -109,7 +109,9 @@ class ApcTest extends \PHPUnit_Framework_TestCase
 
         $this->adapter->set($key, $value, $ttl = 0);
 
-        $this->assertTrue(file_exists($this->options['cache_folder'] . '/' . $key));
+        $result = $this->adapter->get($key);
+
+        $this->assertTrue($value, $result->getValue());
     }
 
     /**
@@ -125,8 +127,10 @@ class ApcTest extends \PHPUnit_Framework_TestCase
         $value = 'Stuff';
         $key   = md5($value);
         $this->adapter->remove($key);
+        $result = $this->adapter->get($key);
 
-        $this->assertFalse(file_exists($this->options['cache_folder'] . '/' . $key));
+        $this->assertFalse($result->isHit());
+
     }
 
     /**
@@ -192,7 +196,8 @@ class ApcTest extends \PHPUnit_Framework_TestCase
         $this->adapter->clear();
 
         foreach ($keys as $key) {
-            $this->assertFalse(file_exists($this->options['cache_folder'] . '/' . $key));
+            $result = $this->adapter->get($key);
+            $this->assertFalse($result->isHit());
         }
     }
 
@@ -256,105 +261,6 @@ class ApcTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Create a set of cache entries
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    public function testSetMultiple()
-    {
-        $items = array();
-
-        $value = 'dog';
-
-        $items['stuff1'] = md5($value);
-        $items['stuff2'] = md5($value);
-        $items['stuff3'] = md5($value);
-        $items['stuff4'] = md5($value);
-        $items['stuff5'] = md5($value);
-        $items['stuff6'] = md5($value);
-
-        $this->adapter->setMultiple($items);
-
-        $count = 0;
-        foreach (new \DirectoryIterator($this->options['cache_folder']) as $file) {
-            if ($file->isDot()) {
-            } else {
-                $count ++;
-            }
-        }
-
-        $this->assertEquals(6, $count);
-    }
-
-    /**
-     * Remove a set of cache entries
-     *
-     * @param   array $keys
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    public function testRemoveMultiple()
-    {
-        $keys = array();
-
-        $value = 'Stuff1';
-        $key   = md5($value);
-        $this->adapter->set($key, $value, $ttl = 0);
-        $keys[] = $key;
-
-        $value = 'Stuff2';
-        $key   = md5($value);
-        $this->adapter->set($key, $value, $ttl = 0);
-
-        $value = 'Stuff3';
-        $key   = md5($value);
-        $this->adapter->set($key, $value, $ttl = 0);
-
-        $value = 'Stuff4';
-        $key   = md5($value);
-        $this->adapter->set($key, $value, $ttl = 0);
-
-        $value = 'Stuff5';
-        $key   = md5($value);
-        $this->adapter->set($key, $value, $ttl = 0);
-
-        $value = 'Stuff6';
-        $key   = md5($value);
-        $this->adapter->set($key, $value, $ttl = 0);
-
-        $value = 'Stuff7';
-        $key   = md5($value);
-        $this->adapter->set($key, $value, $ttl = 0);
-
-        $value = 'Stuff8';
-        $key   = md5($value);
-        $this->adapter->set($key, $value, $ttl = 0);
-
-        $value = 'Stuff9';
-        $key   = md5($value);
-        $this->adapter->set($key, $value, $ttl = 0);
-
-        $value = 'Stuff10';
-        $key   = md5($value);
-        $this->adapter->set($key, $value, $ttl = 0);
-        $keys[] = $key;
-
-        $this->adapter->removeMultiple($keys);
-
-        $count = 0;
-        foreach (new \DirectoryIterator($this->options['cache_folder']) as $file) {
-            if ($file->isDot()) {
-            } else {
-                $count ++;
-            }
-        }
-
-        $this->assertEquals(8, $count);
-    }
-
-    /**
      * Tears Down
      *
      * @return $this
@@ -362,12 +268,6 @@ class ApcTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        foreach (new \DirectoryIterator($this->options['cache_folder']) as $file) {
-            if ($file->isDot()) {
-            } else {
-                unlink($file->getPathname());
-            }
-        }
-        rmdir($this->options['cache_folder']);
+
     }
 }
