@@ -48,9 +48,8 @@ class ApcTest extends \PHPUnit_Framework_TestCase
         $adapter_handler = new ApcCache();
 
         $this->options                  = array();
-        $this->options['cache_service'] = 1;
+        $this->options['cache_service'] = true;
         $this->options['cache_time']    = 600; //ten minutes
-        $this->options['cache_handler'] = 'File';
 
         $this->adapter = new Adapter($adapter_handler, $this->options);
 
