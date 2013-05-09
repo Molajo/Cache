@@ -17,7 +17,7 @@
 $installer = new PhpExtensions();
 
 $installer->install('apc');
-//$installer->install('memcache');
+$installer->install('memcache');
 $installer->install('memcached');
 
 class PhpExtensions
