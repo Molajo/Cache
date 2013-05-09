@@ -11,8 +11,7 @@ services:
   - memcached
 
 before_script:
-  - .dev/InstallMemcached.sh
-  - php .dev/PhpExtensions.php
+  if [[ "$TRAVIS_PHP_VERSION" == "5.3" ]]; then installPhpModule -y apc; fi
 
 script:
  - phpunit  -c .dev/phpunit.xml
