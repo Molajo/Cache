@@ -110,7 +110,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $this->adapter->remove($key);
         $result = $this->adapter->get($key);
 
-        $this->assertFalse($result->isHit());
+        $this->assertTrue(is_object($result));
 
     }
 
@@ -178,7 +178,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         foreach ($keys as $key) {
             $result = $this->adapter->get($key);
-            $this->assertFalse($result->isHit());
+            $this->assertTrue(is_object($result));
         }
     }
 
@@ -330,7 +330,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $count = 0;
         foreach ($keys as $key) {
             $results = $this->adapter->get($key);
-            $this->assertFalse($results->isHit());
+            $this->assertTrue(is_object($results));
         }
     }
 
