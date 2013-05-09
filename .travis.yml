@@ -9,10 +9,8 @@ notifications:
 
 
 before_script:
- - pecl install pear/PHP_CodeSniffer
- - phpenv rehash
- - phpenv config-add .dev/myconfig.ini
+ phpenv config-add .dev/myconfig.ini
 
 script:
- - phpLint all
- - phpunit  -c .dev/phpunit.xml
+ phpLint all
+ phpunit  -c .dev/phpunit.xml
