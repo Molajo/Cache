@@ -49,13 +49,6 @@ class Apc extends AbstractHandler implements CacheInterface
         if (extension_loaded('apc')
             && ini_get('apc.enabled')) {
         } else {
-            ini_set('apc.enabled', 1);
-        }
-
-        if (extension_loaded('apc')
-            && ini_get('apc.enabled')) {
-        } else {
-            ini_set('display_errors', 1);
             throw new ApcHandlerException ('Cache APC: APC is not enabled');
         }
 
