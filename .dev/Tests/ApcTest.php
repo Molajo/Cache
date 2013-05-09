@@ -8,7 +8,7 @@
  */
 namespace Molajo\Cache\Test;
 
-use Molajo\Cache\Handler\File as FileCache;
+use Molajo\Cache\Handler\Apc as ApcCache;
 use Molajo\Cache\Adapter;
 
 /**
@@ -19,7 +19,7 @@ use Molajo\Cache\Adapter;
  * @copyright 2013 Amy Stephen. All rights reserved.
  * @since     1.0
  */
-class CacheTest extends \PHPUnit_Framework_TestCase
+class ApcTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Adapter
@@ -45,11 +45,10 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $adapter_handler = new FileCache();
+        $adapter_handler = new ApcCache();
 
         $this->options                  = array();
         $this->options['cache_service'] = 1;
-        $this->options['cache_folder']  = BASE_FOLDER . '/.dev/Cache';
         $this->options['cache_time']    = 600; //ten minutes
         $this->options['cache_handler'] = 'File';
 

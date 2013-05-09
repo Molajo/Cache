@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Test;
 
-
-
 /**
  * Cache Test
  *
@@ -26,7 +24,7 @@ class CacheFile2Test extends \PHPUnit_Framework_TestCase
     protected $cache;
 
     /**
-     * @var Cache Object
+     * @var Cache Folder
      */
     protected $cache_folder;
 
