@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Handler;
 
-
-
 use Molajo\Cache\CacheItem;
 use Molajo\Cache\Api\CacheInterface;
 use Molajo\Cache\Exception\DummyHandlerException;
