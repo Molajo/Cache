@@ -238,7 +238,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         $items = $this->adapter->getMultiple($keys);
 
-        $this->assertTrue(is_object($items));
+        $this->assertFalse(is_object($items));
     }
 
 

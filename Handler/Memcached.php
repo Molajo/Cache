@@ -131,10 +131,10 @@ class Memcached extends AbstractHandler implements CacheInterface
 
         } catch (Exception $e) {
             throw new MemcachedHandlerException
-            ('Cache: Get Failed for Memcached ' . $this->cache_folder . '/' . $key . $e->getMessage());
+            ('Cache: Get Failed for Memcached ' . $key . $e->getMessage());
         }
 
-        return new CacheItem($key, $value, $exists);
+        return new CacheItem($key, $value, (bool) $value);
     }
 
     /**
@@ -204,7 +204,7 @@ class Memcached extends AbstractHandler implements CacheInterface
 
         } catch (Exception $e) {
             throw new MemcachedHandlerException
-            ('Cache: Get Failed for Memcached ' . $this->cache_folder . '/' . $key . $e->getMessage());
+            ('Cache: Get Failed for Memcached ' . $key . $e->getMessage());
         }
 
         return $this;
