@@ -3,6 +3,10 @@ language: php
 php:
   - 5.3.3
 
+services:
+  - Redis
+  - memcached
+
 notifications:
   irc: "irc.freenode.org#molajo"
   email: amystephen@gmail.com

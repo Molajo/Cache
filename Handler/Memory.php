@@ -122,7 +122,6 @@ class Memory extends AbstractHandler implements CacheInterface
         }
 
         try {
-
             $entry          = new \stdClass();
             $entry->value   = $value;
             $entry->expires = $ttl;
