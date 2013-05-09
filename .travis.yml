@@ -8,8 +8,7 @@ notifications:
   email: amystephen@gmail.com
 
 
-before_script:
- phpenv config-add .dev/myconfig.ini
+before_script: php ./bin/travis-setup.php apc
 
 script:
  phpunit  -c .dev/phpunit.xml

@@ -1,24 +1,38 @@
 <?php
-
 /*
- * This file is part of the Symfony package.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the LGPL. For more information, see
+ * <http://www.doctrine-project.org>.
  */
 
 /**
- * Install PHP extensions for Travis CI.
+ * Install PHP extensions required for testing by Travis CI.
  *
  * @author Victor Berchet <victor@suumit.com>
+ * @since 2.2
  */
 $installer = new PhpExtensions();
 
-$installer->install('apc');
-//$installer->install('memcache');
-//$installer->install('memcached');
+if (isset($argv[1]) && 'APC' === strtoupper($argv[1])) {
+    $installer->install('apc');
+} else {
+    $installer->install('xcache');
+}
+
+$installer->install('memcache');
+$installer->install('memcached');
 
 class PhpExtensions
 {
@@ -56,9 +70,7 @@ class PhpExtensions
                 'ini'         => array(
                     'extension=apc.so',
                     'apc.enabled=1',
-                    'apc.enable_cli=1',
-                    // disable opcode cache
-                    'apc.max_file_size=1'
+                    'apc.enable_cli=1'
                 ),
             ),
             'xcache' => array(
@@ -70,10 +82,9 @@ class PhpExtensions
                 'cfg'         => array('--enable-xcache'),
                 'ini'         => array(
                     'extension=xcache.so',
+                    'xcache.cacher=false',
                     'xcache.admin.enable_auth=0',
                     'xcache.var_size=1M',
-                    // disable opcode cache
-                    'xcache.cacher=false',
                 ),
             ),
         );
@@ -83,6 +94,7 @@ class PhpExtensions
     {
         if (array_key_exists($name, $this->extensions)) {
             $extension = $this->extensions[$name];
+
 
             echo "== extension: $name ==\n";
 
@@ -121,7 +133,7 @@ class PhpExtensions
         $ret = 0;
         system($cmd, $ret);
         if (0 !== $ret) {
-            printf("=> Command '%s' failed !\n", $cmd);
+            printf("=> Command '%s' failed !", $cmd);
 
             exit($ret);
         }
