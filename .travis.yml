@@ -11,7 +11,7 @@ services:
   - memcached
 
 before_script:
-  - ./tests/travis/memcached-setup.sh
+  - .dev/memcached-setup.sh
   - php .dev/PhpExtensions.php
 
 script:
