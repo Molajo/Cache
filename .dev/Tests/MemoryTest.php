@@ -287,7 +287,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
         $this->adapter->setMultiple($items);
 
         $count = 0;
-        foreach ($items as $key) {
+        foreach ($items as $key => $value) {
             $results = $this->adapter->get($key);
             $this->assertEquals(md5('dog'), $results->getValue());
         }
