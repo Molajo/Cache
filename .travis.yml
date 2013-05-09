@@ -1,6 +1,6 @@
 language: php
 
-before_script: phpenv config-add myconfig.ini
+before_script: phpenv config-add .dev/myconfig.ini
 
 php:
   - 5.3.3
