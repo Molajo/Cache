@@ -12,5 +12,4 @@ before_script:
  phpenv config-add .dev/myconfig.ini
 
 script:
- phpLint all
  phpunit  -c .dev/phpunit.xml
