@@ -109,9 +109,12 @@ class ApcTest extends \PHPUnit_Framework_TestCase
 
         $this->adapter->set($key, $value, $ttl = 0);
 
-        $result = $this->adapter->get($key);
+        $value = 'Stuff';
+        $key   = md5($value);
 
-        $this->assertTrue($value, $result->getValue());
+        $results = $this->adapter->get($key);
+
+        $this->assertEquals($value, $results->getValue());
     }
 
     /**
