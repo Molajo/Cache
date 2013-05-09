@@ -2,7 +2,6 @@ language: php
 
 before_script: phpenv config-add myconfig.ini
 
-pear install pear/PHP_CodeSniffer
 php:
   - 5.3.3
   - 5.3
