@@ -5,10 +5,13 @@ php:
 
 notifications:
   irc: "irc.freenode.org#molajo"
-  email:
-    - amystephen@gmail.com
+  email: amystephen@gmail.com
+
+services:
+  - memcached
 
 before_script:
+  - ./tests/travis/memcached-setup.sh
   - php .dev/PhpExtensions.php
 
 script:
