@@ -134,7 +134,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
 
         $results = $this->adapter->get($key);
 
-        $this->assertFalse($value, $results->getValue());
+        $this->assertFalse($results->isHit());
 
     }
 
@@ -202,7 +202,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
 
         foreach ($keys as $key) {
             $results = $this->adapter->get($key);
-            $this->assertFalse($value, $results->getValue());
+            $this->assertFalse($results->isHit());
         }
     }
 
@@ -289,7 +289,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
         $count = 0;
         foreach ($items as $key) {
             $results = $this->adapter->get($key);
-            $this->assertFalse(md5('dog'), $results->getValue());
+            $this->assertEquals(md5('dog'), $results->getValue());
         }
 
         $this->assertEquals(6, $count);
@@ -363,6 +363,6 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        
+
     }
 }
