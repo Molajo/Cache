@@ -114,7 +114,7 @@ class File extends AbstractHandler implements CacheInterface
     /**
      * Create a cache entry
      *
-     * @param   string       $key   md5 name uniquely identifying content
+     * @param   string       $key   serialize name uniquely identifying content
      * @param   mixed        $value Data to be serialized and then saved as cache
      * @param   null|integer $ttl
      *
@@ -130,7 +130,7 @@ class File extends AbstractHandler implements CacheInterface
         }
 
         if ($key === null) {
-            $key = md5($value);
+            $key = serialize($value);
         }
 
         if (file_exists($this->cache_folder . '/' . $key) === true) {
@@ -233,7 +233,7 @@ class File extends AbstractHandler implements CacheInterface
             }
         } catch (Exception $e) {
             throw new FileHandlerException
-            ('Cache: Remove file failed ' . $this->cache_folder . '/' . $key . $e->getMessage());
+            ('Cache: Remove cache entry failed ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
         return $this;

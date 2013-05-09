@@ -189,7 +189,7 @@ class Database extends AbstractHandler implements CacheInterface
         }
 
         if ($key === null) {
-            $key = md5($value);
+            $key = serialize($value);
         }
 
         if ((int)$ttl == 0) {

@@ -24,6 +24,15 @@ use Molajo\Cache\Exception\RedisHandlerException;
 class Redis extends AbstractHandler implements CacheInterface
 {
     /**
+     * Redis Database Connection
+     *
+     * @var    object
+     *
+     * @since  1.0
+     */
+    protected $redis;
+
+    /**
      * Constructor
      *
      * @param   string $cache_handler
@@ -47,6 +56,13 @@ class Redis extends AbstractHandler implements CacheInterface
      */
     public function connect($options = array())
     {
+        if (isset($options['redis'])) {
+            $this->redis = $options['redis'];
+        } else {
+            throw new RedisHandlerException
+            ('Cache Redis Handler: Redis Database dependency not passed into Connect');
+        }
+
         return parent::connect($options);
     }
 
@@ -66,9 +82,9 @@ class Redis extends AbstractHandler implements CacheInterface
         }
 
         try {
-            $exists = \apc_exists($key);
+            $value = $this->redis->get($key);
 
-            $value = \apc_fetch($key, $exists);
+            $exists = (boolean)$value;
 
             return new CacheItem($key, $value, $exists);
 
@@ -96,14 +112,17 @@ class Redis extends AbstractHandler implements CacheInterface
         }
 
         if ($key === null) {
-            $key = md5($value);
+            $key = serialize($value);
         }
 
         if ((int)$ttl == 0) {
             $ttl = (int)$this->cache_time;
         }
 
-        $results = apc_store($key, $value, (int)$ttl);
+        $results = $this->redis->set($key, $value);
+
+        $results = $this->redis->expire($key, $ttl);
+
         if ($results === false) {
             throw new RedisHandlerException
             ('Cache APC Handler: Set failed for Key: ' . $key);
@@ -122,11 +141,11 @@ class Redis extends AbstractHandler implements CacheInterface
      */
     public function remove($key = null)
     {
-        $results = apc_delete($key);
+        $results = $this->redis->del($key);
 
         if ($results === false) {
             throw new RedisHandlerException
-            ('Cache: Remove file failed ' . $this->cache_folder . '/' . $key . $e->getMessage());
+            ('Cache: Remove cache entry failed');
         }
 
         return $this;
@@ -140,6 +159,8 @@ class Redis extends AbstractHandler implements CacheInterface
      */
     public function clear()
     {
-        return apc_clear_cache('user');
+        $this->redis->flushdb();
+
+        return $this;
     }
 }

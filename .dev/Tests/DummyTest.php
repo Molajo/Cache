@@ -83,12 +83,12 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     public function testGet()
     {
         $value = 'Stuff';
-        $key   = md5($value);
+        $key   = serialize($value);
 
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff';
-        $key   = md5($value);
+        $key   = serialize($value);
 
         $results = $this->adapter->get($key);
 
@@ -106,7 +106,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     public function testRemove()
     {
         $value = 'Stuff';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->remove($key);
         $result = $this->adapter->get($key);
 
@@ -125,52 +125,52 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $keys = array();
 
         $value = 'Stuff1';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
         $value = 'Stuff2';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
         $value = 'Stuff3';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
         $value = 'Stuff4';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
         $value = 'Stuff5';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
         $value = 'Stuff6';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
         $value = 'Stuff7';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
         $value = 'Stuff8';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
         $value = 'Stuff9';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
         $value = 'Stuff10';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
@@ -195,44 +195,44 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $keys = array();
 
         $value = 'Stuff1';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
         $value = 'Stuff2';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff3';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff4';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff5';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff6';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff7';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff8';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff9';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff10';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
@@ -254,17 +254,17 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         $value = 'dog';
 
-        $items['stuff1'] = md5($value);
-        $items['stuff2'] = md5($value);
-        $items['stuff3'] = md5($value);
-        $items['stuff4'] = md5($value);
-        $items['stuff5'] = md5($value);
-        $items['stuff6'] = md5($value);
+        $items['stuff1'] = serialize($value);
+        $items['stuff2'] = serialize($value);
+        $items['stuff3'] = serialize($value);
+        $items['stuff4'] = serialize($value);
+        $items['stuff5'] = serialize($value);
+        $items['stuff6'] = serialize($value);
 
         $this->adapter->setMultiple($items);
 
         $value = 'dog';
-        $key   = md5($value);
+        $key   = serialize($value);
 
         $results = $this->adapter->get($key);
 
@@ -284,44 +284,44 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $keys = array();
 
         $value = 'Stuff1';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 
         $value = 'Stuff2';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff3';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff4';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff5';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff6';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff7';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff8';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff9';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
 
         $value = 'Stuff10';
-        $key   = md5($value);
+        $key   = serialize($value);
         $this->adapter->set($key, $value, $ttl = 0);
         $keys[] = $key;
 

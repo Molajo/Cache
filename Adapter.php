@@ -71,7 +71,7 @@ class Adapter implements CacheInterface
     /**
      * Return cached or parameter value
      *
-     * @param  string $key md5 name uniquely identifying content
+     * @param  string $key serialize name uniquely identifying content
      *
      * @return  bool|CacheItem cache for this key that has not been serialized
      * @since   1.0
@@ -112,7 +112,7 @@ class Adapter implements CacheInterface
     /**
      * Remove cache for specified $key value
      *
-     * @param string $key md5 name uniquely identifying content
+     * @param string $key serialize name uniquely identifying content
      *
      * @return  object CacheInterface
      * @since   1.0
