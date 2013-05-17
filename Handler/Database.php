@@ -9,7 +9,6 @@
 namespace Molajo\Cache\Handler;
 
 
-
 use Exception;
 use Molajo\Cache\CacheItem;
 use Molajo\Cache\Exception\DatabaseHandlerException;
@@ -75,13 +74,15 @@ class Database extends AbstractHandler implements CacheInterface
     /**
      * Constructor
      *
-     * @param   string $cache_handler
+     * @param   array  $options
      *
      * @since   1.0
      */
-    public function __construct($cache_handler = 'Database')
+    public function __construct($options)
     {
-        parent::__construct($cache_handler);
+        $this->cache_handler = 'Database';
+
+        $this->connect($options);
     }
 
     /**

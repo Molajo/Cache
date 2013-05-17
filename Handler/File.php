@@ -36,12 +36,15 @@ class File extends AbstractHandler implements CacheInterface
      * Constructor
      *
      * @param   string $cache_handler
+     * @param   array  $options
      *
      * @since   1.0
      */
-    public function __construct($cache_handler = 'File')
+    public function __construct($options)
     {
-        parent::__construct($cache_handler);
+        $this->cache_handler = 'File';
+
+        $this->connect($options);
     }
 
     /**

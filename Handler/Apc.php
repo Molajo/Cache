@@ -26,13 +26,15 @@ class Apc extends AbstractHandler implements CacheInterface
     /**
      * Constructor
      *
-     * @param   string $cache_handler
+     * @param   array  $options
      *
      * @since   1.0
      */
-    public function __construct($cache_handler = 'Apc')
+    public function __construct($options)
     {
-        parent::__construct($cache_handler);
+        $this->cache_handler = 'Apc';
+
+        $this->connect($options);
     }
 
     /**
@@ -46,13 +48,16 @@ class Apc extends AbstractHandler implements CacheInterface
      */
     public function connect($options = array())
     {
+        parent::connect($options);
+
         if (extension_loaded('apc')
-            && ini_get('apc.enabled')) {
+            && ini_get('apc.enabled')
+        ) {
         } else {
             throw new ApcHandlerException ('Cache APC: APC is not enabled');
         }
 
-        return parent::connect($options);
+        return $this;
     }
 
     /**
@@ -72,7 +77,7 @@ class Apc extends AbstractHandler implements CacheInterface
 
         try {
             $exists = apc_exists($key);
-            $value = apc_fetch($key);
+            $value  = apc_fetch($key);
             return new CacheItem($key, $value, $exists);
 
         } catch (Exception $e) {

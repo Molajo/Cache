@@ -45,15 +45,15 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $adapter_handler = new FileCache();
-
         $this->options                  = array();
         $this->options['cache_service'] = true;
         $this->options['cache_folder']  = BASE_FOLDER . '/.dev/Cache';
         $this->options['cache_time']    = 600; //ten minutes
         $this->options['cache_handler'] = 'File';
 
-        $this->adapter = new Adapter($adapter_handler, $this->options);
+        $adapter_handler = new FileCache($this->options);
+
+        $this->adapter = new Adapter($adapter_handler);
 
         return $this;
     }

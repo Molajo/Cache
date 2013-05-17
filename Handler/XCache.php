@@ -30,9 +30,11 @@ class XCache extends AbstractHandler implements CacheInterface
      *
      * @since  1.0
      */
-    public function __construct($cache_handler = 'XCache')
+    public function __construct($options)
     {
-        parent::__construct($cache_handler);
+        $this->cache_handler = 'XCache';
+
+        $this->connect($options);
     }
 
     /**

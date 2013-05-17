@@ -8,8 +8,6 @@
  */
 namespace Molajo\Cache\Api;
 
-
-
 use Molajo\Cache\Exception\CacheException;
 
 /**

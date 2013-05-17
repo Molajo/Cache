@@ -38,9 +38,11 @@ class Memory extends AbstractHandler implements CacheInterface
      *
      * @since  1.0
      */
-    public function __construct($cache_handler = 'Memory')
+    public function __construct($options)
     {
-        parent::__construct($cache_handler);
+        $this->cache_handler = 'Memory';
+
+        $this->connect($options);
     }
 
     /**

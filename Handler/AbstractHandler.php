@@ -49,13 +49,14 @@ abstract class AbstractHandler implements CacheInterface
     /**
      * Constructor
      *
-     * @param  string $cache_handler
+     * @param   string $cache_handler
+     * @param   array  $options
      *
-     * @since  1.0
+     * @since   1.0
      */
-    public function __construct($cache_handler = 'AbstractHandler')
+    public function __construct($options)
     {
-        $this->cache_handler = ucfirst(strtolower($cache_handler));
+        $this->connect($options);
     }
 
     /**

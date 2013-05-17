@@ -38,34 +38,9 @@ class Adapter implements CacheInterface
      *
      * @since   1.0
      */
-    public function __construct(CacheInterface $cache, $options)
+    public function __construct(CacheInterface $cache)
     {
         $this->adapterHandler = $cache;
-        $this->connect($options);
-    }
-
-    /**
-     * Connect to the Cache Adapter Handler
-     *
-     * @param   array $options
-     *
-     * @return  $this
-     * @since   1.0
-     * @throws  AdapterException
-     * @api
-     */
-    public function connect($options = array())
-    {
-        try {
-            $this->adapterHandler->connect($options);
-
-        } catch (Exception $e) {
-
-            throw new AdapterException
-            ('Cache: Caught Exception: ' . $e->getMessage());
-        }
-
-        return $this;
     }
 
     /**

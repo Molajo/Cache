@@ -39,9 +39,11 @@ class Memcached extends AbstractHandler implements CacheInterface
      *
      * @since  1.0
      */
-    public function __construct($cache_handler = 'Memcached')
+    public function __construct($options)
     {
-        parent::__construct($cache_handler);
+        $this->cache_handler = 'Memcached';
+
+        $this->connect($options);
     }
 
     /**
@@ -167,7 +169,7 @@ class Memcached extends AbstractHandler implements CacheInterface
         if (phpMemcached::RES_SUCCESS == $results) {
         } else {
             throw new MemcachedHandlerException
-            ('Cache APC Handler: Set failed for Key: ' . $key);
+            ('Cache Memcached Handler: Set failed for Key: ' . $key);
         }
 
         return $this;

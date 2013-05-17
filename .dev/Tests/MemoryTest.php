@@ -45,14 +45,13 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $adapter_handler = new MemoryCache();
-
         $this->options                  = array();
         $this->options['cache_service'] = true;
         $this->options['cache_time']    = 600; //ten minutes
-        $this->options['cache_handler'] = 'Memory';
 
-        $this->adapter = new Adapter($adapter_handler, $this->options);
+        $adapter_handler = new MemoryCache($this->options);
+
+        $this->adapter = new Adapter($adapter_handler);
 
         return $this;
     }

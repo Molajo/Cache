@@ -39,9 +39,11 @@ class Wincache extends AbstractHandler implements CacheInterface
      *
      * @since  1.0
      */
-    public function __construct($cache_handler = 'Wincache')
+    public function __construct($options)
     {
-        parent::__construct($cache_handler);
+        $this->cache_handler = 'Wincache';
+
+        $this->connect($options);
     }
 
     /**

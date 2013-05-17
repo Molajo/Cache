@@ -39,9 +39,11 @@ class Redis extends AbstractHandler implements CacheInterface
      *
      * @since   1.0
      */
-    public function __construct($cache_handler = 'Redis')
+    public function __construct($options)
     {
-        parent::__construct($cache_handler);
+        $this->cache_handler = 'Redis';
+
+        $this->connect($options);
     }
 
     /**
@@ -56,6 +58,8 @@ class Redis extends AbstractHandler implements CacheInterface
      */
     public function connect($options = array())
     {
+        parent::connect($options);
+
         if (isset($options['redis'])) {
             $this->redis = $options['redis'];
         } else {
@@ -63,7 +67,7 @@ class Redis extends AbstractHandler implements CacheInterface
             ('Cache Redis Handler: Redis Database dependency not passed into Connect');
         }
 
-        return parent::connect($options);
+        return $this;
     }
 
     /**
@@ -119,7 +123,7 @@ class Redis extends AbstractHandler implements CacheInterface
             $ttl = (int)$this->cache_time;
         }
 
-        $results = $this->redis->set($key, $value);
+        $this->redis->set($key, $value);
 
         $results = $this->redis->expire($key, $ttl);
 

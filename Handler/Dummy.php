@@ -22,16 +22,19 @@ use Molajo\Cache\Exception\DummyHandlerException;
  */
 class Dummy extends AbstractHandler implements CacheInterface
 {
+
     /**
      * Constructor
      *
-     * @param   string $cache_handler
+     * @param   array  $options
      *
      * @since   1.0
      */
-    public function __construct($cache_handler = 'Dummy')
+    public function __construct($options)
     {
-        parent::__construct($cache_handler);
+        $this->cache_handler = 'Dummy';
+
+        $this->connect($options);
     }
 
     /**
@@ -46,7 +49,9 @@ class Dummy extends AbstractHandler implements CacheInterface
      */
     public function connect($options = array())
     {
-        return parent::connect($options);
+        parent::connect($options);
+
+        return $this;
     }
 
     /**
