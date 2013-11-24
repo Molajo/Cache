@@ -22,11 +22,8 @@
         "irc": "irc://irc.freenode.org/molajo"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Molajo\\Cache": "./"
         }
     }
 }
-
-
-
