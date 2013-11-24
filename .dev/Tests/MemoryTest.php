@@ -2,9 +2,9 @@
 /**
  * Cache Test
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Test;
 
@@ -14,10 +14,10 @@ use Molajo\Cache\Adapter;
 /**
  * Cache Test
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class MemoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -134,7 +134,6 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
         $results = $this->adapter->get($key);
 
         $this->assertFalse($results->isHit());
-
     }
 
     /**
@@ -289,7 +288,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
         foreach ($items as $key => $value) {
             $results = $this->adapter->get($key);
             $this->assertEquals(serialize('dog'), $results->getValue());
-            $count++;
+            $count ++;
         }
 
         $this->assertEquals(6, $count);
@@ -363,6 +362,5 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-
     }
 }

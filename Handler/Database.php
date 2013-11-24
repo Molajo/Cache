@@ -2,25 +2,24 @@
 /**
  * Database Cache Handler
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Handler;
 
-
 use Exception;
 use Molajo\Cache\CacheItem;
-use Molajo\Cache\Exception\DatabaseHandlerException;
-use Molajo\Cache\Api\CacheInterface;
+use Exception\Cache\DatabaseHandlerException;
+use CommonApi\Cache\CacheInterface;
 
 /**
  * Database Cache
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class Database extends AbstractHandler implements CacheInterface
 {
@@ -30,55 +29,24 @@ class Database extends AbstractHandler implements CacheInterface
      * @var    object
      * @since  1.0
      */
-    protected $database_connection;
+    protected $db_adapter;
 
     /**
      * Database Table
      *
-     * Three columns:
-     *
-     * $id          integer      identity key
-     * $key         varchar(255) unique
-     * $value       text
-     * $expiration  datetime
-     *
-     * @var    string
+     * @var    object
      * @since  1.0
      */
-    protected $database_table;
-
-    /**
-     * Database Namequote
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $database_namequote = "`";
-
-    /**
-     * Database Quote
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $database_quote = "'";
-
-    /**
-     * SQL
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $sql = "'";
+    protected $database_table = 'molajo_cache';
 
     /**
      * Constructor
      *
-     * @param   array  $options
+     * @param   array $options
      *
      * @since   1.0
      */
-    public function __construct($options)
+    public function __construct(array $options = array())
     {
         $this->cache_handler = 'Database';
 
@@ -103,24 +71,9 @@ class Database extends AbstractHandler implements CacheInterface
             $this->cache_time = $options['cache_time'];
         }
 
-        $this->database_connection = null;
-        if (isset($options['database_connection'])) {
-            $this->database_connection = $options['database_connection'];
-        }
-
-        $this->database_table = null;
-        if (isset($options['database_table'])) {
-            $this->database_table = $options['database_table'];
-        }
-
-        $this->database_quote = "`";
-        if (isset($options['database_quote'])) {
-            $this->database_quote = $options['database_quote'];
-        }
-
-        $this->database_namequote = "'";
-        if (isset($options['database_namequote'])) {
-            $this->database_namequote = $options['database_namequote'];
+        $this->db_adapter = null;
+        if (isset($options['db_adapter'])) {
+            $this->db_adapter = $options['db_adapter'];
         }
 
         return $this;
@@ -165,10 +118,9 @@ class Database extends AbstractHandler implements CacheInterface
             }
 
             return new CacheItem($key, $value, $exists);
-
         } catch (Exception $e) {
             throw new DatabaseHandlerException
-            ('Cache: Get Failed for Database ' . $this->database_connection . '/' . $key . $e->getMessage());
+            ('Cache: Get Failed for Database ' . $this->db_adapter . '/' . $key . $e->getMessage());
         }
     }
 
@@ -199,14 +151,10 @@ class Database extends AbstractHandler implements CacheInterface
 
         $cacheItem = $this->get($key);
 
-        if ($cacheItem->exists == true) {
-
-            if ($cacheItem->isHit() === false) {
-                $this->delete($key);
-
-            } elseif ($cacheItem->geValue() == $value) {
-                return $this;
-            }
+        if ($cacheItem->isHit() === false) {
+            $this->delete($key);
+        } elseif ($cacheItem->geValue() == $value) {
+            return $this;
         }
 
         try {
@@ -236,10 +184,9 @@ class Database extends AbstractHandler implements CacheInterface
             }
 
             new CacheItem($key, $value, $exists);
-
         } catch (Exception $e) {
             throw new DatabaseHandlerException
-            ('Cache: Get Failed for Database ' . $this->database_connection . '/' . $key . $e->getMessage());
+            ('Cache: Get Failed for Database ' . $this->db_adapter . '/' . $key . $e->getMessage());
         }
 
         return $this;
@@ -267,7 +214,6 @@ class Database extends AbstractHandler implements CacheInterface
             $this->setQuery($sql);
 
             $this->execute();
-
         } catch (Exception $e) {
             throw new DatabaseHandlerException
             ('Cache Database Handler: Delete failed' . $e->getMessage());

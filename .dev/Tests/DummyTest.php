@@ -2,9 +2,9 @@
 /**
  * Cache Test
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Test;
 
@@ -14,10 +14,10 @@ use Molajo\Cache\Adapter;
 /**
  * Cache Test
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class DummyTest extends \PHPUnit_Framework_TestCase
 {
@@ -111,7 +111,6 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $result = $this->adapter->get($key);
 
         $this->assertTrue(is_object($result));
-
     }
 
     /**
@@ -241,7 +240,6 @@ class DummyTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(is_object($items));
     }
 
-
     /**
      * Create a set of cache entries
      *
@@ -342,6 +340,5 @@ class DummyTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-
     }
 }

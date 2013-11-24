@@ -1,26 +1,26 @@
 <?php
 /**
- * File
+ * File Handler for Cache
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Handler;
 
 use Exception;
 use DirectoryIterator;
 use Molajo\Cache\CacheItem;
-use Molajo\Cache\Exception\FileHandlerException;
-use Molajo\Cache\Api\CacheInterface;
+use Exception\Cache\FileHandlerException;
+use CommonApi\Cache\CacheInterface;
 
 /**
- * File Cache
+ * File Handler for Cache
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class File extends AbstractHandler implements CacheInterface
 {
@@ -40,7 +40,7 @@ class File extends AbstractHandler implements CacheInterface
      *
      * @since   1.0
      */
-    public function __construct($options)
+    public function __construct(array $options = array())
     {
         $this->cache_handler = 'File';
 
@@ -72,7 +72,6 @@ class File extends AbstractHandler implements CacheInterface
             } else {
                 mkdir($this->cache_folder);
             }
-
         } catch (Exception $e) {
             throw new FileHandlerException
             ('Cache: Failed creating File Handler Folder ' . $this->cache_folder . $e->getMessage());
@@ -105,7 +104,6 @@ class File extends AbstractHandler implements CacheInterface
                 $exists = true;
                 $value  = unserialize(file_get_contents($this->cache_folder . '/' . $key));
             }
-
         } catch (Exception $e) {
             throw new FileHandlerException
             ('Cache: Get Failed for File ' . $this->cache_folder . '/' . $key . $e->getMessage());
@@ -128,12 +126,7 @@ class File extends AbstractHandler implements CacheInterface
     public function set($key = null, $value, $ttl = 0)
     {
         if ($this->cache_service == 0) {
-            throw new FileHandlerException
-            ('Cache: Not enabled by the application.');
-        }
-
-        if ($key === null) {
-            $key = serialize($value);
+            return false;
         }
 
         if (file_exists($this->cache_folder . '/' . $key) === true) {
@@ -144,7 +137,6 @@ class File extends AbstractHandler implements CacheInterface
             if (file_exists($this->cache_folder . '/' . $key) === true) {
                 return $this;
             }
-
         } catch (Exception $e) {
             throw new FileHandlerException
             ('Cache: Set file exists check Failed for File ' . $this->cache_folder . '/' . $key . $e->getMessage());
@@ -152,7 +144,6 @@ class File extends AbstractHandler implements CacheInterface
 
         try {
             file_put_contents($this->cache_folder . '/' . $key, serialize($value));
-
         } catch (Exception $e) {
             throw new FileHandlerException
             ('Cache: file_put_contents failed for ' . $this->cache_folder . '/' . $key . $e->getMessage());
@@ -160,7 +151,6 @@ class File extends AbstractHandler implements CacheInterface
 
         try {
             chmod(($this->cache_folder . '/' . $key), 0644);
-
         } catch (Exception $e) {
             throw new FileHandlerException
             ('Cache: Chmod failed ' . $this->cache_folder . '/' . $key . $e->getMessage());
@@ -189,9 +179,8 @@ class File extends AbstractHandler implements CacheInterface
 
                 if (file_exists($file->getPathname())
                     && (time() - $this->cache_time)
-                        < filemtime($file->getPathname())
+                    < filemtime($file->getPathname())
                 ) {
-
                 } else {
                     $this->remove($file->getPathname());
                 }

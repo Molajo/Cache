@@ -2,25 +2,25 @@
 /**
  * Wincache
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Handler;
 
 use Wincache as phpWincache;
 use Exception;
-use Molajo\Cache\Exception\WincacheHandlerException;
+use Exception\Cache\WincacheHandlerException;
 use Molajo\Cache\CacheItem;
-use Molajo\Cache\Api\CacheInterface;
+use CommonApi\Cache\CacheInterface;
 
 /**
  * Wincache Cache
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class Wincache extends AbstractHandler implements CacheInterface
 {
@@ -39,7 +39,7 @@ class Wincache extends AbstractHandler implements CacheInterface
      *
      * @since  1.0
      */
-    public function __construct($options)
+    public function __construct(array $options = array())
     {
         $this->cache_handler = 'Wincache';
 
@@ -90,7 +90,6 @@ class Wincache extends AbstractHandler implements CacheInterface
             if ($value === false) {
                 return new CacheItem($key, null, false);
             }
-
         } catch (Exception $e) {
             throw new WincacheHandlerException
             ('Cache: Get Failed for Wincache Key: ' . $key . ' Message: ' . $e->getMessage());
@@ -150,12 +149,10 @@ class Wincache extends AbstractHandler implements CacheInterface
             $results = \wincache_ucache_delete($key);
 
             if ($results === true) {
-
             } else {
                 throw new WincacheHandlerException
                 ('Unable to remove cache entry for');
             }
-
         } catch (Exception $e) {
             throw new WincacheHandlerException
             ('Cache: Get Failed for Wincache ' . $e->getMessage());
@@ -179,7 +176,6 @@ class Wincache extends AbstractHandler implements CacheInterface
             } else {
                 throw new WincacheHandlerException('Unable to clear Wincache.');
             }
-
         } catch (Exception $e) {
             throw new WincacheHandlerException
             ('Unable to clear Wincache.' . $e->getMessage());

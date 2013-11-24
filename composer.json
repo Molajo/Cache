@@ -1,28 +1,32 @@
 {
     "name": "molajo/cache",
-    "type": "molajo-bundle",
-    "description": "Cache API for PHP applications with APC, Database, File, Memcached, in-memory, Redis, Wincache, and xCache handlers.",
-    "keywords": ["Cache", "Molajo", "PSR-0", "APC", "Memcached", "Redis", "Wincache", "xCache"],
+    "description": "Cache API for PHP applications with APC, Database, File, Memcached, In-memory, Redis, Wincache, and xCache handlers.",
+    "keywords": ["Cache", "Molajo", "CommonApi", "APC", "Memcached", "Redis", "Wincache", "xCache"],
     "homepage": "http://github.com/Molajo/Cache",
+    "type": "PHP Package",
     "license": "MIT",
     "authors": [
         {
             "name": "Amy Stephen",
-            "email": "AmyStephen@gmail.com",
-            "homepage": "http://AmyStephen.github.io"
+            "email": "AmyStephen@molajo.org",
+            "homepage": "http://Molajo.org"
         }
     ],
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.10",
+        "commonapi/cache": "dev-master"
     },
+
     "support": {
         "email": "hello@molajo.org",
         "irc": "irc://irc.freenode.org/molajo"
     },
-    "target-dir": "Molajo/Cache",
     "autoload": {
         "psr-0": {
-            "Molajo": "./"
+            "Molajo\\Cache": "./"
         }
     }
 }
+
+
+

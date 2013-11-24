@@ -2,24 +2,24 @@
 /**
  * Memory Cache
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Handler;
 
 use Exception;
 use Molajo\Cache\CacheItem;
-use Molajo\Cache\Api\CacheInterface;
-use Molajo\Cache\Exception\MemoryHandlerException;
+use CommonApi\Cache\CacheInterface;
+use Exception\Cache\MemoryHandlerException;
 
 /**
  * Memory Cache
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class Memory extends AbstractHandler implements CacheInterface
 {
@@ -38,7 +38,7 @@ class Memory extends AbstractHandler implements CacheInterface
      *
      * @since  1.0
      */
-    public function __construct($options)
+    public function __construct(array $options = array())
     {
         $this->cache_handler = 'Memory';
 
@@ -91,7 +91,6 @@ class Memory extends AbstractHandler implements CacheInterface
             }
 
             return new CacheItem($key, $value, $exists);
-
         } catch (Exception $e) {
             throw new MemoryHandlerException
             ('Cache: Memory Handler Failed during Get for Memory ' . $key . $e->getMessage());
@@ -129,7 +128,6 @@ class Memory extends AbstractHandler implements CacheInterface
             $entry->expires = $ttl;
 
             $this->cache_container[$key] = $entry;
-
         } catch (Exception $e) {
             throw new MemoryHandlerException
             ('Cache: Memory Handler Failed during set for Memory');
@@ -154,7 +152,6 @@ class Memory extends AbstractHandler implements CacheInterface
             if (isset($this->cache_container[$key])) {
                 unset($this->cache_container[$key]);
             }
-
         } catch (Exception $e) {
             throw new MemoryHandlerException
             ('Cache: Memory Handler Failed during Remove ' . $e->getMessage());

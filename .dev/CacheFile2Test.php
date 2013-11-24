@@ -2,19 +2,19 @@
 /**
  * Cache Test
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Test;
 
 /**
  * Cache Test
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class CacheFile2Test extends \PHPUnit_Framework_TestCase
 {
@@ -63,6 +63,5 @@ class CacheFile2Test extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-
     }
 }

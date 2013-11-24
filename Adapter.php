@@ -2,23 +2,22 @@
 /**
  * Adapter for Cache
  *
- * @package   Molajo
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Cache;
 
-use Exception;
-use Molajo\Cache\Exception\AdapterException;
-use Molajo\Cache\Api\CacheInterface;
+use Exception\Cache\AdapterException;
+use CommonApi\Cache\CacheInterface;
 
 /**
  * Adapter for Cache
  *
- * @package   Molajo
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @since     1.0
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @since      1.0
  */
 class Adapter implements CacheInterface
 {
@@ -46,7 +45,7 @@ class Adapter implements CacheInterface
     /**
      * Return cached or parameter value
      *
-     * @param  string $key serialize name uniquely identifying content
+     * @param   string $key serialize name uniquely identifying content
      *
      * @return  bool|CacheItem cache for this key that has not been serialized
      * @since   1.0
@@ -74,20 +73,9 @@ class Adapter implements CacheInterface
     }
 
     /**
-     * Clear all cache
-     *
-     * @return  object CacheInterface
-     * @since   1.0
-     */
-    public function clear()
-    {
-        return $this->adapterHandler->clear();
-    }
-
-    /**
      * Remove cache for specified $key value
      *
-     * @param string $key serialize name uniquely identifying content
+     * @param   string $key serialize name uniquely identifying content
      *
      * @return  object CacheInterface
      * @since   1.0
@@ -96,6 +84,17 @@ class Adapter implements CacheInterface
     public function remove($key = null)
     {
         return $this->adapterHandler->remove($key);
+    }
+
+    /**
+     * Clear all cache
+     *
+     * @return  object CacheInterface
+     * @since   1.0
+     */
+    public function clear()
+    {
+        return $this->adapterHandler->clear();
     }
 
     /**

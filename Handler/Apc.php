@@ -2,35 +2,35 @@
 /**
  * Apc Cache Handler
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Handler;
 
 use Exception;
 use Molajo\Cache\CacheItem;
-use Molajo\Cache\Api\CacheInterface;
-use Molajo\Cache\Exception\ApcHandlerException;
+use CommonApi\Cache\CacheInterface;
+use Exception\Cache\ApcHandlerException;
 
 /**
  * Apc Cache Handler
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class Apc extends AbstractHandler implements CacheInterface
 {
     /**
      * Constructor
      *
-     * @param   array  $options
+     * @param   array $options
      *
      * @since   1.0
      */
-    public function __construct($options)
+    public function __construct(array $options = array())
     {
         $this->cache_handler = 'Apc';
 
@@ -79,7 +79,6 @@ class Apc extends AbstractHandler implements CacheInterface
             $exists = apc_exists($key);
             $value  = apc_fetch($key);
             return new CacheItem($key, $value, $exists);
-
         } catch (Exception $e) {
             throw new ApcHandlerException
             ('Cache: Get Failed for Apc ' . $e->getMessage());

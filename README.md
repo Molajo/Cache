@@ -6,24 +6,24 @@ Molajo Cache API
 [![Build Status](https://travis-ci.org/Molajo/Cache.png?branch=master)](https://travis-ci.org/Molajo/Cache)
 
 Simple, clean cache API for PHP applications to
-[get](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#get),
-[set] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#set),
-[remove] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#remove),
-[getMultiple] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#getmultiple),
-[setMultiple] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#setmultiple),
-[removeMultiple] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#removemultiple),
+[get](https://github.com/Molajo/Cache/tree/master/Cache#get),
+[set] (https://github.com/Molajo/Cache/tree/master/Cache#set),
+[remove] (https://github.com/Molajo/Cache/tree/master/Cache#remove),
+[getMultiple] (https://github.com/Molajo/Cache/tree/master/Cache#getmultiple),
+[setMultiple] (https://github.com/Molajo/Cache/tree/master/Cache#setmultiple),
+[removeMultiple] (https://github.com/Molajo/Cache/tree/master/Cache#removemultiple),
 and
-[clear] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#clear),
+[clear] (https://github.com/Molajo/Cache/tree/master/Cache#clear),
 cache is the manner. Cache Handlers available include:
-[Apc](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#apc),
-[Database](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#database),
-[Dummy](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#dummy),
-[File](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#file),
-[Memcached](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#memcached),
-[Memory](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#memory),
-[Redis](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#redis),
-[Wincache](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#wincache), and
-[xCache](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#xcache).
+[Apc](https://github.com/Molajo/Cache/tree/master/Cache#apc),
+[Database](https://github.com/Molajo/Cache/tree/master/Cache#database),
+[Dummy](https://github.com/Molajo/Cache/tree/master/Cache#dummy),
+[File](https://github.com/Molajo/Cache/tree/master/Cache#file),
+[Memcached](https://github.com/Molajo/Cache/tree/master/Cache#memcached),
+[Memory](https://github.com/Molajo/Cache/tree/master/Cache#memory),
+[Redis](https://github.com/Molajo/Cache/tree/master/Cache#redis),
+[Wincache](https://github.com/Molajo/Cache/tree/master/Cache#wincache), and
+[xCache](https://github.com/Molajo/Cache/tree/master/Cache#xcache).
 
 ## At a glance ...
 
@@ -72,14 +72,14 @@ cache is the manner. Cache Handlers available include:
 ## Cache API
 
 Common API for Cache operations:
-[get](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#get),
-[set] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#set),
-[remove] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#remove),
-[getMultiple] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#getmultiple),
-[setMultiple] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#setmultiple),
-[removeMultiple] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#removemultiple),
+[get](https://github.com/Molajo/Cache/tree/master/Cache#get),
+[set] (https://github.com/Molajo/Cache/tree/master/Cache#set),
+[remove] (https://github.com/Molajo/Cache/tree/master/Cache#remove),
+[getMultiple] (https://github.com/Molajo/Cache/tree/master/Cache#getmultiple),
+[setMultiple] (https://github.com/Molajo/Cache/tree/master/Cache#setmultiple),
+[removeMultiple] (https://github.com/Molajo/Cache/tree/master/Cache#removemultiple),
 and
-[clear] (https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#clear) methods.
+[clear] (https://github.com/Molajo/Cache/tree/master/Cache#clear) methods.
 
 ### Get
 Retrieves a CacheItem object associated with the key. If the value is not found, an exception is
@@ -211,15 +211,15 @@ Uses the array of key values to delete multiple items currently stored in cache 
 ## Cache Adapter Handlers
 
 Cache Handlers available include:
-[Apc](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#apc),
-[Database](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#database),
-[Dummy](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#dummy),
-[File](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#file),
-[Memcached](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#memcached),
-[Memory](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#memory),
-[Redis](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#redis),
-[Wincache](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#wincache), and
-[xCache](https://github.com/Molajo/Standard/tree/master/Vendor/Molajo/Cache#xcache).
+[Apc](https://github.com/Molajo/Cache/tree/master/Cache#apc),
+[Database](https://github.com/Molajo/Cache/tree/master/Cache#database),
+[Dummy](https://github.com/Molajo/Cache/tree/master/Cache#dummy),
+[File](https://github.com/Molajo/Cache/tree/master/Cache#file),
+[Memcached](https://github.com/Molajo/Cache/tree/master/Cache#memcached),
+[Memory](https://github.com/Molajo/Cache/tree/master/Cache#memory),
+[Redis](https://github.com/Molajo/Cache/tree/master/Cache#redis),
+[Wincache](https://github.com/Molajo/Cache/tree/master/Cache#wincache), and
+[xCache](https://github.com/Molajo/Cache/tree/master/Cache#xcache).
 
 ### Apc
 APC (Alternative PHP Cache) comes standard with PHP. An APC Cache Handler is available
@@ -282,7 +282,7 @@ Use, as follows:
     $options['cache_service']       = 1;
     $options['cache_time']          = 86400;
 
-// Instantiate Cache Handler
+    // Instantiate Cache Handler
     use Molajo\Cache\Adapter\Dummy as DummyCache;
     $adapter_handler = new DummyCache($options);
 
@@ -304,7 +304,7 @@ Use, as follows:
     $options['cache_time']          = 86400;
 
     // Specific to the File Handler
-    $options['cache_handler']       = '/Absolute/Path/To/Cache/Folder;
+    $options['cache_handler']       = '/Absolute/Path/To/Cache/Folder';
 
     // Instantiate Cache Handler
     use Molajo\Cache\Adapter\File as FileCache;
@@ -313,6 +313,7 @@ Use, as follows:
     // Instantiate Cache Adapter, injecting the Handler
     use Molajo\Cache\Adapter;
     $adapter = new Adapter($adapter_handler);
+
 ```
 
 ### Memcached

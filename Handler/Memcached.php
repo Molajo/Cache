@@ -2,25 +2,25 @@
 /**
  * Memcached
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Handler;
 
 use Exception;
 use Memcached as phpMemcached;
-use Molajo\Cache\Exception\MemcachedHandlerException;
+use Exception\Cache\MemcachedHandlerException;
 use Molajo\Cache\CacheItem;
-use Molajo\Cache\Api\CacheInterface;
+use CommonApi\Cache\CacheInterface;
 
 /**
  * Memcached Cache
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class Memcached extends AbstractHandler implements CacheInterface
 {
@@ -39,7 +39,7 @@ class Memcached extends AbstractHandler implements CacheInterface
      *
      * @since  1.0
      */
-    public function __construct($options)
+    public function __construct(array $options = array())
     {
         $this->cache_handler = 'Memcached';
 
@@ -118,10 +118,8 @@ class Memcached extends AbstractHandler implements CacheInterface
             $results = $this->memcached->getResultCode();
 
             if (phpMemcached::RES_SUCCESS == $results) {
-
             } elseif (phpMemcached::RES_NOTFOUND == $results) {
                 return null;
-
             } else {
                 throw new MemcachedHandlerException
                 (sprintf(
@@ -130,13 +128,12 @@ class Memcached extends AbstractHandler implements CacheInterface
                     $this->memcached->getResultMessage()
                 ));
             }
-
         } catch (Exception $e) {
             throw new MemcachedHandlerException
             ('Cache: Get Failed for Memcached ' . $key . $e->getMessage());
         }
 
-        return new CacheItem($key, $value, (bool) $value);
+        return new CacheItem($key, $value, (bool)$value);
     }
 
     /**
@@ -192,9 +189,7 @@ class Memcached extends AbstractHandler implements CacheInterface
             $results = $this->memcached->getResultCode();
 
             if (phpMemcached::RES_SUCCESS == $results) {
-
             } elseif (phpMemcached::RES_NOTFOUND == $results) {
-
             } else {
                 throw new MemcachedHandlerException
                 (sprintf(
@@ -203,7 +198,6 @@ class Memcached extends AbstractHandler implements CacheInterface
                     $this->memcached->getResultMessage()
                 ));
             }
-
         } catch (Exception $e) {
             throw new MemcachedHandlerException
             ('Cache: Get Failed for Memcached ' . $key . $e->getMessage());
@@ -226,13 +220,10 @@ class Memcached extends AbstractHandler implements CacheInterface
             $results = $this->memcached->getResultCode();
 
             if (phpMemcached::RES_SUCCESS == $results) {
-
             } elseif (phpMemcached::RES_NOTFOUND == $results) {
-
             } else {
                 throw new MemcachedHandlerException('Unable to flush Memcached.');
             }
-
         } catch (Exception $e) {
             throw new MemcachedHandlerException
             ('Cache: Flush Failed for Memcached ' . $e->getMessage());

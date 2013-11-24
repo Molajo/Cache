@@ -2,23 +2,23 @@
 /**
  * Abstract Handler Cache
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Handler;
 
 use Molajo\Cache\CacheItem;
-use Molajo\Cache\Api\CacheInterface;
-use Molajo\Cache\Exception\AbstractHandlerException;
+use CommonApi\Cache\CacheInterface;
+use Exception\Cache\AbstractHandlerException;
 
 /**
  * Abstract Handler Cache
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 abstract class AbstractHandler implements CacheInterface
 {
@@ -54,7 +54,7 @@ abstract class AbstractHandler implements CacheInterface
      *
      * @since   1.0
      */
-    public function __construct($options)
+    public function __construct(array $options = array())
     {
         $this->connect($options);
     }
@@ -70,14 +70,16 @@ abstract class AbstractHandler implements CacheInterface
      */
     public function connect($options = array())
     {
-        $this->cache_service = false;
         if (isset($options['cache_service'])) {
             $this->cache_service = (boolean)$options['cache_service'];
         }
 
-        $this->cache_time = 86400;
         if (isset($options['cache_time'])) {
             $this->cache_time = $options['cache_time'];
+        }
+
+        if ((int)$this->cache_time === 0) {
+            $this->cache_time = 86400;
         }
 
         return $this;

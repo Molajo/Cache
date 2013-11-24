@@ -1,27 +1,27 @@
 <?php
 /**
- * XCache
+ * Xcache
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Handler;
 
-use XCache as phpXCache;
+use Xcache as phpXcache;
 use Exception;
-use Molajo\Cache\Exception\XCacheHandlerException;
-use Molajo\Cache\Api\CacheInterface;
+use Exception\Cache\XcacheHandlerException;
+use CommonApi\Cache\CacheInterface;
 
 /**
- * XCache Cache
+ * Xcache Cache
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
-class XCache extends AbstractHandler implements CacheInterface
+class Xcache extends AbstractHandler implements CacheInterface
 {
     /**
      * Constructor
@@ -30,9 +30,9 @@ class XCache extends AbstractHandler implements CacheInterface
      *
      * @since  1.0
      */
-    public function __construct($options)
+    public function __construct(array $options = array())
     {
-        $this->cache_handler = 'XCache';
+        $this->cache_handler = 'Xcache';
 
         $this->connect($options);
     }
@@ -44,7 +44,7 @@ class XCache extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  XCacheHandlerException
+     * @throws  XcacheHandlerException
      * @api
      */
     public function connect($options = array())
@@ -53,8 +53,8 @@ class XCache extends AbstractHandler implements CacheInterface
 
         if (extension_loaded('xcache') && is_callable('xcache_get')) {
         } else {
-            throw new XCacheHandlerException
-            ('Cache XCache Handler: Not supported. xcache must be loaded and xcache_get must be callable.');
+            throw new XcacheHandlerException
+            ('Cache Xcache Handler: Not supported. xcache must be loaded and xcache_get must be callable.');
         }
 
         $pool = null;
@@ -72,10 +72,10 @@ class XCache extends AbstractHandler implements CacheInterface
             $servers = $options['xcache_servers'];
         }
 
-        $this->xcache = new phpXCache($pool);
+        $this->xcache = new phpXcache($pool);
 
-        $this->xcache->setOption(phpXCache::OPT_COMPRESSION, $compression);
-        $this->xcache->setOption(phpXCache::OPT_LIBKETAMA_COMPATIBLE, true);
+        $this->xcache->setOption(phpXcache::OPT_COMPRESSION, $compression);
+        $this->xcache->setOption(phpXcache::OPT_LIBKETAMA_COMPATIBLE, true);
 
         $serverList = $this->xcache->getServerList();
         if (empty($serverList)) {
@@ -94,7 +94,7 @@ class XCache extends AbstractHandler implements CacheInterface
      *
      * @return  null|mixed cached value
      * @since   1.0
-     * @throws  XCacheHandlerException
+     * @throws  XcacheHandlerException
      */
     public function get($key)
     {
@@ -107,25 +107,22 @@ class XCache extends AbstractHandler implements CacheInterface
 
             $results = $this->xcache->getResultCode();
 
-            if (phpXCache::RES_SUCCESS == $results) {
+            if (phpXcache::RES_SUCCESS == $results) {
                 $exists = true;
-
-            } elseif (phpXCache::RES_NOTFOUND == $results) {
+            } elseif (phpXcache::RES_NOTFOUND == $results) {
                 $exists  = false;
                 $results = null;
-
             } else {
-                throw new XCacheHandlerException
+                throw new XcacheHandlerException
                 (sprintf(
                     'Unable to fetch cache entry for %s. Error message `%s`.',
                     $key,
                     $this->xcache->getResultMessage()
                 ));
             }
-
         } catch (Exception $e) {
-            throw new XCacheHandlerException
-            ('Cache: Get Failed for XCache ' . $this->cache_folder . '/' . $key . $e->getMessage());
+            throw new XcacheHandlerException
+            ('Cache: Get Failed for Xcache ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
         return new CacheItem($key, $value, $exists);
@@ -140,7 +137,7 @@ class XCache extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  XCacheHandlerException
+     * @throws  XcacheHandlerException
      */
     public function set($key = null, $value = null, $ttl = 0)
     {
@@ -156,16 +153,15 @@ class XCache extends AbstractHandler implements CacheInterface
             $ttl = (int)$this->cache_time;
         }
 
-
         $results = apc_store($key, $value, (int)$ttl);
 
         $this->xcache->set($key, $value, (int)$ttl);
 
         $results = $this->xcache->getResultCode();
 
-        if (phpXCache::RES_SUCCESS == $results) {
+        if (phpXcache::RES_SUCCESS == $results) {
         } else {
-            throw new XCacheHandlerException
+            throw new XcacheHandlerException
             ('Cache APC Handler: Set failed for Key: ' . $key);
         }
 
@@ -179,7 +175,7 @@ class XCache extends AbstractHandler implements CacheInterface
      *
      * @return  object
      * @since   1.0
-     * @throws  XCacheHandlerException
+     * @throws  XcacheHandlerException
      */
     public function remove($key = null)
     {
@@ -188,22 +184,19 @@ class XCache extends AbstractHandler implements CacheInterface
 
             $results = $this->xcache->getResultCode();
 
-            if (phpXCache::RES_SUCCESS == $results) {
-
-            } elseif (phpXCache::RES_NOTFOUND == $results) {
-
+            if (phpXcache::RES_SUCCESS == $results) {
+            } elseif (phpXcache::RES_NOTFOUND == $results) {
             } else {
-                throw new XCacheHandlerException
+                throw new XcacheHandlerException
                 (sprintf(
                     'Unable to remove cache entry for %s. Error message `%s`.',
                     $key,
                     $this->xcache->getResultMessage()
                 ));
             }
-
         } catch (Exception $e) {
-            throw new XCacheHandlerException
-            ('Cache: Get Failed for XCache ' . $this->cache_folder . '/' . $key . $e->getMessage());
+            throw new XcacheHandlerException
+            ('Cache: Get Failed for Xcache ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
         return $this;
@@ -222,17 +215,14 @@ class XCache extends AbstractHandler implements CacheInterface
 
             $results = $this->xcache->getResultCode();
 
-            if (phpXCache::RES_SUCCESS == $results) {
-
-            } elseif (phpXCache::RES_NOTFOUND == $results) {
-
+            if (phpXcache::RES_SUCCESS == $results) {
+            } elseif (phpXcache::RES_NOTFOUND == $results) {
             } else {
-                throw new XCacheHandlerException('Unable to flush XCache.');
+                throw new XcacheHandlerException('Unable to flush Xcache.');
             }
-
         } catch (Exception $e) {
-            throw new XCacheHandlerException
-            ('Cache: Flush Failed for XCache ' . $e->getMessage());
+            throw new XcacheHandlerException
+            ('Cache: Flush Failed for Xcache ' . $e->getMessage());
         }
     }
 }

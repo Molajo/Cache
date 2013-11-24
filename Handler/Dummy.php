@@ -2,23 +2,23 @@
 /**
  * Dummy
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Handler;
 
 use Molajo\Cache\CacheItem;
-use Molajo\Cache\Api\CacheInterface;
-use Molajo\Cache\Exception\DummyHandlerException;
+use CommonApi\Cache\CacheInterface;
+use Exception\Cache\DummyHandlerException;
 
 /**
  * Dummy Cache
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class Dummy extends AbstractHandler implements CacheInterface
 {
@@ -26,11 +26,11 @@ class Dummy extends AbstractHandler implements CacheInterface
     /**
      * Constructor
      *
-     * @param   array  $options
+     * @param   array $options
      *
      * @since   1.0
      */
-    public function __construct($options)
+    public function __construct(array $options = array())
     {
         $this->cache_handler = 'Dummy';
 

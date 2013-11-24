@@ -2,24 +2,24 @@
 /**
  * Redis Handler
  *
- * @package   Molajo
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Handler;
 
 use Exception;
 use Molajo\Cache\CacheItem;
-use Molajo\Cache\Api\CacheInterface;
-use Molajo\Cache\Exception\RedisHandlerException;
+use CommonApi\Cache\CacheInterface;
+use Exception\Cache\RedisHandlerException;
 
 /**
  * Redis Handler
  *
- * @author    Amy Stephen
- * @license   http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright 2013 Amy Stephen. All rights reserved.
- * @since     1.0
+ * @author     Amy Stephen
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class Redis extends AbstractHandler implements CacheInterface
 {
@@ -39,7 +39,7 @@ class Redis extends AbstractHandler implements CacheInterface
      *
      * @since   1.0
      */
-    public function __construct($options)
+    public function __construct(array $options = array())
     {
         $this->cache_handler = 'Redis';
 
@@ -91,7 +91,6 @@ class Redis extends AbstractHandler implements CacheInterface
             $exists = (boolean)$value;
 
             return new CacheItem($key, $value, $exists);
-
         } catch (Exception $e) {
             throw new RedisHandlerException
             ('Cache: Get Failed for Redis ' . $e->getMessage());
