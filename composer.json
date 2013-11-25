@@ -3,7 +3,7 @@
     "description": "Cache API for PHP applications with APC, Database, File, Memcached, In-memory, Redis, Wincache, and xCache handlers.",
     "keywords": ["Cache", "Molajo", "CommonApi", "APC", "Memcached", "Redis", "Wincache", "xCache"],
     "homepage": "http://github.com/Molajo/Cache",
-    "type": "PHP Package",
+    "type": "molajo-package",
     "license": "MIT",
     "authors": [
         {
@@ -22,7 +22,7 @@
         "irc": "irc://irc.freenode.org/molajo"
     },
     "autoload": {
-        "psr-4": {
+        "psr-0": {
             "Molajo\\Cache": "./"
         }
     }
