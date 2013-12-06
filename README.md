@@ -6,22 +6,22 @@ Molajo Cache API
 [![Build Status](https://travis-ci.org/Molajo/Cache.png?branch=master)](https://travis-ci.org/Molajo/Cache)
 
 Simple, clean cache API for PHP applications to
-[get](https://github.com/Molajo/Cache/tree/master/Cache#get),
-[set] (https://github.com/Molajo/Cache/tree/master/Cache#set),
-[remove] (https://github.com/Molajo/Cache/tree/master/Cache#remove),
-[clear] (https://github.com/Molajo/Cache/tree/master/Cache#clear),
+[get](https://github.com/Molajo/Cache#get),
+[set] (https://github.com/Molajo/Cache/Cache#set),
+[remove] (https://github.com/Molajo/Cache/Cache#remove),
+[clear] (https://github.com/Molajo/Cache/Cache#clear),
 cache.
 
 Cache Handlers available include:
-- [Apc](https://github.com/Molajo/Cache/tree/master/Cache#apc),
-- [Database](https://github.com/Molajo/Cache/tree/master/Cache#database),
-- [Dummy](https://github.com/Molajo/Cache/tree/master/Cache#dummy),
-- [File](https://github.com/Molajo/Cache/tree/master/Cache#file),
-- [Memcached](https://github.com/Molajo/Cache/tree/master/Cache#memcached),
-- [Memory](https://github.com/Molajo/Cache/tree/master/Cache#memory),
-- [Redis](https://github.com/Molajo/Cache/tree/master/Cache#redis),
-- [Wincache](https://github.com/Molajo/Cache/tree/master/Cache#wincache), and
-- [xCache](https://github.com/Molajo/Cache/tree/master/Cache#xcache).
+- [Apc](https://github.com/Molajo/Cache/Cache#apc),
+- [Database](https://github.com/Molajo/Cache/Cache#database),
+- [Dummy](https://github.com/Molajo/Cache/Cache#dummy),
+- [File](https://github.com/Molajo/Cache/Cache#file),
+- [Memcached](https://github.com/Molajo/Cache/Cache#memcached),
+- [Memory](https://github.com/Molajo/Cache/Cache#memory),
+- [Redis](https://github.com/Molajo/Cache/Cache#redis),
+- [Wincache](https://github.com/Molajo/Cache/Cache#wincache), and
+- [xCache](https://github.com/Molajo/Cache/Cache#xcache).
 
 ## At a glance ...
 
@@ -70,10 +70,10 @@ Cache Handlers available include:
 ## Cache API
 
 Common API for Cache operations:
-[get](https://github.com/Molajo/Cache/tree/master/Cache#get),
-[set] (https://github.com/Molajo/Cache/tree/master/Cache#set),
-[remove] (https://github.com/Molajo/Cache/tree/master/Cache#remove),
-[clear] (https://github.com/Molajo/Cache/tree/master/Cache#clear) methods.
+[get](https://github.com/Molajo/Cache/Cache#get),
+[set] (https://github.com/Molajo/Cache/Cache#set),
+[remove] (https://github.com/Molajo/Cache/Cache#remove),
+[clear] (https://github.com/Molajo/Cache/Cache#clear) methods.
 
 ### Get
 Retrieves a CacheItem object associated with the key. If the value is not found, an exception is
@@ -151,15 +151,15 @@ Remove all cache for this Cache Handler instance.
 ## Cache Adapter Handlers
 
 Cache Handlers available include:
-- [Apc](https://github.com/Molajo/Cache/tree/master/Cache#apc),
-- [Database](https://github.com/Molajo/Cache/tree/master/Cache#database),
-- [Dummy](https://github.com/Molajo/Cache/tree/master/Cache#dummy),
-- [File](https://github.com/Molajo/Cache/tree/master/Cache#file),
-- [Memcached](https://github.com/Molajo/Cache/tree/master/Cache#memcached),
-- [Memory](https://github.com/Molajo/Cache/tree/master/Cache#memory),
-- [Redis](https://github.com/Molajo/Cache/tree/master/Cache#redis),
-- [Wincache](https://github.com/Molajo/Cache/tree/master/Cache#wincache), and
-- [xCache](https://github.com/Molajo/Cache/tree/master/Cache#xcache).
+- [Apc](https://github.com/Molajo/Cache/Cache#apc),
+- [Database](https://github.com/Molajo/Cache/Cache#database),
+- [Dummy](https://github.com/Molajo/Cache/Cache#dummy),
+- [File](https://github.com/Molajo/Cache/Cache#file),
+- [Memcached](https://github.com/Molajo/Cache/Cache#memcached),
+- [Memory](https://github.com/Molajo/Cache/Cache#memory),
+- [Redis](https://github.com/Molajo/Cache/Cache#redis),
+- [Wincache](https://github.com/Molajo/Cache/Cache#wincache), and
+- [xCache](https://github.com/Molajo/Cache/Cache#xcache).
 
 ### Apc
 APC (Alternative PHP Cache) comes standard with PHP. An APC Cache Handler is available
