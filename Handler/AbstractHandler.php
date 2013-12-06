@@ -10,7 +10,6 @@ namespace Molajo\Cache\Handler;
 
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
-use Exception\Cache\AbstractHandlerException;
 
 /**
  * Abstract Handler Cache

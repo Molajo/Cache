@@ -8,7 +8,6 @@
  */
 namespace Molajo\Cache;
 
-use Exception\Cache\AdapterException;
 use CommonApi\Cache\CacheInterface;
 
 /**
@@ -33,7 +32,6 @@ class Adapter implements CacheInterface
      * Constructor
      *
      * @param   CacheInterface $cache
-     * @param   array          $options
      *
      * @since   1.0
      */
@@ -49,7 +47,6 @@ class Adapter implements CacheInterface
      *
      * @return  bool|CacheItem cache for this key that has not been serialized
      * @since   1.0
-     * @throws  AdapterException
      */
     public function get($key)
     {
@@ -65,7 +62,6 @@ class Adapter implements CacheInterface
      *
      * @return  bool
      * @since   1.0
-     * @throws  AdapterException
      */
     public function set($key = null, $value, $ttl = 0)
     {
@@ -79,7 +75,6 @@ class Adapter implements CacheInterface
      *
      * @return  object CacheInterface
      * @since   1.0
-     * @throws  AdapterException
      */
     public function remove($key = null)
     {
