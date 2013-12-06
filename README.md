@@ -9,26 +9,24 @@ Simple, clean cache API for PHP applications to
 [get](https://github.com/Molajo/Cache/tree/master/Cache#get),
 [set] (https://github.com/Molajo/Cache/tree/master/Cache#set),
 [remove] (https://github.com/Molajo/Cache/tree/master/Cache#remove),
-[getMultiple] (https://github.com/Molajo/Cache/tree/master/Cache#getmultiple),
-[setMultiple] (https://github.com/Molajo/Cache/tree/master/Cache#setmultiple),
-[removeMultiple] (https://github.com/Molajo/Cache/tree/master/Cache#removemultiple),
-and
 [clear] (https://github.com/Molajo/Cache/tree/master/Cache#clear),
-cache is the manner. Cache Handlers available include:
-[Apc](https://github.com/Molajo/Cache/tree/master/Cache#apc),
-[Database](https://github.com/Molajo/Cache/tree/master/Cache#database),
-[Dummy](https://github.com/Molajo/Cache/tree/master/Cache#dummy),
-[File](https://github.com/Molajo/Cache/tree/master/Cache#file),
-[Memcached](https://github.com/Molajo/Cache/tree/master/Cache#memcached),
-[Memory](https://github.com/Molajo/Cache/tree/master/Cache#memory),
-[Redis](https://github.com/Molajo/Cache/tree/master/Cache#redis),
-[Wincache](https://github.com/Molajo/Cache/tree/master/Cache#wincache), and
-[xCache](https://github.com/Molajo/Cache/tree/master/Cache#xcache).
+cache.
+
+Cache Handlers available include:
+- [Apc](https://github.com/Molajo/Cache/tree/master/Cache#apc),
+- [Database](https://github.com/Molajo/Cache/tree/master/Cache#database),
+- [Dummy](https://github.com/Molajo/Cache/tree/master/Cache#dummy),
+- [File](https://github.com/Molajo/Cache/tree/master/Cache#file),
+- [Memcached](https://github.com/Molajo/Cache/tree/master/Cache#memcached),
+- [Memory](https://github.com/Molajo/Cache/tree/master/Cache#memory),
+- [Redis](https://github.com/Molajo/Cache/tree/master/Cache#redis),
+- [Wincache](https://github.com/Molajo/Cache/tree/master/Cache#wincache), and
+- [xCache](https://github.com/Molajo/Cache/tree/master/Cache#xcache).
 
 ## At a glance ...
 
-1. Instantiate a Cache Handler.
-2. Instantiate the Adapter, injecting it with the Handler.
+1. Construct a Cache Handler Class.
+2. Instantiate the Cache Adapter, injecting it with the Cache Handler instance.
 3. Set cache.
 4. Get cache.
 5. Remove cache.
@@ -75,10 +73,6 @@ Common API for Cache operations:
 [get](https://github.com/Molajo/Cache/tree/master/Cache#get),
 [set] (https://github.com/Molajo/Cache/tree/master/Cache#set),
 [remove] (https://github.com/Molajo/Cache/tree/master/Cache#remove),
-[getMultiple] (https://github.com/Molajo/Cache/tree/master/Cache#getmultiple),
-[setMultiple] (https://github.com/Molajo/Cache/tree/master/Cache#setmultiple),
-[removeMultiple] (https://github.com/Molajo/Cache/tree/master/Cache#removemultiple),
-and
 [clear] (https://github.com/Molajo/Cache/tree/master/Cache#clear) methods.
 
 ### Get
@@ -154,72 +148,18 @@ Remove all cache for this Cache Handler instance.
 **Parameters**
 - **n/a** no parameters are required
 
-
-### getMultiple
-Retrieve an array of CacheItem objects for the specified key values.
-
-```php
-    try {
-        $adapter->getMultiple($keys);
-
-    } catch (Exception $e) {
-        // deal with the exception
-    }
-
-```
-
-**Parameters**
-- **$keys** an array of key values to use when retrieving CacheItems, returning the set of objects as an array
-
-
-### setMultiple
-Uses the associative array of items to store multiple items in cache for specified keys, given the time specified.
-
-```php
-    try {
-        $adapter->setMultiple($items, $ttl);
-
-    } catch (Exception $e) {
-        // deal with the exception
-    }
-
-```
-
-**Parameters**
-- **$items** an associative array of key, value pairs for which cache items must be created
-- **$ttl** "Time to live" which is the number of seconds the cache is considered relevant
-
-
-### removeMultiple
-Uses the array of key values to delete multiple items currently stored in cache for specified keys.
-
-```php
-    try {
-        $adapter->setMultiple($items, $ttl);
-
-    } catch (Exception $e) {
-        // deal with the exception
-    }
-
-```
-
-**Parameters**
-- **$items** an associative array of key, value pairs for which cache items must be created
-- **$ttl** "Time to live" which is the number of seconds the cache is considered relevant
-
-
 ## Cache Adapter Handlers
 
 Cache Handlers available include:
-[Apc](https://github.com/Molajo/Cache/tree/master/Cache#apc),
-[Database](https://github.com/Molajo/Cache/tree/master/Cache#database),
-[Dummy](https://github.com/Molajo/Cache/tree/master/Cache#dummy),
-[File](https://github.com/Molajo/Cache/tree/master/Cache#file),
-[Memcached](https://github.com/Molajo/Cache/tree/master/Cache#memcached),
-[Memory](https://github.com/Molajo/Cache/tree/master/Cache#memory),
-[Redis](https://github.com/Molajo/Cache/tree/master/Cache#redis),
-[Wincache](https://github.com/Molajo/Cache/tree/master/Cache#wincache), and
-[xCache](https://github.com/Molajo/Cache/tree/master/Cache#xcache).
+- [Apc](https://github.com/Molajo/Cache/tree/master/Cache#apc),
+- [Database](https://github.com/Molajo/Cache/tree/master/Cache#database),
+- [Dummy](https://github.com/Molajo/Cache/tree/master/Cache#dummy),
+- [File](https://github.com/Molajo/Cache/tree/master/Cache#file),
+- [Memcached](https://github.com/Molajo/Cache/tree/master/Cache#memcached),
+- [Memory](https://github.com/Molajo/Cache/tree/master/Cache#memory),
+- [Redis](https://github.com/Molajo/Cache/tree/master/Cache#redis),
+- [Wincache](https://github.com/Molajo/Cache/tree/master/Cache#wincache), and
+- [xCache](https://github.com/Molajo/Cache/tree/master/Cache#xcache).
 
 ### Apc
 APC (Alternative PHP Cache) comes standard with PHP. An APC Cache Handler is available
