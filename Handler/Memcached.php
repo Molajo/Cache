@@ -10,7 +10,7 @@ namespace Molajo\Cache\Handler;
 
 use Exception;
 use Memcached as phpMemcached;
-use Exception\Cache\MemcachedHandlerException;
+use CommonApi\Exception\RuntimeException;
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
 
@@ -53,8 +53,7 @@ class Memcached extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  MemcachedHandlerException
-     * @api
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function connect($options = array())
     {
@@ -62,7 +61,7 @@ class Memcached extends AbstractHandler implements CacheInterface
 
         if (extension_loaded('memcached') && class_exists('\\Memcached')) {
         } else {
-            throw new MemcachedHandlerException
+            throw new RuntimeException
             ('Cache: Memcached not supported.');
         }
 
@@ -104,7 +103,7 @@ class Memcached extends AbstractHandler implements CacheInterface
      *
      * @return  null|mixed cached value
      * @since   1.0
-     * @throws  MemcachedHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function get($key)
     {
@@ -121,7 +120,7 @@ class Memcached extends AbstractHandler implements CacheInterface
             } elseif (phpMemcached::RES_NOTFOUND == $results) {
                 return null;
             } else {
-                throw new MemcachedHandlerException
+                throw new RuntimeException
                 (sprintf(
                     'Unable to fetch cache entry for %s. Error message `%s`.',
                     $key,
@@ -129,7 +128,7 @@ class Memcached extends AbstractHandler implements CacheInterface
                 ));
             }
         } catch (Exception $e) {
-            throw new MemcachedHandlerException
+            throw new RuntimeException
             ('Cache: Get Failed for Memcached ' . $key . $e->getMessage());
         }
 
@@ -145,7 +144,7 @@ class Memcached extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  MemcachedHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function set($key = null, $value = null, $ttl = 0)
     {
@@ -165,7 +164,7 @@ class Memcached extends AbstractHandler implements CacheInterface
 
         if (phpMemcached::RES_SUCCESS == $results) {
         } else {
-            throw new MemcachedHandlerException
+            throw new RuntimeException
             ('Cache Memcached Handler: Set failed for Key: ' . $key);
         }
 
@@ -179,7 +178,7 @@ class Memcached extends AbstractHandler implements CacheInterface
      *
      * @return  object
      * @since   1.0
-     * @throws  MemcachedHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function remove($key = null)
     {
@@ -191,7 +190,7 @@ class Memcached extends AbstractHandler implements CacheInterface
             if (phpMemcached::RES_SUCCESS == $results) {
             } elseif (phpMemcached::RES_NOTFOUND == $results) {
             } else {
-                throw new MemcachedHandlerException
+                throw new RuntimeException
                 (sprintf(
                     'Unable to remove cache entry for %s. Error message `%s`.',
                     $key,
@@ -199,7 +198,7 @@ class Memcached extends AbstractHandler implements CacheInterface
                 ));
             }
         } catch (Exception $e) {
-            throw new MemcachedHandlerException
+            throw new RuntimeException
             ('Cache: Get Failed for Memcached ' . $key . $e->getMessage());
         }
 
@@ -211,6 +210,7 @@ class Memcached extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function clear()
     {
@@ -222,10 +222,10 @@ class Memcached extends AbstractHandler implements CacheInterface
             if (phpMemcached::RES_SUCCESS == $results) {
             } elseif (phpMemcached::RES_NOTFOUND == $results) {
             } else {
-                throw new MemcachedHandlerException('Unable to flush Memcached.');
+                throw new RuntimeException('Unable to flush Memcached.');
             }
         } catch (Exception $e) {
-            throw new MemcachedHandlerException
+            throw new RuntimeException
             ('Cache: Flush Failed for Memcached ' . $e->getMessage());
         }
     }

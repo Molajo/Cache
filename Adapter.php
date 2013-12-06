@@ -91,44 +91,4 @@ class Adapter implements CacheInterface
     {
         return $this->adapterHandler->clear();
     }
-
-    /**
-     * Get multiple CacheItems by Key
-     *
-     * @param   array $keys
-     *
-     * @return  array
-     * @since   1.0
-     */
-    public function getMultiple($keys = array())
-    {
-        return $this->adapterHandler->getMultiple($keys);
-    }
-
-    /**
-     * Create a set of cache entries
-     *
-     * @param   array        $items
-     * @param   null|integer $ttl
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    public function setMultiple($items = array(), $ttl = null)
-    {
-        return $this->adapterHandler->setMultiple($items, $ttl);
-    }
-
-    /**
-     * Remove a set of cache entries
-     *
-     * @param   array $keys
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    public function removeMultiple($keys = array())
-    {
-        return $this->adapterHandler->removeMultiple($keys);
-    }
 }

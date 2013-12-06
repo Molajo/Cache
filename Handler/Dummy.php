@@ -1,6 +1,6 @@
 <?php
 /**
- * Dummy
+ * Dummy Cache
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
@@ -10,7 +10,7 @@ namespace Molajo\Cache\Handler;
 
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
-use Exception\Cache\DummyHandlerException;
+use CommonApi\Exception\RuntimeException;
 
 /**
  * Dummy Cache
@@ -22,7 +22,6 @@ use Exception\Cache\DummyHandlerException;
  */
 class Dummy extends AbstractHandler implements CacheInterface
 {
-
     /**
      * Constructor
      *
@@ -44,8 +43,6 @@ class Dummy extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  DummyHandlerException
-     * @api
      */
     public function connect($options = array())
     {
@@ -61,7 +58,6 @@ class Dummy extends AbstractHandler implements CacheInterface
      *
      * @return  bool|CacheItem
      * @since   1.0
-     * @throws  DummyHandlerException
      */
     public function get($key)
     {
@@ -77,7 +73,6 @@ class Dummy extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  DummyHandlerException
      */
     public function set($key = null, $value = null, $ttl = 0)
     {
@@ -91,7 +86,6 @@ class Dummy extends AbstractHandler implements CacheInterface
      *
      * @return  object
      * @since   1.0
-     * @throws  DummyHandlerException
      */
     public function remove($key = null)
     {

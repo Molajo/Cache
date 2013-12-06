@@ -11,7 +11,7 @@ namespace Molajo\Cache\Handler;
 use Exception;
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
-use Exception\Cache\MemoryHandlerException;
+use CommonApi\Exception\RuntimeException;
 
 /**
  * Memory Cache
@@ -52,8 +52,7 @@ class Memory extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  MemoryHandlerException
-     * @api
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function connect($options = array())
     {
@@ -71,7 +70,7 @@ class Memory extends AbstractHandler implements CacheInterface
      *
      * @return  CacheItem
      * @since   1.0
-     * @throws  MemoryHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function get($key)
     {
@@ -92,7 +91,7 @@ class Memory extends AbstractHandler implements CacheInterface
 
             return new CacheItem($key, $value, $exists);
         } catch (Exception $e) {
-            throw new MemoryHandlerException
+            throw new RuntimeException
             ('Cache: Memory Handler Failed during Get for Memory ' . $key . $e->getMessage());
         }
     }
@@ -106,7 +105,7 @@ class Memory extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  MemoryHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function set($key = null, $value = null, $ttl = 0)
     {
@@ -129,7 +128,7 @@ class Memory extends AbstractHandler implements CacheInterface
 
             $this->cache_container[$key] = $entry;
         } catch (Exception $e) {
-            throw new MemoryHandlerException
+            throw new RuntimeException
             ('Cache: Memory Handler Failed during set for Memory');
         }
 
@@ -143,7 +142,7 @@ class Memory extends AbstractHandler implements CacheInterface
      *
      * @return  object
      * @since   1.0
-     * @throws  MemoryHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function remove($key = null)
     {
@@ -153,7 +152,7 @@ class Memory extends AbstractHandler implements CacheInterface
                 unset($this->cache_container[$key]);
             }
         } catch (Exception $e) {
-            throw new MemoryHandlerException
+            throw new RuntimeException
             ('Cache: Memory Handler Failed during Remove ' . $e->getMessage());
         }
     }

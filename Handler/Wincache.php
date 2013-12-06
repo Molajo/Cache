@@ -10,7 +10,7 @@ namespace Molajo\Cache\Handler;
 
 use Wincache as phpWincache;
 use Exception;
-use Exception\Cache\WincacheHandlerException;
+use CommonApi\Exception\RuntimeException;
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
 
@@ -53,8 +53,7 @@ class Wincache extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  WincacheHandlerException
-     * @api
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function connect($options = array())
     {
@@ -62,7 +61,7 @@ class Wincache extends AbstractHandler implements CacheInterface
 
         if (extension_loaded('wincache') && is_callable('wincache_ucache_get')) {
         } else {
-            throw new WincacheHandlerException
+            throw new RuntimeException
             ('Cache: Wincache not supported.');
         }
 
@@ -76,7 +75,7 @@ class Wincache extends AbstractHandler implements CacheInterface
      *
      * @return  null|mixed cached value
      * @since   1.0
-     * @throws  WincacheHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function get($key)
     {
@@ -91,7 +90,7 @@ class Wincache extends AbstractHandler implements CacheInterface
                 return new CacheItem($key, null, false);
             }
         } catch (Exception $e) {
-            throw new WincacheHandlerException
+            throw new RuntimeException
             ('Cache: Get Failed for Wincache Key: ' . $key . ' Message: ' . $e->getMessage());
         }
 
@@ -107,7 +106,7 @@ class Wincache extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  WincacheHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function set($key = null, $value = null, $ttl = 0)
     {
@@ -127,7 +126,7 @@ class Wincache extends AbstractHandler implements CacheInterface
 
         if ($results === true) {
         } else {
-            throw new WincacheHandlerException
+            throw new RuntimeException
             ('Cache APC Handler: Set failed for Key: ' . $key);
         }
 
@@ -141,7 +140,7 @@ class Wincache extends AbstractHandler implements CacheInterface
      *
      * @return  object
      * @since   1.0
-     * @throws  WincacheHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function remove($key = null)
     {
@@ -150,11 +149,11 @@ class Wincache extends AbstractHandler implements CacheInterface
 
             if ($results === true) {
             } else {
-                throw new WincacheHandlerException
+                throw new RuntimeException
                 ('Unable to remove cache entry for');
             }
         } catch (Exception $e) {
-            throw new WincacheHandlerException
+            throw new RuntimeException
             ('Cache: Get Failed for Wincache ' . $e->getMessage());
         }
 
@@ -166,6 +165,7 @@ class Wincache extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function clear()
     {
@@ -174,10 +174,10 @@ class Wincache extends AbstractHandler implements CacheInterface
 
             if ($results === true) {
             } else {
-                throw new WincacheHandlerException('Unable to clear Wincache.');
+                throw new RuntimeException('Unable to clear Wincache.');
             }
         } catch (Exception $e) {
-            throw new WincacheHandlerException
+            throw new RuntimeException
             ('Unable to clear Wincache.' . $e->getMessage());
         }
     }

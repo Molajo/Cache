@@ -9,8 +9,8 @@
 namespace Molajo\Cache\Handler;
 
 use Exception;
+use CommonApi\Exception\RuntimeException;
 use Molajo\Cache\CacheItem;
-use Exception\Cache\DatabaseHandlerException;
 use CommonApi\Cache\CacheInterface;
 
 /**
@@ -60,7 +60,6 @@ class Database extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  DatabaseHandlerException
      */
     public function connect($options = array())
     {
@@ -86,7 +85,7 @@ class Database extends AbstractHandler implements CacheInterface
      *
      * @return  bool|CacheItem
      * @since   1.0
-     * @throws  DatabaseHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function get($key)
     {
@@ -119,7 +118,7 @@ class Database extends AbstractHandler implements CacheInterface
 
             return new CacheItem($key, $value, $exists);
         } catch (Exception $e) {
-            throw new DatabaseHandlerException
+            throw new RuntimeException
             ('Cache: Get Failed for Database ' . $this->db_adapter . '/' . $key . $e->getMessage());
         }
     }
@@ -133,7 +132,7 @@ class Database extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  DatabaseHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function set($key = null, $value = null, $ttl = 0)
     {
@@ -185,7 +184,7 @@ class Database extends AbstractHandler implements CacheInterface
 
             new CacheItem($key, $value, $exists);
         } catch (Exception $e) {
-            throw new DatabaseHandlerException
+            throw new RuntimeException
             ('Cache: Get Failed for Database ' . $this->db_adapter . '/' . $key . $e->getMessage());
         }
 
@@ -199,7 +198,7 @@ class Database extends AbstractHandler implements CacheInterface
      *
      * @return  object
      * @since   1.0
-     * @throws  DatabaseHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function remove($key = null)
     {
@@ -215,7 +214,7 @@ class Database extends AbstractHandler implements CacheInterface
 
             $this->execute();
         } catch (Exception $e) {
-            throw new DatabaseHandlerException
+            throw new RuntimeException
             ('Cache Database Handler: Delete failed' . $e->getMessage());
         }
 

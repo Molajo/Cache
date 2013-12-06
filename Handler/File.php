@@ -11,7 +11,7 @@ namespace Molajo\Cache\Handler;
 use Exception;
 use DirectoryIterator;
 use Molajo\Cache\CacheItem;
-use Exception\Cache\FileHandlerException;
+use CommonApi\Exception\RuntimeException;
 use CommonApi\Cache\CacheInterface;
 
 /**
@@ -35,10 +35,10 @@ class File extends AbstractHandler implements CacheInterface
     /**
      * Constructor
      *
-     * @param   string $cache_handler
-     * @param   array  $options
+     * @param  string $cache_handler
+     * @param  array  $options
      *
-     * @since   1.0
+     * @since  1.0
      */
     public function __construct(array $options = array())
     {
@@ -54,8 +54,7 @@ class File extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  FileHandlerException
-     * @api
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function connect($options = array())
     {
@@ -73,7 +72,7 @@ class File extends AbstractHandler implements CacheInterface
                 mkdir($this->cache_folder);
             }
         } catch (Exception $e) {
-            throw new FileHandlerException
+            throw new RuntimeException
             ('Cache: Failed creating File Handler Folder ' . $this->cache_folder . $e->getMessage());
         }
 
@@ -87,7 +86,7 @@ class File extends AbstractHandler implements CacheInterface
      *
      * @return  bool|CacheItem
      * @since   1.0
-     * @throws  FileHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function get($key)
     {
@@ -105,7 +104,7 @@ class File extends AbstractHandler implements CacheInterface
                 $value  = unserialize(file_get_contents($this->cache_folder . '/' . $key));
             }
         } catch (Exception $e) {
-            throw new FileHandlerException
+            throw new RuntimeException
             ('Cache: Get Failed for File ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
@@ -121,7 +120,7 @@ class File extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  FileHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function set($key = null, $value, $ttl = 0)
     {
@@ -138,21 +137,21 @@ class File extends AbstractHandler implements CacheInterface
                 return $this;
             }
         } catch (Exception $e) {
-            throw new FileHandlerException
+            throw new RuntimeException
             ('Cache: Set file exists check Failed for File ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
         try {
             file_put_contents($this->cache_folder . '/' . $key, serialize($value));
         } catch (Exception $e) {
-            throw new FileHandlerException
+            throw new RuntimeException
             ('Cache: file_put_contents failed for ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
         try {
             chmod(($this->cache_folder . '/' . $key), 0644);
         } catch (Exception $e) {
-            throw new FileHandlerException
+            throw new RuntimeException
             ('Cache: Chmod failed ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
@@ -215,7 +214,7 @@ class File extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  FileHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function remove($key = null)
     {
@@ -224,7 +223,7 @@ class File extends AbstractHandler implements CacheInterface
                 unlink($this->cache_folder . '/' . $key);
             }
         } catch (Exception $e) {
-            throw new FileHandlerException
+            throw new RuntimeException
             ('Cache: Remove cache entry failed ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
@@ -236,8 +235,6 @@ class File extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  FileHandlerException
-     * @api
      */
     public function close()
     {

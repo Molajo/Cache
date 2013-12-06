@@ -11,7 +11,7 @@ namespace Molajo\Cache\Handler;
 use Exception;
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
-use Exception\Cache\RedisHandlerException;
+use CommonApi\Exception\RuntimeException;
 
 /**
  * Redis Handler
@@ -53,8 +53,7 @@ class Redis extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  RedisHandlerException
-     * @api
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function connect($options = array())
     {
@@ -63,7 +62,7 @@ class Redis extends AbstractHandler implements CacheInterface
         if (isset($options['redis'])) {
             $this->redis = $options['redis'];
         } else {
-            throw new RedisHandlerException
+            throw new RuntimeException
             ('Cache Redis Handler: Redis Database dependency not passed into Connect');
         }
 
@@ -77,7 +76,7 @@ class Redis extends AbstractHandler implements CacheInterface
      *
      * @return  bool|CacheItem
      * @since   1.0
-     * @throws  RedisHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function get($key)
     {
@@ -92,7 +91,7 @@ class Redis extends AbstractHandler implements CacheInterface
 
             return new CacheItem($key, $value, $exists);
         } catch (Exception $e) {
-            throw new RedisHandlerException
+            throw new RuntimeException
             ('Cache: Get Failed for Redis ' . $e->getMessage());
         }
     }
@@ -106,7 +105,7 @@ class Redis extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  RedisHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function set($key = null, $value = null, $ttl = 0)
     {
@@ -127,7 +126,7 @@ class Redis extends AbstractHandler implements CacheInterface
         $results = $this->redis->expire($key, $ttl);
 
         if ($results === false) {
-            throw new RedisHandlerException
+            throw new RuntimeException
             ('Cache APC Handler: Set failed for Key: ' . $key);
         }
         return $this;
@@ -140,14 +139,14 @@ class Redis extends AbstractHandler implements CacheInterface
      *
      * @return  object
      * @since   1.0
-     * @throws  RedisHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function remove($key = null)
     {
         $results = $this->redis->del($key);
 
         if ($results === false) {
-            throw new RedisHandlerException
+            throw new RuntimeException
             ('Cache: Remove cache entry failed');
         }
 

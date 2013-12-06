@@ -9,9 +9,9 @@
 namespace Molajo\Cache\Handler;
 
 use Exception;
+use CommonApi\Exception\RuntimeException;
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
-use Exception\Cache\ApcHandlerException;
 
 /**
  * Apc Cache Handler
@@ -44,7 +44,7 @@ class Apc extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  ApcHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function connect($options = array())
     {
@@ -54,7 +54,7 @@ class Apc extends AbstractHandler implements CacheInterface
             && ini_get('apc.enabled')
         ) {
         } else {
-            throw new ApcHandlerException ('Cache APC: APC is not enabled');
+            throw new RuntimeException('Cache APC: APC is not enabled');
         }
 
         return $this;
@@ -67,7 +67,7 @@ class Apc extends AbstractHandler implements CacheInterface
      *
      * @return  bool|CacheItem
      * @since   1.0
-     * @throws  ApcHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function get($key)
     {
@@ -80,7 +80,7 @@ class Apc extends AbstractHandler implements CacheInterface
             $value  = apc_fetch($key);
             return new CacheItem($key, $value, $exists);
         } catch (Exception $e) {
-            throw new ApcHandlerException
+            throw new RuntimeException
             ('Cache: Get Failed for Apc ' . $e->getMessage());
         }
     }
@@ -94,7 +94,7 @@ class Apc extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  ApcHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function set($key = null, $value = null, $ttl = 0)
     {
@@ -113,7 +113,7 @@ class Apc extends AbstractHandler implements CacheInterface
         $results = apc_add($key, $value, (int)$ttl);
 
         if ($results === false) {
-            throw new ApcHandlerException
+            throw new RuntimeException
             ('Cache APC Handler: Set failed.');
         }
 
@@ -127,14 +127,14 @@ class Apc extends AbstractHandler implements CacheInterface
      *
      * @return  object
      * @since   1.0
-     * @throws  ApcHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function remove($key = null)
     {
         $results = apc_delete($key);
 
         if ($results === false) {
-            throw new ApcHandlerException
+            throw new RuntimeException
             ('Cache APC Handler: Remove cache failed.');
         }
 

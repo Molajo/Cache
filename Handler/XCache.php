@@ -8,9 +8,8 @@
  */
 namespace Molajo\Cache\Handler;
 
-use Xcache as phpXcache;
 use Exception;
-use Exception\Cache\XcacheHandlerException;
+use CommonApi\Exception\RuntimeException;
 use CommonApi\Cache\CacheInterface;
 
 /**
@@ -44,8 +43,7 @@ class Xcache extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  XcacheHandlerException
-     * @api
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function connect($options = array())
     {
@@ -53,7 +51,7 @@ class Xcache extends AbstractHandler implements CacheInterface
 
         if (extension_loaded('xcache') && is_callable('xcache_get')) {
         } else {
-            throw new XcacheHandlerException
+            throw new RuntimeException
             ('Cache Xcache Handler: Not supported. xcache must be loaded and xcache_get must be callable.');
         }
 
@@ -94,7 +92,7 @@ class Xcache extends AbstractHandler implements CacheInterface
      *
      * @return  null|mixed cached value
      * @since   1.0
-     * @throws  XcacheHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function get($key)
     {
@@ -113,7 +111,7 @@ class Xcache extends AbstractHandler implements CacheInterface
                 $exists  = false;
                 $results = null;
             } else {
-                throw new XcacheHandlerException
+                throw new RuntimeException
                 (sprintf(
                     'Unable to fetch cache entry for %s. Error message `%s`.',
                     $key,
@@ -121,7 +119,7 @@ class Xcache extends AbstractHandler implements CacheInterface
                 ));
             }
         } catch (Exception $e) {
-            throw new XcacheHandlerException
+            throw new RuntimeException
             ('Cache: Get Failed for Xcache ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
@@ -137,7 +135,7 @@ class Xcache extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  XcacheHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function set($key = null, $value = null, $ttl = 0)
     {
@@ -161,7 +159,7 @@ class Xcache extends AbstractHandler implements CacheInterface
 
         if (phpXcache::RES_SUCCESS == $results) {
         } else {
-            throw new XcacheHandlerException
+            throw new RuntimeException
             ('Cache APC Handler: Set failed for Key: ' . $key);
         }
 
@@ -175,7 +173,7 @@ class Xcache extends AbstractHandler implements CacheInterface
      *
      * @return  object
      * @since   1.0
-     * @throws  XcacheHandlerException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function remove($key = null)
     {
@@ -187,7 +185,7 @@ class Xcache extends AbstractHandler implements CacheInterface
             if (phpXcache::RES_SUCCESS == $results) {
             } elseif (phpXcache::RES_NOTFOUND == $results) {
             } else {
-                throw new XcacheHandlerException
+                throw new RuntimeException
                 (sprintf(
                     'Unable to remove cache entry for %s. Error message `%s`.',
                     $key,
@@ -195,7 +193,7 @@ class Xcache extends AbstractHandler implements CacheInterface
                 ));
             }
         } catch (Exception $e) {
-            throw new XcacheHandlerException
+            throw new RuntimeException
             ('Cache: Get Failed for Xcache ' . $this->cache_folder . '/' . $key . $e->getMessage());
         }
 
@@ -207,6 +205,7 @@ class Xcache extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function clear()
     {
@@ -218,10 +217,10 @@ class Xcache extends AbstractHandler implements CacheInterface
             if (phpXcache::RES_SUCCESS == $results) {
             } elseif (phpXcache::RES_NOTFOUND == $results) {
             } else {
-                throw new XcacheHandlerException('Unable to flush Xcache.');
+                throw new RuntimeException('Unable to flush Xcache.');
             }
         } catch (Exception $e) {
-            throw new XcacheHandlerException
+            throw new RuntimeException
             ('Cache: Flush Failed for Xcache ' . $e->getMessage());
         }
     }

@@ -65,7 +65,6 @@ abstract class AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  AbstractHandlerException
      */
     public function connect($options = array())
     {
@@ -91,7 +90,6 @@ abstract class AbstractHandler implements CacheInterface
      *
      * @return  CacheItem
      * @since   1.0
-     * @throws  AbstractHandlerException
      */
     public function get($key)
     {
@@ -107,7 +105,6 @@ abstract class AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  AbstractHandlerException
      */
     public function set($key = null, $value, $ttl = 0)
     {
@@ -121,7 +118,6 @@ abstract class AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  AbstractHandlerException
      */
     public function remove($key = null)
     {
@@ -136,67 +132,6 @@ abstract class AbstractHandler implements CacheInterface
      */
     public function clear()
     {
-        return $this;
-    }
-
-    /**
-     * Get multiple CacheItems by Key
-     *
-     * @param   array $keys
-     *
-     * @return  array
-     * @since   1.0
-     */
-    public function getMultiple($keys = array())
-    {
-        $entries = array();
-
-        if (count($keys) > 0 && is_array($keys)) {
-            foreach ($keys as $key) {
-                $entries[$key] = $this->get($key);
-            }
-        }
-
-        return $entries;
-    }
-
-    /**
-     * Create a set of cache entries
-     *
-     * @param   array        $items
-     * @param   null|integer $ttl
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    public function setMultiple($items = array(), $ttl = null)
-    {
-        if (count($items) > 0 && is_array($items)) {
-
-            foreach ($items as $key => $value) {
-                $this->set($key, $value, $ttl);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * Remove a set of cache entries
-     *
-     * @param   array $keys
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    public function removeMultiple($keys = array())
-    {
-        if (count($keys) > 0 && is_array($keys)) {
-            foreach ($keys as $key) {
-                $this->remove($key);
-            }
-        }
-
         return $this;
     }
 }
