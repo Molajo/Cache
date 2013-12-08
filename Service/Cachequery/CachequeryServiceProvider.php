@@ -1,26 +1,26 @@
 <?php
 /**
- * Cache Template Dependency Injector
+ * Cache Query Service Provider
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Service\Cachemodel;
+namespace Molajo\Service\Cachequery;
 
-use Molajo\IoC\Handler\AbstractInjector;
-use CommonApi\IoC\ServiceHandlerInterface;
+use Molajo\IoC\AbstractServiceProvider;
+use CommonApi\IoC\ServiceProviderInterface;
 use CommonApi\Exception\RuntimeException;
 
 /**
- * Cache Template Dependency Injector
+ * Cache Query Service Provider
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class CachemodelInjector extends AbstractInjector implements ServiceHandlerInterface
+class CachequeryServiceProvider extends AbstractServiceProvider implements ServiceProviderInterface
 {
     /**
      * Constructor
@@ -46,7 +46,7 @@ class CachemodelInjector extends AbstractInjector implements ServiceHandlerInter
      */
     public function instantiateService()
     {
-        $this->service_instance = $this->options['cache_model'];
+        $this->service_instance = $this->options['cache_query'];
 
         return $this;
     }

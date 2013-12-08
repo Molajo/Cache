@@ -1,26 +1,26 @@
 <?php
 /**
- * Cache Page Dependency Injector
+ * Cache Template Service Provider
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Service\Cachepage;
+namespace Molajo\Service\Cachemodel;
 
-use Molajo\IoC\Handler\AbstractInjector;
-use CommonApi\IoC\ServiceHandlerInterface;
+use Molajo\IoC\AbstractServiceProvider;
+use CommonApi\IoC\ServiceProviderInterface;
 use CommonApi\Exception\RuntimeException;
 
 /**
- * Cache Page Dependency Injector
+ * Cache Template Service Provider
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class CachepageInjector extends AbstractInjector implements ServiceHandlerInterface
+class CachemodelServiceProvider extends AbstractServiceProvider implements ServiceProviderInterface
 {
     /**
      * Constructor
@@ -46,7 +46,7 @@ class CachepageInjector extends AbstractInjector implements ServiceHandlerInterf
      */
     public function instantiateService()
     {
-        $this->service_instance = $this->options['cache_page'];
+        $this->service_instance = $this->options['cache_model'];
 
         return $this;
     }
