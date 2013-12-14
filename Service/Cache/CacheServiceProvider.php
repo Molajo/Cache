@@ -136,6 +136,7 @@ class CacheServiceProvider extends AbstractServiceProvider implements ServicePro
         $options['cache_time']    = $this->dependencies['Runtimedata']->application->parameters->cache_time;
         $options['cache_folder']  = $this->dependencies['Runtimedata']->site->cache_folder;
         $options['cache_service'] = $this->dependencies['Runtimedata']->application->parameters->cache_service;
+        $options['cache_service'] = 1;
 
         $class = 'Molajo\\Cache\\Handler\\File';
 
