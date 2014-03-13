@@ -1,29 +1,30 @@
 <?php
 /**
- * Cache Service Provider
+ * Cache Factory Method
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Service\Cache;
+namespace Molajo\Factories\Cache;
 
 use Exception;
-use Molajo\IoC\AbstractServiceProvider;
-use CommonApi\IoC\ServiceProviderInterface;
 use CommonApi\Exception\RuntimeException;
+use CommonApi\IoC\FactoryMethodInterface;
+use CommonApi\IoC\FactoryMethodBatchSchedulingInterface;
+use Molajo\IoC\FactoryBase;
 
 //todo: finish implementing DI logic for Cache options
 
 /**
- * Cache Service Provider
+ * Cache Factory Method
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class CacheServiceProvider extends AbstractServiceProvider implements ServiceProviderInterface
+class CacheFactoryMethod extends FactoryBase implements FactoryMethodInterface, FactoryMethodBatchSchedulingInterface
 {
     /**
      * Constructor
@@ -34,15 +35,15 @@ class CacheServiceProvider extends AbstractServiceProvider implements ServicePro
      */
     public function __construct(array $options = array())
     {
-        $options['service_name']             = basename(__DIR__);
+        $options['product_name']             = basename(__DIR__);
         $options['store_instance_indicator'] = true;
-        $options['service_namespace']        = 'Molajo\\Cache\\Adapter';
+        $options['product_namespace']        = 'Molajo\\Cache\\Adapter';
 
         parent::__construct($options);
     }
 
     /**
-     * Instantiate a new handler and inject it into the Adapter for the ServiceProviderInterface
+     * Instantiate a new handler and inject it into the Adapter for the FactoryMethodInterface
      * Retrieve a list of Interface dependencies and return the data ot the controller.
      *
      * @return  array
@@ -51,9 +52,11 @@ class CacheServiceProvider extends AbstractServiceProvider implements ServicePro
      */
     public function setDependencies(array $reflection = null)
     {
+        $options['base_path'] = $this->options['base_path'];
+
         $this->dependencies                = array();
-        $this->dependencies['Dispatcher']  = array();
-        $this->dependencies['Runtimedata'] = array();
+        $this->dependencies['Dispatcher']  = $options;
+        $this->dependencies['Runtimedata'] = $options;
 
         return $this->dependencies;
     }
@@ -65,7 +68,7 @@ class CacheServiceProvider extends AbstractServiceProvider implements ServicePro
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    public function instantiateService()
+    public function instantiateClass()
     {
         $cache_handler = $this->dependencies['Runtimedata']->application->parameters->cache_handler;
 
@@ -76,16 +79,7 @@ class CacheServiceProvider extends AbstractServiceProvider implements ServicePro
             $handler = $this->getFileHandler();
         }
 
-        $this->service_instance = $this->getAdapter($handler);
-
-        /** Instantiate the individual ones - then the master, passing in the individual */
-        /** Page Cache */
-        //$options = array();
-        //$options['cache_page'] = $cache_page_instance;
-        //$application = $getService('Cachepage', $options);
-        /** Model Cache */
-        /** Query Cache */
-        /** Template Cache */
+        $this->product_result = $this->getAdapter($handler);
 
         return $this;
     }
@@ -135,8 +129,8 @@ class CacheServiceProvider extends AbstractServiceProvider implements ServicePro
         $options                  = array();
         $options['cache_time']    = $this->dependencies['Runtimedata']->application->parameters->cache_time;
         $options['cache_folder']  = $this->dependencies['Runtimedata']->site->cache_folder;
-        $options['cache_service'] = $this->dependencies['Runtimedata']->application->parameters->cache_service;
-        $options['cache_service'] = 1;
+        $options['cache_enabled'] = $this->dependencies['Runtimedata']->application->parameters->cache_enabled;
+        $options['cache_enabled'] = 1;
 
         $class = 'Molajo\\Cache\\Handler\\File';
 
@@ -225,7 +219,7 @@ class CacheServiceProvider extends AbstractServiceProvider implements ServicePro
      */
     protected function getAdapter($handler)
     {
-        $class = $this->service_namespace;
+        $class = $this->product_namespace;
 
         try {
             return new $class($handler);

@@ -46,7 +46,7 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->options                  = array();
-        $this->options['cache_service'] = true;
+        $this->options['cache_enabled'] = true;
         $this->options['cache_time']    = 600; //ten minutes
 
         $adapter_handler = new DummyCache($this->options);

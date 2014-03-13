@@ -90,7 +90,7 @@ class File extends AbstractHandler implements CacheInterface
      */
     public function get($key)
     {
-        if ($this->cache_service == 0) {
+        if ($this->cache_enabled == 0) {
             return false;
         }
 
@@ -124,7 +124,7 @@ class File extends AbstractHandler implements CacheInterface
      */
     public function set($key = null, $value, $ttl = 0)
     {
-        if ($this->cache_service == 0) {
+        if ($this->cache_enabled == 0) {
             return false;
         }
 

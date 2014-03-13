@@ -23,7 +23,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Molajo\\Cache\\": "Source/"
+            "Molajo\\Cache\\": "Source/",
+            "Molajo\\Factories\\": "Factories/"
         }
     },
 

@@ -35,7 +35,7 @@ abstract class AbstractHandler implements CacheInterface
      * @var    bool
      * @since  1.0
      */
-    protected $cache_service = false;
+    protected $cache_enabled = false;
 
     /**
      * Cache Time in seconds
@@ -68,8 +68,8 @@ abstract class AbstractHandler implements CacheInterface
      */
     public function connect($options = array())
     {
-        if (isset($options['cache_service'])) {
-            $this->cache_service = (boolean)$options['cache_service'];
+        if (isset($options['cache_enabled'])) {
+            $this->cache_enabled = (boolean)$options['cache_enabled'];
         }
 
         if (isset($options['cache_time'])) {

@@ -1,26 +1,27 @@
 <?php
 /**
- * Cache Template Service Provider
+ * Cache Page Factory Method
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Service\Cachemodel;
+namespace Molajo\Factories\Cachepage;
 
-use Molajo\IoC\AbstractServiceProvider;
-use CommonApi\IoC\ServiceProviderInterface;
 use CommonApi\Exception\RuntimeException;
+use CommonApi\IoC\FactoryMethodInterface;
+use CommonApi\IoC\FactoryMethodBatchSchedulingInterface;
+use Molajo\IoC\FactoryBase;
 
 /**
- * Cache Template Service Provider
+ * Cache Page Factory Method
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class CachemodelServiceProvider extends AbstractServiceProvider implements ServiceProviderInterface
+class CachepageFactoryMethod extends FactoryBase implements FactoryMethodInterface, FactoryMethodBatchSchedulingInterface
 {
     /**
      * Constructor
@@ -33,7 +34,7 @@ class CachemodelServiceProvider extends AbstractServiceProvider implements Servi
     {
         parent::__construct($options);
 
-        $this->service_namespace        = 'Molajo\\Cache\\Adapter';
+        $this->product_namespace        = 'Molajo\\Cache\\Adapter';
         $this->store_instance_indicator = true;
     }
 
@@ -44,9 +45,9 @@ class CachemodelServiceProvider extends AbstractServiceProvider implements Servi
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    public function instantiateService()
+    public function instantiateClass()
     {
-        $this->service_instance = $this->options['cache_model'];
+        $this->product_result = $this->options['cache_page'];
 
         return $this;
     }

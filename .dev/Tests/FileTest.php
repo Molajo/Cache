@@ -46,7 +46,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->options                  = array();
-        $this->options['cache_service'] = true;
+        $this->options['cache_enabled'] = true;
         $this->options['cache_folder']  = __DIR__ . '/Cache';
         $this->options['cache_time']    = 600; //ten minutes
         $this->options['cache_handler'] = 'File';

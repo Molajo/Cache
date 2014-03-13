@@ -18,7 +18,7 @@ $classmap = array();
 
 $results  = createClassMap($base . '/Source/Handler', 'Molajo\\Cache\\Handler\\');
 $classmap = array_merge($classmap, $results);
-$results  = createClassMap($base . '/Service/Cache', 'Molajo\\Service\\Cache\\');
+$results  = createClassMap($base . '/Factories/Cache', 'Molajo\\Factories\\Cache\\');
 $classmap = array_merge($classmap, $results);
 $results  = createClassMap($base . '/vendor/commonapi/cache', 'CommonApi\\Cache\\');
 $classmap = array_merge($classmap, $results);
