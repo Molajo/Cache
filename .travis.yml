@@ -10,11 +10,8 @@ notifications:
   email:
     - amystephen@gmail.com
 
-before_install:
-  - composer self-update
-
 before_script:
-  - composer update --dev
+  - composer install --prefer-source
 
 script:
  - phpunit  -c .dev/phpunit.xml

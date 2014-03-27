@@ -10,9 +10,9 @@ namespace Molajo\Factories\Cache;
 
 use Exception;
 use CommonApi\Exception\RuntimeException;
-use CommonApi\IoC\FactoryMethodInterface;
-use CommonApi\IoC\FactoryMethodBatchSchedulingInterface;
-use Molajo\IoC\FactoryBase;
+use CommonApi\IoC\FactoryInterface;
+use CommonApi\IoC\FactoryBatchInterface;
+use Molajo\IoC\FactoryMethodBase;
 
 //todo: finish implementing DI logic for Cache options
 
@@ -24,7 +24,7 @@ use Molajo\IoC\FactoryBase;
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class CacheFactoryMethod extends FactoryBase implements FactoryMethodInterface, FactoryMethodBatchSchedulingInterface
+class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, FactoryBatchInterface
 {
     /**
      * Constructor
@@ -37,14 +37,13 @@ class CacheFactoryMethod extends FactoryBase implements FactoryMethodInterface, 
     {
         $options['product_name']             = basename(__DIR__);
         $options['store_instance_indicator'] = true;
-        $options['product_namespace']        = 'Molajo\\Cache\\Adapter';
+        $options['product_namespace']        = 'Molajo\\Cache\\Driver';
 
         parent::__construct($options);
     }
 
     /**
-     * Instantiate a new handler and inject it into the Adapter for the FactoryMethodInterface
-     * Retrieve a list of Interface dependencies and return the data ot the controller.
+     * Instantiate a new adapter and inject it into the Driver for the FactoryInterface
      *
      * @return  array
      * @since   1.0
@@ -70,61 +69,61 @@ class CacheFactoryMethod extends FactoryBase implements FactoryMethodInterface, 
      */
     public function instantiateClass()
     {
-        $cache_handler = $this->dependencies['Runtimedata']->application->parameters->cache_handler;
+        $cache_adapter = $this->dependencies['Runtimedata']->application->parameters->cache_handler;
 
-        $method = 'get' . ucfirst(strtolower($cache_handler)) . 'Handler';
+        $method = 'get' . ucfirst(strtolower($cache_adapter)) . 'Adapter';
         if (method_exists($this, ucfirst(strtolower($method)))) {
-            $handler = $this->$method();
+            $adapter = $this->$method();
         } else {
-            $handler = $this->getFileHandler();
+            $adapter = $this->getFileAdapter();
         }
 
-        $this->product_result = $this->getAdapter($handler);
+        $this->product_result = $this->getDriver($adapter);
 
         return $this;
     }
 
     /**
-     * Get the Apc Handler for Cache
+     * Get the Apc Adapter for Cache
      *
      * @return  $this
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    protected function getApcHandler()
+    protected function getApcAdapter()
     {
     }
 
     /**
-     * Get the Database Handler for Cache
+     * Get the Database Adapter for Cache
      *
      * @return  $this
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    protected function getDatabaseHandler()
+    protected function getDatabaseAdapter()
     {
     }
 
     /**
-     * Get the Dummy Handler for Cache
+     * Get the Dummy Adapter for Cache
      *
      * @return  $this
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    protected function getDummyHandler()
+    protected function getDummyAdapter()
     {
     }
 
     /**
-     * Get the File Handler for Cache
+     * Get the File Adapter for Cache
      *
      * @return  $this
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    protected function getFileHandler()
+    protected function getFileAdapter()
     {
         $options                  = array();
         $options['cache_time']    = $this->dependencies['Runtimedata']->application->parameters->cache_time;
@@ -132,19 +131,19 @@ class CacheFactoryMethod extends FactoryBase implements FactoryMethodInterface, 
         $options['cache_enabled'] = $this->dependencies['Runtimedata']->application->parameters->cache_enabled;
         $options['cache_enabled'] = 1;
 
-        $class = 'Molajo\\Cache\\Handler\\File';
+        $class = 'Molajo\\Cache\\Adapter\\File';
 
         try {
             return new $class($options);
         } catch (Exception $e) {
 
             throw new RuntimeException
-            ('Cache: Could not instantiate Cache Adapter Handler: File');
+            ('Cache: Could not instantiate Cache Adapter Adapter: File');
         }
     }
 
     /**
-     * Get the Memcached Handler for Cache
+     * Get the Memcached Adapter for Cache
      *
      * @param   object $application
      *
@@ -152,12 +151,12 @@ class CacheFactoryMethod extends FactoryBase implements FactoryMethodInterface, 
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    protected function getMemcachedHandler()
+    protected function getMemcachedAdapter()
     {
     }
 
     /**
-     * Get the Memory Handler for Cache
+     * Get the Memory Adapter for Cache
      *
      * @param   object $application
      *
@@ -165,12 +164,12 @@ class CacheFactoryMethod extends FactoryBase implements FactoryMethodInterface, 
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    protected function getMemoryHandler()
+    protected function getMemoryAdapter()
     {
     }
 
     /**
-     * Get the Redis Handler for Cache
+     * Get the Redis Adapter for Cache
      *
      * @param   object $application
      *
@@ -178,12 +177,12 @@ class CacheFactoryMethod extends FactoryBase implements FactoryMethodInterface, 
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    protected function getRedisHandler()
+    protected function getRedisAdapter()
     {
     }
 
     /**
-     * Get the Wincache Handler for Cache
+     * Get the Wincache Adapter for Cache
      *
      * @param   object $application
      *
@@ -191,12 +190,12 @@ class CacheFactoryMethod extends FactoryBase implements FactoryMethodInterface, 
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    protected function getWincacheHandler()
+    protected function getWincacheAdapter()
     {
     }
 
     /**
-     * Get the XCache Handler for Cache
+     * Get the XCache Adapter for Cache
      *
      * @param   object $application
      *
@@ -204,29 +203,32 @@ class CacheFactoryMethod extends FactoryBase implements FactoryMethodInterface, 
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    protected function getXCacheHandler()
+    protected function getXCacheAdapter()
     {
     }
 
     /**
-     * Get Cache Adapter, inject with specific Cache Adapter Handler
+     * Get Cache Adapter, inject with specific Cache Adapter Adapter
      *
-     * @param   object $handler
+     * @param   object $adapter
      *
      * @return  object
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    protected function getAdapter($handler)
+    protected function getDriver($adapter)
     {
         $class = $this->product_namespace;
 
         try {
-            return new $class($handler);
+            return new $class($adapter);
+
         } catch (Exception $e) {
 
-            throw new RuntimeException
-            ('Cache: Could not instantiate Adapter for Cache');
+            //throw new RuntimeException
+            //('Cache: Could not instantiate Adapter for Cache');
+            echo 'Cache: Could not instantiate Adapter for Cache';
+            die;
         }
     }
 }

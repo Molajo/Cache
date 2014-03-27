@@ -1,28 +1,28 @@
 <?php
 /**
- * Abstract Handler Cache
+ * Abstract Adapter for Cache
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Cache\Handler;
+namespace Molajo\Cache\Adapter;
 
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
 
 /**
- * Abstract Handler Cache
+ * Abstract Adapter Cache
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-abstract class AbstractHandler implements CacheInterface
+abstract class AbstractAdapter implements CacheInterface
 {
     /**
-     * Cache Handler
+     * Cache Adapter
      *
      * @var    string
      * @since  1.0

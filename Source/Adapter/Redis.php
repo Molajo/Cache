@@ -1,12 +1,12 @@
 <?php
 /**
- * Redis Handler
+ * Redis Adapter
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Cache\Handler;
+namespace Molajo\Cache\Adapter;
 
 use Exception;
 use Molajo\Cache\CacheItem;
@@ -14,14 +14,14 @@ use CommonApi\Cache\CacheInterface;
 use CommonApi\Exception\RuntimeException;
 
 /**
- * Redis Handler
+ * Redis Adapter
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class Redis extends AbstractHandler implements CacheInterface
+class Redis extends AbstractAdapter implements CacheInterface
 {
     /**
      * Redis Database Connection
@@ -63,7 +63,7 @@ class Redis extends AbstractHandler implements CacheInterface
             $this->redis = $options['redis'];
         } else {
             throw new RuntimeException
-            ('Cache Redis Handler: Redis Database dependency not passed into Connect');
+            ('Cache Redis Adapter: Redis Database dependency not passed into Connect');
         }
 
         return $this;
@@ -127,7 +127,7 @@ class Redis extends AbstractHandler implements CacheInterface
 
         if ($results === false) {
             throw new RuntimeException
-            ('Cache APC Handler: Set failed for Key: ' . $key);
+            ('Cache APC Adapter: Set failed for Key: ' . $key);
         }
         return $this;
     }

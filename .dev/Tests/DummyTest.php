@@ -8,7 +8,7 @@
  */
 namespace Molajo\Cache\Test;
 
-use Molajo\Cache\Handler\Dummy as DummyCache;
+use Molajo\Cache\Dummy as DummyCache;
 use Molajo\Cache\Adapter;
 
 /**
@@ -74,8 +74,8 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     /**
      * Create a cache entry
      *
-     * @covers  Molajo\Cache\Handler\Dummy::get
-     * @covers  Molajo\Cache\Handler\Dummy::set
+     * @covers  Molajo\Cache\Dummy::get
+     * @covers  Molajo\Cache\Dummy::set
      *
      * @return  $this
      * @since   1.0

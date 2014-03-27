@@ -1,27 +1,37 @@
 <?php
 /**
- * Xcache
+ * Memcached
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Cache\Handler;
+namespace Molajo\Cache\Adapter;
 
 use Exception;
+use Memcached as phpMemcached;
 use CommonApi\Exception\RuntimeException;
+use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
 
 /**
- * Xcache Cache
+ * Memcached Cache
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class Xcache extends AbstractHandler implements CacheInterface
+class Memcached extends AbstractAdapter implements CacheInterface
 {
+    /**
+     * Memcached Instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $memcached;
+
     /**
      * Constructor
      *
@@ -31,7 +41,7 @@ class Xcache extends AbstractHandler implements CacheInterface
      */
     public function __construct(array $options = array())
     {
-        $this->cache_handler = 'Xcache';
+        $this->cache_handler = 'Memcached';
 
         $this->connect($options);
     }
@@ -49,36 +59,37 @@ class Xcache extends AbstractHandler implements CacheInterface
     {
         parent::connect($options);
 
-        if (extension_loaded('xcache') && is_callable('xcache_get')) {
+        if (extension_loaded('memcached') && class_exists('\\Memcached')) {
         } else {
             throw new RuntimeException
-            ('Cache Xcache Handler: Not supported. xcache must be loaded and xcache_get must be callable.');
+            ('Cache: Memcached not supported.');
         }
 
         $pool = null;
-        if (isset($options['xcache_pool'])) {
-            $pool = $options['xcache_pool'];
+        if (isset($options['memcached_pool'])) {
+            $pool = $options['memcached_pool'];
         }
 
         $compression = false;
-        if (isset($options['xcache_compression'])) {
-            $compression = $options['xcache_compression'];
+        if (isset($options['memcached_compression'])) {
+            $compression = $options['memcached_compression'];
         }
 
         $servers = array();
-        if (isset($options['xcache_servers'])) {
-            $servers = $options['xcache_servers'];
+        if (isset($options['memcached_servers'])) {
+            $servers = $options['memcached_servers'];
         }
 
-        $this->xcache = new phpXcache($pool);
+        $this->memcached = new phpMemcached($pool);
 
-        $this->xcache->setOption(phpXcache::OPT_COMPRESSION, $compression);
-        $this->xcache->setOption(phpXcache::OPT_LIBKETAMA_COMPATIBLE, true);
+        $this->memcached->setOption(phpMemcached::OPT_COMPRESSION, $compression);
+        $this->memcached->setOption(phpMemcached::OPT_LIBKETAMA_COMPATIBLE, true);
 
-        $serverList = $this->xcache->getServerList();
+        $serverList = $this->memcached->getServerList();
+
         if (empty($serverList)) {
             foreach ($servers as $server) {
-                $this->xcache->addServer($server->host, $server->port);
+                $this->memcached->addServer($server->host, $server->port);
             }
         }
 
@@ -101,29 +112,27 @@ class Xcache extends AbstractHandler implements CacheInterface
         }
 
         try {
-            $value = $this->xcache->get($key);
+            $value = $this->memcached->get($key);
 
-            $results = $this->xcache->getResultCode();
+            $results = $this->memcached->getResultCode();
 
-            if (phpXcache::RES_SUCCESS == $results) {
-                $exists = true;
-            } elseif (phpXcache::RES_NOTFOUND == $results) {
-                $exists  = false;
-                $results = null;
+            if (phpMemcached::RES_SUCCESS == $results) {
+            } elseif (phpMemcached::RES_NOTFOUND == $results) {
+                return null;
             } else {
                 throw new RuntimeException
                 (sprintf(
                     'Unable to fetch cache entry for %s. Error message `%s`.',
                     $key,
-                    $this->xcache->getResultMessage()
+                    $this->memcached->getResultMessage()
                 ));
             }
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Get Failed for Xcache ' . $this->cache_folder . '/' . $key . $e->getMessage());
+            ('Cache: Get Failed for Memcached ' . $key . $e->getMessage());
         }
 
-        return new CacheItem($key, $value, $exists);
+        return new CacheItem($key, $value, (bool)$value);
     }
 
     /**
@@ -151,16 +160,12 @@ class Xcache extends AbstractHandler implements CacheInterface
             $ttl = (int)$this->cache_time;
         }
 
-        $results = apc_store($key, $value, (int)$ttl);
+        $results = $this->memcached->set($key, $value, (int)$ttl);
 
-        $this->xcache->set($key, $value, (int)$ttl);
-
-        $results = $this->xcache->getResultCode();
-
-        if (phpXcache::RES_SUCCESS == $results) {
+        if (phpMemcached::RES_SUCCESS == $results) {
         } else {
             throw new RuntimeException
-            ('Cache APC Handler: Set failed for Key: ' . $key);
+            ('Cache Memcached Adapter: Set failed for Key: ' . $key);
         }
 
         return $this;
@@ -178,23 +183,23 @@ class Xcache extends AbstractHandler implements CacheInterface
     public function remove($key = null)
     {
         try {
-            $this->xcache->delete($key);
+            $this->memcached->delete($key);
 
-            $results = $this->xcache->getResultCode();
+            $results = $this->memcached->getResultCode();
 
-            if (phpXcache::RES_SUCCESS == $results) {
-            } elseif (phpXcache::RES_NOTFOUND == $results) {
+            if (phpMemcached::RES_SUCCESS == $results) {
+            } elseif (phpMemcached::RES_NOTFOUND == $results) {
             } else {
                 throw new RuntimeException
                 (sprintf(
                     'Unable to remove cache entry for %s. Error message `%s`.',
                     $key,
-                    $this->xcache->getResultMessage()
+                    $this->memcached->getResultMessage()
                 ));
             }
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Get Failed for Xcache ' . $this->cache_folder . '/' . $key . $e->getMessage());
+            ('Cache: Get Failed for Memcached ' . $key . $e->getMessage());
         }
 
         return $this;
@@ -210,18 +215,18 @@ class Xcache extends AbstractHandler implements CacheInterface
     public function clear()
     {
         try {
-            $this->xcache->flush();
+            $this->memcached->flush();
 
-            $results = $this->xcache->getResultCode();
+            $results = $this->memcached->getResultCode();
 
-            if (phpXcache::RES_SUCCESS == $results) {
-            } elseif (phpXcache::RES_NOTFOUND == $results) {
+            if (phpMemcached::RES_SUCCESS == $results) {
+            } elseif (phpMemcached::RES_NOTFOUND == $results) {
             } else {
-                throw new RuntimeException('Unable to flush Xcache.');
+                throw new RuntimeException('Unable to flush Memcached.');
             }
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Flush Failed for Xcache ' . $e->getMessage());
+            ('Cache: Flush Failed for Memcached ' . $e->getMessage());
         }
     }
 }

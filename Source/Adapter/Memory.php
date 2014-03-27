@@ -1,38 +1,46 @@
 <?php
 /**
- * Apc Cache Handler
+ * Memory Cache
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Cache\Handler;
+namespace Molajo\Cache\Adapter;
 
 use Exception;
-use CommonApi\Exception\RuntimeException;
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
+use CommonApi\Exception\RuntimeException;
 
 /**
- * Apc Cache Handler
+ * Memory Cache
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class Apc extends AbstractHandler implements CacheInterface
+class Memory extends AbstractAdapter implements CacheInterface
 {
+    /**
+     * Cache Container
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $cache_container = array();
+
     /**
      * Constructor
      *
-     * @param   array $options
+     * @param  string $cache_handler
      *
-     * @since   1.0
+     * @since  1.0
      */
     public function __construct(array $options = array())
     {
-        $this->cache_handler = 'Apc';
+        $this->cache_handler = 'Memory';
 
         $this->connect($options);
     }
@@ -50,12 +58,7 @@ class Apc extends AbstractHandler implements CacheInterface
     {
         parent::connect($options);
 
-        if (extension_loaded('apc')
-            && ini_get('apc.enabled')
-        ) {
-        } else {
-            throw new RuntimeException('Cache APC: APC is not enabled');
-        }
+        $this->cache_container = array();
 
         return $this;
     }
@@ -65,7 +68,7 @@ class Apc extends AbstractHandler implements CacheInterface
      *
      * @param   string $key
      *
-     * @return  bool|CacheItem
+     * @return  CacheItem
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
@@ -76,12 +79,20 @@ class Apc extends AbstractHandler implements CacheInterface
         }
 
         try {
-            $exists = apc_exists($key);
-            $value  = apc_fetch($key);
+
+            $value  = null;
+            $exists = false;
+
+            if (isset($this->cache_container[$key])) {
+                $entry  = $this->cache_container[$key];
+                $exists = true;
+                $value  = $entry->value;
+            }
+
             return new CacheItem($key, $value, $exists);
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Get Failed for Apc ' . $e->getMessage());
+            ('Cache: Memory Adapter Failed during Get for Memory ' . $key . $e->getMessage());
         }
     }
 
@@ -110,11 +121,15 @@ class Apc extends AbstractHandler implements CacheInterface
             $ttl = (int)$this->cache_time;
         }
 
-        $results = apc_add($key, $value, (int)$ttl);
+        try {
+            $entry          = new \stdClass();
+            $entry->value   = $value;
+            $entry->expires = $ttl;
 
-        if ($results === false) {
+            $this->cache_container[$key] = $entry;
+        } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache APC Handler: Set failed.');
+            ('Cache: Memory Adapter Failed during set for Memory');
         }
 
         return $this;
@@ -123,7 +138,7 @@ class Apc extends AbstractHandler implements CacheInterface
     /**
      * Remove cache for specified $key value
      *
-     * @param   string $key
+     * @param string $key
      *
      * @return  object
      * @since   1.0
@@ -131,14 +146,15 @@ class Apc extends AbstractHandler implements CacheInterface
      */
     public function remove($key = null)
     {
-        $results = apc_delete($key);
+        try {
 
-        if ($results === false) {
+            if (isset($this->cache_container[$key])) {
+                unset($this->cache_container[$key]);
+            }
+        } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache APC Handler: Remove cache failed.');
+            ('Cache: Memory Adapter Failed during Remove ' . $e->getMessage());
         }
-
-        return $this;
     }
 
     /**
@@ -149,6 +165,6 @@ class Apc extends AbstractHandler implements CacheInterface
      */
     public function clear()
     {
-        return apc_clear_cache('user');
+        return $this->cache_container = array();
     }
 }

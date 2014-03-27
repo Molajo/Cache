@@ -1,6 +1,6 @@
 <?php
 /**
- * Adapter for Cache
+ * Cache Driver
  *
  * @package    Molajo
  * @copyright  2014 Amy Stephen. All rights reserved.
@@ -11,22 +11,22 @@ namespace Molajo\Cache;
 use CommonApi\Cache\CacheInterface;
 
 /**
- * Adapter for Cache
+ * Cache Driver
  *
  * @package    Molajo
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @since      1.0
  */
-class Adapter implements CacheInterface
+class Driver implements CacheInterface
 {
     /**
-     * Cache Adapter Handler
+     * Cache Adapter
      *
      * @var     object
      * @since   1.0
      */
-    protected $adapterHandler;
+    protected $adapter;
 
     /**
      * Constructor
@@ -37,7 +37,7 @@ class Adapter implements CacheInterface
      */
     public function __construct(CacheInterface $cache)
     {
-        $this->adapterHandler = $cache;
+        $this->adapter = $cache;
     }
 
     /**
@@ -50,7 +50,7 @@ class Adapter implements CacheInterface
      */
     public function get($key)
     {
-        return $this->adapterHandler->get($key);
+        return $this->adapter->get($key);
     }
 
     /**
@@ -65,7 +65,7 @@ class Adapter implements CacheInterface
      */
     public function set($key = null, $value, $ttl = 0)
     {
-        return $this->adapterHandler->set($key, $value, $ttl);
+        return $this->adapter->set($key, $value, $ttl);
     }
 
     /**
@@ -78,7 +78,7 @@ class Adapter implements CacheInterface
      */
     public function remove($key = null)
     {
-        return $this->adapterHandler->remove($key);
+        return $this->adapter->remove($key);
     }
 
     /**
@@ -89,6 +89,6 @@ class Adapter implements CacheInterface
      */
     public function clear()
     {
-        return $this->adapterHandler->clear();
+        return $this->adapter->clear();
     }
 }

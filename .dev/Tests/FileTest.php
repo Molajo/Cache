@@ -8,7 +8,7 @@
  */
 namespace Molajo\Cache\Test;
 
-use Molajo\Cache\Handler\File as FileCache;
+use Molajo\Cache\File as FileCache;
 use Molajo\Cache\Adapter;
 
 /**
@@ -76,7 +76,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * Create a cache entry
      *
-     * @covers  Molajo\Cache\Handler\File::get
+     * @covers  Molajo\Cache\File::get
      *
      * @return  $this
      * @since   1.0
@@ -99,7 +99,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     /**
      * Create a cache entry
      *
-     * @covers  Molajo\Cache\Handler\File::connect
+     * @covers  Molajo\Cache\File::connect
      *
      * @return  $this
      * @since   1.0

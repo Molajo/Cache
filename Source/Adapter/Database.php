@@ -1,12 +1,12 @@
 <?php
 /**
- * Database Cache Handler
+ * Database Cache Adapter
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Cache\Handler;
+namespace Molajo\Cache\Adapter;
 
 use Exception;
 use CommonApi\Exception\RuntimeException;
@@ -21,7 +21,7 @@ use CommonApi\Cache\CacheInterface;
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class Database extends AbstractHandler implements CacheInterface
+class Database extends AbstractAdapter implements CacheInterface
 {
     /**
      * Database Connection
@@ -215,7 +215,7 @@ class Database extends AbstractHandler implements CacheInterface
             $this->execute();
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache Database Handler: Delete failed' . $e->getMessage());
+            ('Cache Database Adapter: Delete failed' . $e->getMessage());
         }
 
         return $this;

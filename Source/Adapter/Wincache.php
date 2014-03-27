@@ -1,35 +1,36 @@
 <?php
 /**
- * Memory Cache
+ * Wincache
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Cache\Handler;
+namespace Molajo\Cache\Adapter;
 
+use Wincache as phpWincache;
 use Exception;
+use CommonApi\Exception\RuntimeException;
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
-use CommonApi\Exception\RuntimeException;
 
 /**
- * Memory Cache
+ * Wincache Cache
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class Memory extends AbstractHandler implements CacheInterface
+class Wincache extends AbstractAdapter implements CacheInterface
 {
     /**
-     * Cache Container
+     * Wincache Instance
      *
-     * @var    array
+     * @var    object
      * @since  1.0
      */
-    protected $cache_container = array();
+    protected $wincache;
 
     /**
      * Constructor
@@ -40,7 +41,7 @@ class Memory extends AbstractHandler implements CacheInterface
      */
     public function __construct(array $options = array())
     {
-        $this->cache_handler = 'Memory';
+        $this->cache_handler = 'Wincache';
 
         $this->connect($options);
     }
@@ -58,7 +59,11 @@ class Memory extends AbstractHandler implements CacheInterface
     {
         parent::connect($options);
 
-        $this->cache_container = array();
+        if (extension_loaded('wincache') && is_callable('wincache_ucache_get')) {
+        } else {
+            throw new RuntimeException
+            ('Cache: Wincache not supported.');
+        }
 
         return $this;
     }
@@ -68,7 +73,7 @@ class Memory extends AbstractHandler implements CacheInterface
      *
      * @param   string $key
      *
-     * @return  CacheItem
+     * @return  null|mixed cached value
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
@@ -79,28 +84,24 @@ class Memory extends AbstractHandler implements CacheInterface
         }
 
         try {
+            $value = \wincache_ucache_get($key);
 
-            $value  = null;
-            $exists = false;
-
-            if (isset($this->cache_container[$key])) {
-                $entry  = $this->cache_container[$key];
-                $exists = true;
-                $value  = $entry->value;
+            if ($value === false) {
+                return new CacheItem($key, null, false);
             }
-
-            return new CacheItem($key, $value, $exists);
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Memory Handler Failed during Get for Memory ' . $key . $e->getMessage());
+            ('Cache: Get Failed for Wincache Key: ' . $key . ' Message: ' . $e->getMessage());
         }
+
+        return new CacheItem($key, $value, true);
     }
 
     /**
      * Create a cache entry
      *
-     * @param   null    $key
-     * @param   null    $value
+     * @param   string  $key
+     * @param   mixed   $value
      * @param   integer $ttl (number of seconds)
      *
      * @return  $this
@@ -121,15 +122,12 @@ class Memory extends AbstractHandler implements CacheInterface
             $ttl = (int)$this->cache_time;
         }
 
-        try {
-            $entry          = new \stdClass();
-            $entry->value   = $value;
-            $entry->expires = $ttl;
+        $results = wincache_ucache_add($key, $value, (int)$ttl);
 
-            $this->cache_container[$key] = $entry;
-        } catch (Exception $e) {
+        if ($results === true) {
+        } else {
             throw new RuntimeException
-            ('Cache: Memory Handler Failed during set for Memory');
+            ('Cache APC Adapter: Set failed for Key: ' . $key);
         }
 
         return $this;
@@ -138,7 +136,7 @@ class Memory extends AbstractHandler implements CacheInterface
     /**
      * Remove cache for specified $key value
      *
-     * @param string $key
+     * @param   string $key
      *
      * @return  object
      * @since   1.0
@@ -147,14 +145,19 @@ class Memory extends AbstractHandler implements CacheInterface
     public function remove($key = null)
     {
         try {
+            $results = \wincache_ucache_delete($key);
 
-            if (isset($this->cache_container[$key])) {
-                unset($this->cache_container[$key]);
+            if ($results === true) {
+            } else {
+                throw new RuntimeException
+                ('Unable to remove cache entry for');
             }
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Memory Handler Failed during Remove ' . $e->getMessage());
+            ('Cache: Get Failed for Wincache ' . $e->getMessage());
         }
+
+        return $this;
     }
 
     /**
@@ -162,9 +165,20 @@ class Memory extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function clear()
     {
-        return $this->cache_container = array();
+        try {
+            $results = \wincache_ucache_clear();
+
+            if ($results === true) {
+            } else {
+                throw new RuntimeException('Unable to clear Wincache.');
+            }
+        } catch (Exception $e) {
+            throw new RuntimeException
+            ('Unable to clear Wincache.' . $e->getMessage());
+        }
     }
 }

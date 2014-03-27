@@ -6,7 +6,7 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Cache\Handler;
+namespace Molajo\Cache\Adapter;
 
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
@@ -20,7 +20,7 @@ use CommonApi\Exception\RuntimeException;
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class Dummy extends AbstractHandler implements CacheInterface
+class Dummy extends AbstractAdapter implements CacheInterface
 {
     /**
      * Constructor

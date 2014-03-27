@@ -1,47 +1,38 @@
 <?php
 /**
- * Wincache
+ * Apc Cache Adapter
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Cache\Handler;
+namespace Molajo\Cache\Adapter;
 
-use Wincache as phpWincache;
 use Exception;
 use CommonApi\Exception\RuntimeException;
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
 
 /**
- * Wincache Cache
+ * Apc Cache Adapter
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class Wincache extends AbstractHandler implements CacheInterface
+class Apc extends AbstractAdapter implements CacheInterface
 {
-    /**
-     * Wincache Instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $wincache;
-
     /**
      * Constructor
      *
-     * @param  string $cache_handler
+     * @param   array $options
      *
-     * @since  1.0
+     * @since   1.0
      */
     public function __construct(array $options = array())
     {
-        $this->cache_handler = 'Wincache';
+        $this->cache_handler = 'Apc';
 
         $this->connect($options);
     }
@@ -59,10 +50,11 @@ class Wincache extends AbstractHandler implements CacheInterface
     {
         parent::connect($options);
 
-        if (extension_loaded('wincache') && is_callable('wincache_ucache_get')) {
+        if (extension_loaded('apc')
+            && ini_get('apc.enabled')
+        ) {
         } else {
-            throw new RuntimeException
-            ('Cache: Wincache not supported.');
+            throw new RuntimeException('Cache APC: APC is not enabled');
         }
 
         return $this;
@@ -73,7 +65,7 @@ class Wincache extends AbstractHandler implements CacheInterface
      *
      * @param   string $key
      *
-     * @return  null|mixed cached value
+     * @return  bool|CacheItem
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
@@ -84,24 +76,20 @@ class Wincache extends AbstractHandler implements CacheInterface
         }
 
         try {
-            $value = \wincache_ucache_get($key);
-
-            if ($value === false) {
-                return new CacheItem($key, null, false);
-            }
+            $exists = apc_exists($key);
+            $value  = apc_fetch($key);
+            return new CacheItem($key, $value, $exists);
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Get Failed for Wincache Key: ' . $key . ' Message: ' . $e->getMessage());
+            ('Cache: Get Failed for Apc ' . $e->getMessage());
         }
-
-        return new CacheItem($key, $value, true);
     }
 
     /**
      * Create a cache entry
      *
-     * @param   string  $key
-     * @param   mixed   $value
+     * @param   null    $key
+     * @param   null    $value
      * @param   integer $ttl (number of seconds)
      *
      * @return  $this
@@ -122,12 +110,11 @@ class Wincache extends AbstractHandler implements CacheInterface
             $ttl = (int)$this->cache_time;
         }
 
-        $results = wincache_ucache_add($key, $value, (int)$ttl);
+        $results = apc_add($key, $value, (int)$ttl);
 
-        if ($results === true) {
-        } else {
+        if ($results === false) {
             throw new RuntimeException
-            ('Cache APC Handler: Set failed for Key: ' . $key);
+            ('Cache APC Adapter: Set failed.');
         }
 
         return $this;
@@ -144,17 +131,11 @@ class Wincache extends AbstractHandler implements CacheInterface
      */
     public function remove($key = null)
     {
-        try {
-            $results = \wincache_ucache_delete($key);
+        $results = apc_delete($key);
 
-            if ($results === true) {
-            } else {
-                throw new RuntimeException
-                ('Unable to remove cache entry for');
-            }
-        } catch (Exception $e) {
+        if ($results === false) {
             throw new RuntimeException
-            ('Cache: Get Failed for Wincache ' . $e->getMessage());
+            ('Cache APC Adapter: Remove cache failed.');
         }
 
         return $this;
@@ -165,20 +146,9 @@ class Wincache extends AbstractHandler implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function clear()
     {
-        try {
-            $results = \wincache_ucache_clear();
-
-            if ($results === true) {
-            } else {
-                throw new RuntimeException('Unable to clear Wincache.');
-            }
-        } catch (Exception $e) {
-            throw new RuntimeException
-            ('Unable to clear Wincache.' . $e->getMessage());
-        }
+        return apc_clear_cache('user');
     }
 }

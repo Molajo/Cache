@@ -1,12 +1,12 @@
 <?php
 /**
- * File Handler for Cache
+ * File Adapter for Cache
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Cache\Handler;
+namespace Molajo\Cache\Adapter;
 
 use Exception;
 use DirectoryIterator;
@@ -15,14 +15,14 @@ use CommonApi\Exception\RuntimeException;
 use CommonApi\Cache\CacheInterface;
 
 /**
- * File Handler for Cache
+ * File Adapter for Cache
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class File extends AbstractHandler implements CacheInterface
+class File extends AbstractAdapter implements CacheInterface
 {
     /**
      * Cache Path from Root
@@ -73,7 +73,7 @@ class File extends AbstractHandler implements CacheInterface
             }
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Failed creating File Handler Folder ' . $this->cache_folder . $e->getMessage());
+            ('Cache: Failed creating File Adapter Folder ' . $this->cache_folder . $e->getMessage());
         }
 
         return $this;

@@ -8,7 +8,7 @@
  */
 namespace Molajo\Cache\Test;
 
-use Molajo\Cache\Handler\Memory as MemoryCache;
+use Molajo\Cache\Memory as MemoryCache;
 use Molajo\Cache\Adapter;
 
 /**
@@ -74,7 +74,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
     /**
      * Create a cache entry
      *
-     * @covers  Molajo\Cache\Handler\Memory::get
+     * @covers  Molajo\Cache\Memory::get
      *
      * @return  $this
      * @since   1.0
@@ -97,7 +97,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
     /**
      * Create a cache entry
      *
-     * @covers  Molajo\Cache\Handler\Memory::connect
+     * @covers  Molajo\Cache\Memory::connect
      *
      * @return  $this
      * @since   1.0

@@ -9,9 +9,9 @@
 namespace Molajo\Factories\Cachepage;
 
 use CommonApi\Exception\RuntimeException;
-use CommonApi\IoC\FactoryMethodInterface;
-use CommonApi\IoC\FactoryMethodBatchSchedulingInterface;
-use Molajo\IoC\FactoryBase;
+use CommonApi\IoC\FactoryInterface;
+use CommonApi\IoC\FactoryBatchInterface;
+use Molajo\IoC\FactoryMethodBase;
 
 /**
  * Cache Page Factory Method
@@ -21,7 +21,7 @@ use Molajo\IoC\FactoryBase;
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class CachepageFactoryMethod extends FactoryBase implements FactoryMethodInterface, FactoryMethodBatchSchedulingInterface
+class CachepageFactoryMethod extends FactoryMethodBase implements FactoryInterface, FactoryBatchInterface
 {
     /**
      * Constructor
@@ -34,7 +34,7 @@ class CachepageFactoryMethod extends FactoryBase implements FactoryMethodInterfa
     {
         parent::__construct($options);
 
-        $this->product_namespace        = 'Molajo\\Cache\\Adapter';
+//        $this->product_namespace        = 'Molajo\\Cache';
         $this->store_instance_indicator = true;
     }
 

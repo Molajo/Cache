@@ -34,7 +34,7 @@ Class CacheItem implements CacheItemInterface
      * @var     bool
      * @since   1.0
      */
-    public $isHit;
+    public $is_hit;
 
     /**
      * Cache Value
@@ -49,15 +49,15 @@ Class CacheItem implements CacheItemInterface
      *
      * @param  string $key
      * @param  null   $value
-     * @param  bool   $isHit
+     * @param  bool   $is_hit
      *
      * @since  1.0
      */
-    public function __construct($key, $value = null, $isHit = true)
+    public function __construct($key, $value = null, $is_hit = true)
     {
-        $this->key   = $key;
-        $this->value = $value;
-        $this->isHit = $isHit;
+        $this->key    = $key;
+        $this->value  = $value;
+        $this->is_hit = $is_hit;
     }
 
     /**
@@ -105,6 +105,6 @@ Class CacheItem implements CacheItemInterface
      */
     public function isHit()
     {
-        return (bool)$this->isHit;
+        return (bool)$this->is_hit;
     }
 }
