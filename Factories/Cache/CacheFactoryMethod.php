@@ -47,7 +47,7 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      *
      * @return  array
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function setDependencies(array $reflection = null)
     {
@@ -65,7 +65,7 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function instantiateClass()
     {
@@ -88,7 +88,7 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getApcAdapter()
     {
@@ -99,7 +99,7 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getDatabaseAdapter()
     {
@@ -110,7 +110,7 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getDummyAdapter()
     {
@@ -121,7 +121,7 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getFileAdapter()
     {
@@ -149,7 +149,7 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getMemcachedAdapter()
     {
@@ -162,7 +162,7 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getMemoryAdapter()
     {
@@ -175,7 +175,7 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getRedisAdapter()
     {
@@ -188,7 +188,7 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getWincacheAdapter()
     {
@@ -201,7 +201,7 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getXCacheAdapter()
     {
@@ -214,7 +214,7 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      *
      * @return  object
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getDriver($adapter)
     {

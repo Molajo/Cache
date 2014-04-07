@@ -43,7 +43,7 @@ class CachequeryFactoryMethod extends FactoryMethodBase implements FactoryInterf
      *
      * @return  object
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function instantiateClass()
     {
