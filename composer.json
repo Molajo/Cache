@@ -23,8 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Molajo\\Cache\\": "Source/Adapter/",
-            "Molajo\\": "Source/Driver/",
+            "Molajo\\Cache\\": "Source/",
             "Molajo\\Factories\\": "Factories/"
         }
     },
