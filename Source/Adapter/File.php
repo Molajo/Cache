@@ -8,10 +8,8 @@
  */
 namespace Molajo\Cache\Adapter;
 
-use Exception;
 use DirectoryIterator;
 use Molajo\Cache\CacheItem;
-use CommonApi\Exception\RuntimeException;
 use CommonApi\Cache\CacheInterface;
 
 /**
@@ -54,7 +52,6 @@ class File extends AbstractAdapter implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function connect($options = array())
     {
@@ -78,7 +75,6 @@ class File extends AbstractAdapter implements CacheInterface
      *
      * @return  bool|CacheItem
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function get($key)
     {
@@ -100,7 +96,6 @@ class File extends AbstractAdapter implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function set($key, $value, $ttl = 0)
     {
@@ -131,14 +126,7 @@ class File extends AbstractAdapter implements CacheInterface
 
             if ($file->isDot()) {
             } else {
-
-                if (file_exists($file->getPathname())
-                    && (time() - $this->cache_time)
-                    < filemtime($file->getPathname())
-                ) {
-                } else {
-                    $this->remove($file->getPathname());
-                }
+                $this->RemoveExpiredFile($file);
             }
         }
 
@@ -170,7 +158,6 @@ class File extends AbstractAdapter implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function remove($key = null)
     {
@@ -200,7 +187,6 @@ class File extends AbstractAdapter implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function filePut($key, $value)
     {
@@ -216,7 +202,6 @@ class File extends AbstractAdapter implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function chmodFile($key)
     {
@@ -232,7 +217,6 @@ class File extends AbstractAdapter implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function createFolder()
     {
@@ -251,7 +235,6 @@ class File extends AbstractAdapter implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getFileContents($key)
     {
@@ -264,5 +247,24 @@ class File extends AbstractAdapter implements CacheInterface
         }
 
         return array($exists, $value);
+    }
+
+    /**
+     * Remove expired file
+     *
+     * @param   string $key
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    protected function RemoveExpiredFile($file)
+    {
+        if (file_exists($file->getPathname())
+            && (time() - $this->cache_time)
+            < filemtime($file->getPathname())
+        ) {
+        } else {
+            $this->remove($file->getPathname());
+        }
     }
 }

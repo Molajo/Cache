@@ -8,10 +8,8 @@
  */
 namespace Molajo\Cache\Adapter;
 
-use Exception;
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
-use CommonApi\Exception\RuntimeException;
 
 /**
  * Memory Cache
@@ -52,7 +50,6 @@ class Memory extends AbstractAdapter implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function connect($options = array())
     {
@@ -70,7 +67,6 @@ class Memory extends AbstractAdapter implements CacheInterface
      *
      * @return  CacheItem
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function get($key)
     {
@@ -78,23 +74,31 @@ class Memory extends AbstractAdapter implements CacheInterface
             return false;
         }
 
-        try {
+        list($value, $exists) = $this->createCacheItem($key);
 
-            $value  = null;
-            $exists = false;
+        return new CacheItem($key, $value, $exists);
+    }
 
-            if (isset($this->cache_container[$key])) {
-                $entry  = $this->cache_container[$key];
-                $exists = true;
-                $value  = $entry->value;
-            }
+    /**
+     * Create Cache Item
+     *
+     * @param   string $key
+     *
+     * @return  CacheItem
+     * @since   1.0
+     */
+    protected function createCacheItem($key)
+    {
+        $value  = null;
+        $exists = false;
 
-            return new CacheItem($key, $value, $exists);
-        } catch (Exception $e) {
-            throw new RuntimeException(
-                'Cache: Memory Adapter Failed during Get for Memory ' . $key . $e->getMessage()
-            );
+        if (isset($this->cache_container[$key])) {
+            $entry  = $this->cache_container[$key];
+            $exists = true;
+            $value  = $entry->value;
         }
+
+        return array($value, $exists);
     }
 
     /**
@@ -106,7 +110,6 @@ class Memory extends AbstractAdapter implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function set($key, $value = null, $ttl = 0)
     {
@@ -114,37 +117,45 @@ class Memory extends AbstractAdapter implements CacheInterface
             return false;
         }
 
-        if ($key === null) {
-            $key = serialize($value);
-        }
-
         if ((int)$ttl == 0) {
             $ttl = (int)$this->cache_time;
         }
 
-        try {
-            $entry          = new \stdClass();
-            $entry->value   = $value;
-            $entry->expires = $ttl;
-
-            $this->cache_container[$key] = $entry;
-        } catch (Exception $e) {
-            throw new RuntimeException(
-                'Cache: Memory Adapter Failed during set for Memory'
-            );
-        }
+        $this->cacheItem($key, $value, $ttl);
 
         return $this;
     }
 
     /**
-     * Remove cache for specified $key value
+     * Cache Item
      *
      * @param   string  $key
+     * @param   mixed   $value
+     * @param   integer $ttl
      *
      * @return  object
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
+     */
+    protected function cacheItem($key, $value, $ttl)
+    {
+        if ($key === null) {
+            $key = serialize($value);
+        }
+
+        $entry          = new \stdClass();
+        $entry->value   = $value;
+        $entry->expires = $ttl;
+
+        $this->cache_container[$key] = $entry;
+    }
+
+    /**
+     * Remove cache for specified $key value
+     *
+     * @param   string $key
+     *
+     * @return  object
+     * @since   1.0
      */
     public function remove($key = null)
     {
