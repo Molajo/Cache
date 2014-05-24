@@ -60,20 +60,13 @@ class File extends AbstractAdapter implements CacheInterface
     {
         parent::connect($options);
 
-        try {
-            $this->cache_folder = null;
+        $this->cache_folder = null;
 
-            if (isset($options['cache_folder'])) {
-                $this->cache_folder = $options['cache_folder'];
-            }
-
-            $this->createFolder();
-
-        } catch (Exception $e) {
-            throw new RuntimeException(
-                'Cache: Failed creating File Adapter Folder ' . $this->cache_folder . $e->getMessage()
-            );
+        if (isset($options['cache_folder'])) {
+            $this->cache_folder = $options['cache_folder'];
         }
+
+        $this->createFolder();
 
         return $this;
     }
@@ -93,14 +86,7 @@ class File extends AbstractAdapter implements CacheInterface
             return false;
         }
 
-        try {
-            list($exists, $value) = $this->getFileContents($key);
-
-        } catch (Exception $e) {
-            throw new RuntimeException(
-                'Cache: Get Failed for File ' . $this->cache_folder . '/' . $key . $e->getMessage()
-            );
-        }
+        list($exists, $value) = $this->getFileContents($key);
 
         return new CacheItem($key, $value, $exists);
     }
@@ -188,14 +174,8 @@ class File extends AbstractAdapter implements CacheInterface
      */
     public function remove($key = null)
     {
-        try {
-            if (file_exists($this->cache_folder . '/' . $key)) {
-                unlink($this->cache_folder . '/' . $key);
-            }
-        } catch (Exception $e) {
-            throw new RuntimeException(
-                'Cache: Remove cache entry failed ' . $this->cache_folder . '/' . $key . $e->getMessage()
-            );
+        if (file_exists($this->cache_folder . '/' . $key)) {
+            unlink($this->cache_folder . '/' . $key);
         }
 
         return $this;
@@ -224,13 +204,7 @@ class File extends AbstractAdapter implements CacheInterface
      */
     protected function filePut($key, $value)
     {
-        try {
-            file_put_contents($this->cache_folder . '/' . $key, serialize($value));
-        } catch (Exception $e) {
-            throw new RuntimeException(
-                'Cache: file_put_contents failed for ' . $this->cache_folder . '/' . $key . $e->getMessage()
-            );
-        }
+        file_put_contents($this->cache_folder . '/' . $key, serialize($value));
 
         return $this;
     }
@@ -246,13 +220,7 @@ class File extends AbstractAdapter implements CacheInterface
      */
     protected function chmodFile($key)
     {
-        try {
-            chmod(($this->cache_folder . '/' . $key), 0644);
-        } catch (Exception $e) {
-            throw new RuntimeException(
-                'Cache: Chmod failed ' . $this->cache_folder . '/' . $key . $e->getMessage()
-            );
-        }
+        chmod(($this->cache_folder . '/' . $key), 0644);
 
         return $this;
     }
