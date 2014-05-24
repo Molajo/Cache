@@ -78,13 +78,7 @@ class File extends AbstractAdapter implements CacheInterface
      */
     public function get($key)
     {
-        if ($this->cache_enabled == 0) {
-            return false;
-        }
-
-        list($exists, $value) = $this->getFileContents($key);
-
-        return new CacheItem($key, $value, $exists);
+        return parent::get($key);
     }
 
     /**
@@ -236,7 +230,7 @@ class File extends AbstractAdapter implements CacheInterface
      * @return  $this
      * @since   1.0
      */
-    protected function getFileContents($key)
+    protected function createCacheItem($key)
     {
         $exists = false;
         $value  = null;
@@ -246,7 +240,7 @@ class File extends AbstractAdapter implements CacheInterface
             $value  = unserialize(file_get_contents($this->cache_folder . '/' . $key));
         }
 
-        return array($exists, $value);
+        return array($value, $exists);
     }
 
     /**

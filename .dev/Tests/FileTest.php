@@ -49,7 +49,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::filePut
      * @covers  Molajo\Cache\Adapter\File::chmodFile
      * @covers  Molajo\Cache\Adapter\File::createFolder
-     * @covers  Molajo\Cache\Adapter\File::getFileContents
+     * @covers  Molajo\Cache\Adapter\File::createCacheItem
      *
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect
@@ -100,7 +100,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::filePut
      * @covers  Molajo\Cache\Adapter\File::chmodFile
      * @covers  Molajo\Cache\Adapter\File::createFolder
-     * @covers  Molajo\Cache\Adapter\File::getFileContents
+     * @covers  Molajo\Cache\Adapter\File::createCacheItem
      *
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect
@@ -143,7 +143,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::filePut
      * @covers  Molajo\Cache\Adapter\File::chmodFile
      * @covers  Molajo\Cache\Adapter\File::createFolder
-     * @covers  Molajo\Cache\Adapter\File::getFileContents
+     * @covers  Molajo\Cache\Adapter\File::createCacheItem
      *
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect
@@ -194,7 +194,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::filePut
      * @covers  Molajo\Cache\Adapter\File::chmodFile
      * @covers  Molajo\Cache\Adapter\File::createFolder
-     * @covers  Molajo\Cache\Adapter\File::getFileContents
+     * @covers  Molajo\Cache\Adapter\File::createCacheItem
      *
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect
@@ -240,7 +240,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::filePut
      * @covers  Molajo\Cache\Adapter\File::chmodFile
      * @covers  Molajo\Cache\Adapter\File::createFolder
-     * @covers  Molajo\Cache\Adapter\File::getFileContents
+     * @covers  Molajo\Cache\Adapter\File::createCacheItem
      *
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect
@@ -285,7 +285,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::filePut
      * @covers  Molajo\Cache\Adapter\File::chmodFile
      * @covers  Molajo\Cache\Adapter\File::createFolder
-     * @covers  Molajo\Cache\Adapter\File::getFileContents
+     * @covers  Molajo\Cache\Adapter\File::createCacheItem
      *
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect
@@ -382,7 +382,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::filePut
      * @covers  Molajo\Cache\Adapter\File::chmodFile
      * @covers  Molajo\Cache\Adapter\File::createFolder
-     * @covers  Molajo\Cache\Adapter\File::getFileContents
+     * @covers  Molajo\Cache\Adapter\File::createCacheItem
      *
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect

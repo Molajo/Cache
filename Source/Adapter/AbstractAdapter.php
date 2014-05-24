@@ -92,7 +92,13 @@ abstract class AbstractAdapter implements CacheInterface
      */
     public function get($key)
     {
-        return $this;
+        if ($this->cache_enabled == 0) {
+            return false;
+        }
+
+        list($value, $exists) = $this->createCacheItem($key);
+
+        return new CacheItem($key, $value, $exists);
     }
 
     /**

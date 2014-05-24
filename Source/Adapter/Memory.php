@@ -70,13 +70,7 @@ class Memory extends AbstractAdapter implements CacheInterface
      */
     public function get($key)
     {
-        if ($this->cache_enabled == 0) {
-            return false;
-        }
-
-        list($value, $exists) = $this->createCacheItem($key);
-
-        return new CacheItem($key, $value, $exists);
+        return parent::get($key);
     }
 
     /**
