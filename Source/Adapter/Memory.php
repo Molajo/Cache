@@ -32,7 +32,6 @@ class Memory extends AbstractAdapter implements CacheInterface
     /**
      * Constructor
      *
-     * @param  string $cache_handler
      *
      * @since  1.0
      */
@@ -148,7 +147,7 @@ class Memory extends AbstractAdapter implements CacheInterface
      *
      * @param   string $key
      *
-     * @return  object
+     * @return  Memory
      * @since   1.0
      */
     public function remove($key = null)

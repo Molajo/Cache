@@ -8,9 +8,7 @@
  */
 namespace Molajo\Cache\Adapter;
 
-use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
-use CommonApi\Exception\RuntimeException;
 
 /**
  * Dummy Cache
@@ -59,7 +57,7 @@ class Dummy extends AbstractAdapter implements CacheInterface
      *
      * @param   string $key
      *
-     * @return  bool|CacheItem
+     * @return  Dummy
      * @since   1.0
      */
     public function get($key)
@@ -87,7 +85,7 @@ class Dummy extends AbstractAdapter implements CacheInterface
      *
      * @param string $key
      *
-     * @return  object
+     * @return  Dummy
      * @since   1.0
      */
     public function remove($key = null)

@@ -33,7 +33,6 @@ class File extends AbstractAdapter implements CacheInterface
     /**
      * Constructor
      *
-     * @param  string $cache_handler
      * @param  array  $options
      *
      * @since  1.0
@@ -86,7 +85,7 @@ class File extends AbstractAdapter implements CacheInterface
      *
      * @param   string       $key   serialize name uniquely identifying content
      * @param   mixed        $value Data to be serialized and then saved as cache
-     * @param   null|integer $ttl
+     * @param   integer $ttl
      *
      * @return  $this
      * @since   1.0
@@ -207,7 +206,6 @@ class File extends AbstractAdapter implements CacheInterface
     /**
      * Create Folder
      *
-     * @param   string $key
      *
      * @return  $this
      * @since   1.0
@@ -246,8 +244,8 @@ class File extends AbstractAdapter implements CacheInterface
     /**
      * Remove expired file
      *
-     * @param   string $key
      *
+     * @param DirectoryIterator $file
      * @return  $this
      * @since   1.0
      */
