@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1400901261">
-  <project timestamp="1400901261">
+<coverage generated="1400902154">
+  <project timestamp="1400902154">
     <file name="/Users/amystephen/Sites/Molajo/Cache/.dev/Bootstrap.php">
       <line num="24" type="stmt" count="0"/>
       <line num="25" type="stmt" count="0"/>
@@ -37,7 +37,7 @@
     <package name="Molajo\Cache\Adapter">
       <file name="/Users/amystephen/Sites/Molajo/Cache/Source/Adapter/AbstractAdapter.php">
         <class name="AbstractAdapter" namespace="Molajo\Cache\Adapter">
-          <metrics methods="6" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="11" elements="25" coveredelements="13"/>
+          <metrics methods="7" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="11" elements="23" coveredelements="13"/>
         </class>
         <line num="55" type="method" name="__construct" crap="2" count="0"/>
         <line num="57" type="stmt" count="0"/>
@@ -58,18 +58,16 @@
         <line num="96" type="stmt" count="0"/>
         <line num="99" type="stmt" count="5"/>
         <line num="101" type="stmt" count="5"/>
-        <line num="114" type="method" name="set" crap="2" count="0"/>
-        <line num="116" type="stmt" count="0"/>
-        <line num="127" type="method" name="remove" crap="2" count="0"/>
-        <line num="129" type="stmt" count="0"/>
-        <line num="138" type="method" name="clear" crap="2" count="0"/>
-        <line num="140" type="stmt" count="0"/>
-        <line num="143" type="stmt" count="0"/>
-        <metrics loc="142" ncloc="62" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="11" elements="25" coveredelements="11"/>
+        <line num="114" type="method" name="set" crap="1" count="0"/>
+        <line num="124" type="method" name="remove" crap="1" count="0"/>
+        <line num="132" type="method" name="clear" crap="1" count="0"/>
+        <line num="142" type="method" name="createCacheItem" crap="1" count="0"/>
+        <line num="144" type="stmt" count="0"/>
+        <metrics loc="143" ncloc="55" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="11" elements="19" coveredelements="11"/>
       </file>
       <file name="/Users/amystephen/Sites/Molajo/Cache/Source/Adapter/Dummy.php">
         <class name="Dummy" namespace="Molajo\Cache\Adapter">
-          <metrics methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="9" elements="15" coveredelements="15"/>
+          <metrics methods="7" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="9" elements="17" coveredelements="15"/>
         </class>
         <line num="35" type="method" name="__construct" crap="1" count="4"/>
         <line num="37" type="stmt" count="4"/>
@@ -86,12 +84,14 @@
         <line num="95" type="stmt" count="1"/>
         <line num="104" type="method" name="clear" crap="1" count="1"/>
         <line num="106" type="stmt" count="1"/>
-        <line num="109" type="stmt" count="0"/>
-        <metrics loc="108" ncloc="43" classes="1" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="9" elements="15" coveredelements="15"/>
+        <line num="117" type="method" name="createCacheItem" crap="2" count="0"/>
+        <line num="119" type="stmt" count="0"/>
+        <line num="122" type="stmt" count="0"/>
+        <metrics loc="121" ncloc="48" classes="1" methods="7" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="9" elements="17" coveredelements="15"/>
       </file>
       <file name="/Users/amystephen/Sites/Molajo/Cache/Source/Adapter/File.php">
         <class name="File" namespace="Molajo\Cache\Adapter">
-          <metrics methods="13" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="57" coveredstatements="41" elements="70" coveredelements="51"/>
+          <metrics methods="13" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="57" coveredstatements="40" elements="70" coveredelements="50"/>
         </class>
         <line num="41" type="method" name="__construct" crap="1" count="5"/>
         <line num="43" type="stmt" count="5"/>
@@ -142,10 +142,10 @@
         <line num="200" type="method" name="chmodFile" crap="1" count="3"/>
         <line num="202" type="stmt" count="3"/>
         <line num="204" type="stmt" count="3"/>
-        <line num="215" type="method" name="createFolder" crap="2" count="5"/>
+        <line num="215" type="method" name="createFolder" crap="2.06" count="5"/>
         <line num="217" type="stmt" count="5"/>
-        <line num="218" type="stmt" count="1"/>
-        <line num="219" type="stmt" count="4"/>
+        <line num="218" type="stmt" count="0"/>
+        <line num="219" type="stmt" count="5"/>
         <line num="222" type="stmt" count="5"/>
         <line num="233" type="method" name="createCacheItem" crap="2" count="1"/>
         <line num="235" type="stmt" count="1"/>
@@ -164,11 +164,11 @@
         <line num="261" type="stmt" count="0"/>
         <line num="263" type="stmt" count="0"/>
         <line num="265" type="stmt" count="0"/>
-        <metrics loc="264" ncloc="142" classes="1" methods="13" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="57" coveredstatements="41" elements="70" coveredelements="50"/>
+        <metrics loc="264" ncloc="142" classes="1" methods="13" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="57" coveredstatements="40" elements="70" coveredelements="48"/>
       </file>
       <file name="/Users/amystephen/Sites/Molajo/Cache/Source/Adapter/Memory.php">
         <class name="Memory" namespace="Molajo\Cache\Adapter">
-          <metrics methods="8" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="16" elements="43" coveredelements="22"/>
+          <metrics methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="30" elements="43" coveredelements="38"/>
         </class>
         <line num="39" type="method" name="__construct" crap="1" count="5"/>
         <line num="41" type="stmt" count="5"/>
@@ -180,15 +180,15 @@
         <line num="60" type="stmt" count="5"/>
         <line num="71" type="method" name="get" crap="1" count="4"/>
         <line num="73" type="stmt" count="4"/>
-        <line num="84" type="method" name="createCacheItem" crap="6" count="0"/>
-        <line num="86" type="stmt" count="0"/>
-        <line num="87" type="stmt" count="0"/>
-        <line num="89" type="stmt" count="0"/>
-        <line num="90" type="stmt" count="0"/>
-        <line num="91" type="stmt" count="0"/>
-        <line num="92" type="stmt" count="0"/>
-        <line num="93" type="stmt" count="0"/>
-        <line num="95" type="stmt" count="0"/>
+        <line num="84" type="method" name="createCacheItem" crap="2" count="4"/>
+        <line num="86" type="stmt" count="4"/>
+        <line num="87" type="stmt" count="4"/>
+        <line num="89" type="stmt" count="4"/>
+        <line num="90" type="stmt" count="2"/>
+        <line num="91" type="stmt" count="2"/>
+        <line num="92" type="stmt" count="2"/>
+        <line num="93" type="stmt" count="2"/>
+        <line num="95" type="stmt" count="4"/>
         <line num="108" type="method" name="set" crap="3.03" count="3"/>
         <line num="110" type="stmt" count="3"/>
         <line num="111" type="stmt" count="0"/>
@@ -197,15 +197,15 @@
         <line num="116" type="stmt" count="3"/>
         <line num="118" type="stmt" count="3"/>
         <line num="120" type="stmt" count="3"/>
-        <line num="133" type="method" name="cacheItem" crap="6" count="0"/>
-        <line num="135" type="stmt" count="0"/>
+        <line num="133" type="method" name="cacheItem" crap="2.06" count="3"/>
+        <line num="135" type="stmt" count="3"/>
         <line num="136" type="stmt" count="0"/>
         <line num="137" type="stmt" count="0"/>
-        <line num="139" type="stmt" count="0"/>
-        <line num="140" type="stmt" count="0"/>
-        <line num="141" type="stmt" count="0"/>
-        <line num="143" type="stmt" count="0"/>
-        <line num="144" type="stmt" count="0"/>
+        <line num="139" type="stmt" count="3"/>
+        <line num="140" type="stmt" count="3"/>
+        <line num="141" type="stmt" count="3"/>
+        <line num="143" type="stmt" count="3"/>
+        <line num="144" type="stmt" count="3"/>
         <line num="154" type="method" name="remove" crap="2.50" count="1"/>
         <line num="156" type="stmt" count="1"/>
         <line num="157" type="stmt" count="0"/>
@@ -214,7 +214,7 @@
         <line num="169" type="method" name="clear" crap="1" count="1"/>
         <line num="171" type="stmt" count="1"/>
         <line num="174" type="stmt" count="0"/>
-        <metrics loc="173" ncloc="87" classes="1" methods="8" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="16" elements="43" coveredelements="20"/>
+        <metrics loc="173" ncloc="87" classes="1" methods="8" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="30" elements="43" coveredelements="35"/>
       </file>
     </package>
     <package name="Molajo\Cache">
@@ -460,6 +460,6 @@
       <line num="53" type="stmt" count="0"/>
       <metrics loc="53" ncloc="51" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="27" coveredstatements="0" elements="29" coveredelements="0"/>
     </file>
-    <metrics files="11" loc="1456" ncloc="771" classes="8" methods="62" coveredmethods="27" conditionals="0" coveredconditionals="0" statements="327" coveredstatements="89" elements="389" coveredelements="116"/>
+    <metrics files="11" loc="1470" ncloc="769" classes="8" methods="60" coveredmethods="27" conditionals="0" coveredconditionals="0" statements="325" coveredstatements="102" elements="385" coveredelements="129"/>
   </project>
 </coverage>

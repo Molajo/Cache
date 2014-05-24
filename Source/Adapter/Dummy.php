@@ -105,4 +105,17 @@ class Dummy extends AbstractAdapter implements CacheInterface
     {
         return $this;
     }
+
+    /**
+     * Get File Contents
+     *
+     * @param   string $key
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    protected function createCacheItem($key)
+    {
+        return array(null, null);
+    }
 }
