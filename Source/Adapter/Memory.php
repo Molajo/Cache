@@ -140,7 +140,7 @@ class Memory extends AbstractAdapter implements CacheInterface
     /**
      * Remove cache for specified $key value
      *
-     * @param string $key
+     * @param   string  $key
      *
      * @return  object
      * @since   1.0
@@ -148,17 +148,11 @@ class Memory extends AbstractAdapter implements CacheInterface
      */
     public function remove($key = null)
     {
-        try {
-
-            if (isset($this->cache_container[$key])) {
-                unset($this->cache_container[$key]);
-            }
-        } catch (Exception $e) {
-            throw new RuntimeException
-            (
-                'Cache: Memory Adapter Failed during Remove ' . $e->getMessage()
-            );
+        if (isset($this->cache_container[$key])) {
+            unset($this->cache_container[$key]);
         }
+
+        return $this;
     }
 
     /**

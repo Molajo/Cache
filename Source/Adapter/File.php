@@ -67,10 +67,8 @@ class File extends AbstractAdapter implements CacheInterface
                 $this->cache_folder = $options['cache_folder'];
             }
 
-            if (is_dir($this->cache_folder) === true) {
-            } else {
-                mkdir($this->cache_folder);
-            }
+            $this->createFolder();
+
         } catch (Exception $e) {
             throw new RuntimeException(
                 'Cache: Failed creating File Adapter Folder ' . $this->cache_folder . $e->getMessage()
@@ -96,14 +94,8 @@ class File extends AbstractAdapter implements CacheInterface
         }
 
         try {
+            list($exists, $value) = $this->getFileContents($key);
 
-            $exists = false;
-            $value  = null;
-
-            if (file_exists($this->cache_folder . '/' . $key) === true) {
-                $exists = true;
-                $value  = unserialize(file_get_contents($this->cache_folder . '/' . $key));
-            }
         } catch (Exception $e) {
             throw new RuntimeException(
                 'Cache: Get Failed for File ' . $this->cache_folder . '/' . $key . $e->getMessage()
@@ -134,31 +126,9 @@ class File extends AbstractAdapter implements CacheInterface
             return $this;
         }
 
-        try {
-            if (file_exists($this->cache_folder . '/' . $key) === true) {
-                return $this;
-            }
-        } catch (Exception $e) {
-            throw new RuntimeException(
-                'Cache: Set file exists check Failed for File ' . $this->cache_folder . '/' . $key . $e->getMessage()
-            );
-        }
+        $this->filePut($key, $value);
 
-        try {
-            file_put_contents($this->cache_folder . '/' . $key, serialize($value));
-        } catch (Exception $e) {
-            throw new RuntimeException(
-                'Cache: file_put_contents failed for ' . $this->cache_folder . '/' . $key . $e->getMessage()
-            );
-        }
-
-        try {
-            chmod(($this->cache_folder . '/' . $key), 0644);
-        } catch (Exception $e) {
-            throw new RuntimeException(
-                'Cache: Chmod failed ' . $this->cache_folder . '/' . $key . $e->getMessage()
-            );
-        }
+        $this->chmodFile($key);
 
         return $this;
     }
@@ -175,11 +145,6 @@ class File extends AbstractAdapter implements CacheInterface
 
             if ($file->isDot()) {
             } else {
-
-                if (file_exists($file->getPathname())) {
-                } else {
-                    $this->remove($file->getPathname());
-                }
 
                 if (file_exists($file->getPathname())
                     && (time() - $this->cache_time)
@@ -245,5 +210,91 @@ class File extends AbstractAdapter implements CacheInterface
     public function close()
     {
         return $this;
+    }
+
+    /**
+     * File Put
+     *
+     * @param   string $key
+     * @param   mixed  $value
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  \CommonApi\Exception\RuntimeException
+     */
+    protected function filePut($key, $value)
+    {
+        try {
+            file_put_contents($this->cache_folder . '/' . $key, serialize($value));
+        } catch (Exception $e) {
+            throw new RuntimeException(
+                'Cache: file_put_contents failed for ' . $this->cache_folder . '/' . $key . $e->getMessage()
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * Chmod File
+     *
+     * @param   string $key
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  \CommonApi\Exception\RuntimeException
+     */
+    protected function chmodFile($key)
+    {
+        try {
+            chmod(($this->cache_folder . '/' . $key), 0644);
+        } catch (Exception $e) {
+            throw new RuntimeException(
+                'Cache: Chmod failed ' . $this->cache_folder . '/' . $key . $e->getMessage()
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * Create Folder
+     *
+     * @param   string $key
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  \CommonApi\Exception\RuntimeException
+     */
+    protected function createFolder()
+    {
+        if (is_dir($this->cache_folder) === true) {
+        } else {
+            mkdir($this->cache_folder);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get File Contents
+     *
+     * @param   string $key
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  \CommonApi\Exception\RuntimeException
+     */
+    protected function getFileContents($key)
+    {
+        $exists = false;
+        $value  = null;
+
+        if (file_exists($this->cache_folder . '/' . $key) === true) {
+            $exists = true;
+            $value  = unserialize(file_get_contents($this->cache_folder . '/' . $key));
+        }
+
+        return array($exists, $value);
     }
 }

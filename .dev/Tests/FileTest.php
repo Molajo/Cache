@@ -44,6 +44,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::set
      * @covers  Molajo\Cache\Adapter\File::remove
      * @covers  Molajo\Cache\Adapter\File::clear
+     * @covers  Molajo\Cache\Adapter\File::chmodFile
      *
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
      * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect
