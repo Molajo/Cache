@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1400899140">
-  <project timestamp="1400899140">
+<coverage generated="1400899358">
+  <project timestamp="1400899358">
     <file name="/Users/amystephen/Sites/Molajo/Cache/.dev/Bootstrap.php">
       <line num="24" type="stmt" count="0"/>
       <line num="25" type="stmt" count="0"/>
@@ -88,7 +88,7 @@
       </file>
       <file name="/Users/amystephen/Sites/Molajo/Cache/Source/Adapter/File.php">
         <class name="File" namespace="Molajo\Cache\Adapter">
-          <metrics methods="12" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="78" coveredstatements="34" elements="90" coveredelements="41"/>
+          <metrics methods="12" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="78" coveredstatements="47" elements="90" coveredelements="57"/>
         </class>
         <line num="43" type="method" name="__construct" crap="1" count="5"/>
         <line num="45" type="stmt" count="5"/>
@@ -153,13 +153,13 @@
         <line num="201" type="stmt" count="2"/>
         <line num="210" type="method" name="close" crap="2" count="0"/>
         <line num="212" type="stmt" count="0"/>
-        <line num="225" type="method" name="filePut" crap="6" count="0"/>
-        <line num="228" type="stmt" count="0"/>
-        <line num="229" type="stmt" count="0"/>
+        <line num="225" type="method" name="filePut" crap="2.50" count="3"/>
+        <line num="228" type="stmt" count="3"/>
+        <line num="229" type="stmt" count="3"/>
         <line num="230" type="stmt" count="0"/>
         <line num="231" type="stmt" count="0"/>
         <line num="232" type="stmt" count="0"/>
-        <line num="235" type="stmt" count="0"/>
+        <line num="235" type="stmt" count="3"/>
         <line num="247" type="method" name="chmodFile" crap="2.50" count="3"/>
         <line num="250" type="stmt" count="3"/>
         <line num="251" type="stmt" count="3"/>
@@ -167,21 +167,21 @@
         <line num="253" type="stmt" count="0"/>
         <line num="254" type="stmt" count="0"/>
         <line num="257" type="stmt" count="3"/>
-        <line num="269" type="method" name="createFolder" crap="6" count="0"/>
-        <line num="271" type="stmt" count="0"/>
+        <line num="269" type="method" name="createFolder" crap="2.06" count="5"/>
+        <line num="271" type="stmt" count="5"/>
         <line num="272" type="stmt" count="0"/>
-        <line num="273" type="stmt" count="0"/>
-        <line num="276" type="stmt" count="0"/>
-        <line num="288" type="method" name="getFileContents" crap="6" count="0"/>
-        <line num="290" type="stmt" count="0"/>
-        <line num="291" type="stmt" count="0"/>
-        <line num="293" type="stmt" count="0"/>
-        <line num="294" type="stmt" count="0"/>
-        <line num="295" type="stmt" count="0"/>
-        <line num="296" type="stmt" count="0"/>
-        <line num="298" type="stmt" count="0"/>
+        <line num="273" type="stmt" count="5"/>
+        <line num="276" type="stmt" count="5"/>
+        <line num="288" type="method" name="getFileContents" crap="2" count="1"/>
+        <line num="290" type="stmt" count="1"/>
+        <line num="291" type="stmt" count="1"/>
+        <line num="293" type="stmt" count="1"/>
+        <line num="294" type="stmt" count="1"/>
+        <line num="295" type="stmt" count="1"/>
+        <line num="296" type="stmt" count="1"/>
+        <line num="298" type="stmt" count="1"/>
         <line num="301" type="stmt" count="0"/>
-        <metrics loc="300" ncloc="178" classes="1" methods="12" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="78" coveredstatements="34" elements="90" coveredelements="36"/>
+        <metrics loc="300" ncloc="178" classes="1" methods="12" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="78" coveredstatements="47" elements="90" coveredelements="50"/>
       </file>
       <file name="/Users/amystephen/Sites/Molajo/Cache/Source/Adapter/Memory.php">
         <class name="Memory" namespace="Molajo\Cache\Adapter">
@@ -481,6 +481,6 @@
       <line num="53" type="stmt" count="0"/>
       <metrics loc="53" ncloc="51" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="27" coveredstatements="0" elements="29" coveredelements="0"/>
     </file>
-    <metrics files="11" loc="1481" ncloc="810" classes="8" methods="59" coveredmethods="19" conditionals="0" coveredconditionals="0" statements="351" coveredstatements="92" elements="410" coveredelements="111"/>
+    <metrics files="11" loc="1481" ncloc="810" classes="8" methods="59" coveredmethods="20" conditionals="0" coveredconditionals="0" statements="351" coveredstatements="105" elements="410" coveredelements="125"/>
   </project>
 </coverage>
