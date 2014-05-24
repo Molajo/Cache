@@ -1,6 +1,6 @@
 <?php
 /**
- * Wincache
+ * Redis Adapter
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
@@ -8,40 +8,40 @@
  */
 namespace Molajo\Cache\Adapter;
 
-use Wincache as phpWincache;
 use Exception;
-use CommonApi\Exception\RuntimeException;
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
+use CommonApi\Exception\RuntimeException;
 
 /**
- * Wincache Cache
+ * Redis Adapter
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
-class Wincache extends AbstractAdapter implements CacheInterface
+class Redis extends AbstractAdapter implements CacheInterface
 {
     /**
-     * Wincache Instance
+     * Redis Database Connection
      *
      * @var    object
+     *
      * @since  1.0
      */
-    protected $wincache;
+    protected $redis;
 
     /**
      * Constructor
      *
-     * @param  string $cache_handler
+     * @param   string $cache_handler
      *
-     * @since  1.0
+     * @since   1.0
      */
     public function __construct(array $options = array())
     {
-        $this->cache_handler = 'Wincache';
+        $this->cache_handler = 'Redis';
 
         $this->connect($options);
     }
@@ -59,10 +59,13 @@ class Wincache extends AbstractAdapter implements CacheInterface
     {
         parent::connect($options);
 
-        if (extension_loaded('wincache') && is_callable('wincache_ucache_get')) {
+        if (isset($options['redis'])) {
+            $this->redis = $options['redis'];
         } else {
             throw new RuntimeException
-            ('Cache: Wincache not supported.');
+            (
+                'Cache Redis Adapter: Redis Database dependency not passed into Connect'
+            );
         }
 
         return $this;
@@ -73,7 +76,7 @@ class Wincache extends AbstractAdapter implements CacheInterface
      *
      * @param   string $key
      *
-     * @return  null|mixed cached value
+     * @return  bool|CacheItem
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
@@ -84,24 +87,24 @@ class Wincache extends AbstractAdapter implements CacheInterface
         }
 
         try {
-            $value = \wincache_ucache_get($key);
+            $value = $this->redis->get($key);
 
-            if ($value === false) {
-                return new CacheItem($key, null, false);
-            }
+            $exists = (boolean)$value;
+
+            return new CacheItem($key, $value, $exists);
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Get Failed for Wincache Key: ' . $key . ' Message: ' . $e->getMessage());
+            (
+                'Cache: Get Failed for Redis ' . $e->getMessage()
+            );
         }
-
-        return new CacheItem($key, $value, true);
     }
 
     /**
      * Create a cache entry
      *
-     * @param   string  $key
-     * @param   mixed   $value
+     * @param   null    $key
+     * @param   null    $value
      * @param   integer $ttl (number of seconds)
      *
      * @return  $this
@@ -122,21 +125,23 @@ class Wincache extends AbstractAdapter implements CacheInterface
             $ttl = (int)$this->cache_time;
         }
 
-        $results = wincache_ucache_add($key, $value, (int)$ttl);
+        $this->redis->set($key, $value);
 
-        if ($results === true) {
-        } else {
+        $results = $this->redis->expire($key, $ttl);
+
+        if ($results === false) {
             throw new RuntimeException
-            ('Cache APC Adapter: Set failed for Key: ' . $key);
+            (
+                'Cache APC Adapter: Set failed for Key: ' . $key
+            );
         }
-
         return $this;
     }
 
     /**
      * Remove cache for specified $key value
      *
-     * @param   string $key
+     * @param string $key
      *
      * @return  object
      * @since   1.0
@@ -144,17 +149,13 @@ class Wincache extends AbstractAdapter implements CacheInterface
      */
     public function remove($key = null)
     {
-        try {
-            $results = \wincache_ucache_delete($key);
+        $results = $this->redis->del($key);
 
-            if ($results === true) {
-            } else {
-                throw new RuntimeException
-                ('Unable to remove cache entry for');
-            }
-        } catch (Exception $e) {
+        if ($results === false) {
             throw new RuntimeException
-            ('Cache: Get Failed for Wincache ' . $e->getMessage());
+            (
+                'Cache: Remove cache entry failed'
+            );
         }
 
         return $this;
@@ -165,20 +166,11 @@ class Wincache extends AbstractAdapter implements CacheInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function clear()
     {
-        try {
-            $results = \wincache_ucache_clear();
+        $this->redis->flushdb();
 
-            if ($results === true) {
-            } else {
-                throw new RuntimeException('Unable to clear Wincache.');
-            }
-        } catch (Exception $e) {
-            throw new RuntimeException
-            ('Unable to clear Wincache.' . $e->getMessage());
-        }
+        return $this;
     }
 }

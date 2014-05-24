@@ -52,7 +52,9 @@ class Xcache extends AbstractAdapter implements CacheInterface
         if (extension_loaded('xcache') && is_callable('xcache_get')) {
         } else {
             throw new RuntimeException
-            ('Cache Xcache Adapter: Not supported. xcache must be loaded and xcache_get must be callable.');
+            (
+                'Cache Xcache Adapter: Not supported. xcache must be loaded and xcache_get must be callable.'
+            );
         }
 
         $pool = null;
@@ -112,15 +114,19 @@ class Xcache extends AbstractAdapter implements CacheInterface
                 $results = null;
             } else {
                 throw new RuntimeException
-                (sprintf(
-                    'Unable to fetch cache entry for %s. Error message `%s`.',
-                    $key,
-                    $this->xcache->getResultMessage()
-                ));
+                (
+                    sprintf(
+                        'Unable to fetch cache entry for %s. Error message `%s`.',
+                        $key,
+                        $this->xcache->getResultMessage()
+                    )
+                );
             }
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Get Failed for Xcache ' . $this->cache_folder . '/' . $key . $e->getMessage());
+            (
+                'Cache: Get Failed for Xcache ' . $this->cache_folder . '/' . $key . $e->getMessage()
+            );
         }
 
         return new CacheItem($key, $value, $exists);
@@ -160,7 +166,9 @@ class Xcache extends AbstractAdapter implements CacheInterface
         if (phpXcache::RES_SUCCESS == $results) {
         } else {
             throw new RuntimeException
-            ('Cache APC Adapter: Set failed for Key: ' . $key);
+            (
+                'Cache APC Adapter: Set failed for Key: ' . $key
+            );
         }
 
         return $this;
@@ -186,15 +194,19 @@ class Xcache extends AbstractAdapter implements CacheInterface
             } elseif (phpXcache::RES_NOTFOUND == $results) {
             } else {
                 throw new RuntimeException
-                (sprintf(
-                    'Unable to remove cache entry for %s. Error message `%s`.',
-                    $key,
-                    $this->xcache->getResultMessage()
-                ));
+                (
+                    sprintf(
+                        'Unable to remove cache entry for %s. Error message `%s`.',
+                        $key,
+                        $this->xcache->getResultMessage()
+                    )
+                );
             }
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Get Failed for Xcache ' . $this->cache_folder . '/' . $key . $e->getMessage());
+            (
+                'Cache: Get Failed for Xcache ' . $this->cache_folder . '/' . $key . $e->getMessage()
+            );
         }
 
         return $this;
@@ -221,7 +233,9 @@ class Xcache extends AbstractAdapter implements CacheInterface
             }
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Flush Failed for Xcache ' . $e->getMessage());
+            (
+                'Cache: Flush Failed for Xcache ' . $e->getMessage()
+            );
         }
     }
 }

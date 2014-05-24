@@ -8,8 +8,8 @@
  */
 namespace Molajo\Cache\Test;
 
-use Molajo\Cache\File as FileCache;
-use Molajo\Cache\Adapter;
+use Molajo\Cache\Adapter\File as FileCache;
+use Molajo\Cache\Driver;
 
 /**
  * Cache Test
@@ -38,7 +38,12 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     protected $options;
 
     /**
-     * Setup testing
+     * @covers  Molajo\Cache\Adapter\File::__construct
+     * @covers  Molajo\Cache\Adapter\File::connect
+     * @covers  Molajo\Cache\Adapter\File::get
+     * @covers  Molajo\Cache\Adapter\File::set
+     * @covers  Molajo\Cache\Adapter\File::remove
+     * @covers  Molajo\Cache\Adapter\File::clear
      *
      * @return  $this
      * @since   1.0
@@ -53,15 +58,18 @@ class CacheTest extends \PHPUnit_Framework_TestCase
 
         $adapter_handler = new FileCache($this->options);
 
-        $this->adapter = new Adapter($adapter_handler);
+        $this->adapter = new Driver($adapter_handler);
 
         return $this;
     }
 
     /**
-     * Connect to the Cache
-     *
-     * @param   array $options
+     * @covers  Molajo\Cache\Adapter\File::__construct
+     * @covers  Molajo\Cache\Adapter\File::connect
+     * @covers  Molajo\Cache\Adapter\File::get
+     * @covers  Molajo\Cache\Adapter\File::set
+     * @covers  Molajo\Cache\Adapter\File::remove
+     * @covers  Molajo\Cache\Adapter\File::clear
      *
      * @return  $this
      * @since   1.0
@@ -74,9 +82,12 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Create a cache entry
-     *
-     * @covers  Molajo\Cache\File::get
+     * @covers  Molajo\Cache\Adapter\File::__construct
+     * @covers  Molajo\Cache\Adapter\File::connect
+     * @covers  Molajo\Cache\Adapter\File::get
+     * @covers  Molajo\Cache\Adapter\File::set
+     * @covers  Molajo\Cache\Adapter\File::remove
+     * @covers  Molajo\Cache\Adapter\File::clear
      *
      * @return  $this
      * @since   1.0
@@ -97,9 +108,12 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Create a cache entry
-     *
-     * @covers  Molajo\Cache\File::connect
+     * @covers  Molajo\Cache\Adapter\File::__construct
+     * @covers  Molajo\Cache\Adapter\File::connect
+     * @covers  Molajo\Cache\Adapter\File::get
+     * @covers  Molajo\Cache\Adapter\File::set
+     * @covers  Molajo\Cache\Adapter\File::remove
+     * @covers  Molajo\Cache\Adapter\File::clear
      *
      * @return  $this
      * @since   1.0
@@ -115,9 +129,12 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Delete cache for specified $key value or expired cache
-     *
-     * @param   string $key
+     * @covers  Molajo\Cache\Adapter\File::__construct
+     * @covers  Molajo\Cache\Adapter\File::connect
+     * @covers  Molajo\Cache\Adapter\File::get
+     * @covers  Molajo\Cache\Adapter\File::set
+     * @covers  Molajo\Cache\Adapter\File::remove
+     * @covers  Molajo\Cache\Adapter\File::clear
      *
      * @return  bool
      * @since   1.0
@@ -132,7 +149,12 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Clear all cache
+     * @covers  Molajo\Cache\Adapter\File::__construct
+     * @covers  Molajo\Cache\Adapter\File::connect
+     * @covers  Molajo\Cache\Adapter\File::get
+     * @covers  Molajo\Cache\Adapter\File::set
+     * @covers  Molajo\Cache\Adapter\File::remove
+     * @covers  Molajo\Cache\Adapter\File::clear
      *
      * @return  bool
      * @since   1.0
@@ -199,10 +221,15 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tears Down
+     * @covers  Molajo\Cache\Adapter\File::__construct
+     * @covers  Molajo\Cache\Adapter\File::connect
+     * @covers  Molajo\Cache\Adapter\File::get
+     * @covers  Molajo\Cache\Adapter\File::set
+     * @covers  Molajo\Cache\Adapter\File::remove
+     * @covers  Molajo\Cache\Adapter\File::clear
      *
      * @return $this
-     * @since 1.0
+     * @since   1.0
      */
     protected function tearDown()
     {

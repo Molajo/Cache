@@ -1,6 +1,6 @@
 <?php
 /**
- * Dummy Cache
+ * Abstract Adapter for Cache
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
@@ -10,32 +10,51 @@ namespace Molajo\Cache\Adapter;
 
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
-use CommonApi\Exception\RuntimeException;
 
 /**
- * Dummy Cache
+ * Abstract Adapter Cache
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
-class Dummy extends AbstractAdapter implements CacheInterface
+abstract class AbstractAdapter implements CacheInterface
 {
     /**
-     * @covers  Molajo\Cache\Adapter\Dummy::__construct
-     * @covers  Molajo\Cache\Adapter\Dummy::connect
-     * @covers  Molajo\Cache\Adapter\Dummy::get
-     * @covers  Molajo\Cache\Adapter\Dummy::set
-     * @covers  Molajo\Cache\Adapter\Dummy::remove
-     * @covers  Molajo\Cache\Adapter\Dummy::clear
+     * Cache Adapter
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $cache_handler;
+
+    /**
+     * Cache
+     *
+     * @var    bool
+     * @since  1.0
+     */
+    protected $cache_enabled = false;
+
+    /**
+     * Cache Time in seconds
+     *
+     * @var    Integer
+     * @since  1.0
+     */
+    protected $cache_time = 86400;
+
+    /**
+     * Constructor
+     *
+     * @param   string $cache_handler
+     * @param   array  $options
      *
      * @since   1.0
      */
     public function __construct(array $options = array())
     {
-        $this->cache_handler = 'Dummy';
-
         $this->connect($options);
     }
 
@@ -49,7 +68,17 @@ class Dummy extends AbstractAdapter implements CacheInterface
      */
     public function connect($options = array())
     {
-        parent::connect($options);
+        if (isset($options['cache_enabled'])) {
+            $this->cache_enabled = (boolean)$options['cache_enabled'];
+        }
+
+        if (isset($options['cache_time'])) {
+            $this->cache_time = $options['cache_time'];
+        }
+
+        if ((int)$this->cache_time === 0) {
+            $this->cache_time = 86400;
+        }
 
         return $this;
     }
@@ -59,7 +88,7 @@ class Dummy extends AbstractAdapter implements CacheInterface
      *
      * @param   string $key
      *
-     * @return  bool|CacheItem
+     * @return  CacheItem
      * @since   1.0
      */
     public function get($key)
@@ -70,14 +99,14 @@ class Dummy extends AbstractAdapter implements CacheInterface
     /**
      * Create a cache entry
      *
-     * @param   null    $key
-     * @param   null    $value
+     * @param   string  $key
+     * @param   mixed   $value
      * @param   integer $ttl (number of seconds)
      *
      * @return  $this
      * @since   1.0
      */
-    public function set($key = null, $value = null, $ttl = 0)
+    public function set($key = null, $value, $ttl = 0)
     {
         return $this;
     }
@@ -85,9 +114,9 @@ class Dummy extends AbstractAdapter implements CacheInterface
     /**
      * Remove cache for specified $key value
      *
-     * @param string $key
+     * @param   string $key
      *
-     * @return  object
+     * @return  $this
      * @since   1.0
      */
     public function remove($key = null)

@@ -62,7 +62,9 @@ class Memcached extends AbstractAdapter implements CacheInterface
         if (extension_loaded('memcached') && class_exists('\\Memcached')) {
         } else {
             throw new RuntimeException
-            ('Cache: Memcached not supported.');
+            (
+                'Cache: Memcached not supported.'
+            );
         }
 
         $pool = null;
@@ -121,15 +123,19 @@ class Memcached extends AbstractAdapter implements CacheInterface
                 return null;
             } else {
                 throw new RuntimeException
-                (sprintf(
-                    'Unable to fetch cache entry for %s. Error message `%s`.',
-                    $key,
-                    $this->memcached->getResultMessage()
-                ));
+                (
+                    sprintf(
+                        'Unable to fetch cache entry for %s. Error message `%s`.',
+                        $key,
+                        $this->memcached->getResultMessage()
+                    )
+                );
             }
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Get Failed for Memcached ' . $key . $e->getMessage());
+            (
+                'Cache: Get Failed for Memcached ' . $key . $e->getMessage()
+            );
         }
 
         return new CacheItem($key, $value, (bool)$value);
@@ -165,7 +171,9 @@ class Memcached extends AbstractAdapter implements CacheInterface
         if (phpMemcached::RES_SUCCESS == $results) {
         } else {
             throw new RuntimeException
-            ('Cache Memcached Adapter: Set failed for Key: ' . $key);
+            (
+                'Cache Memcached Adapter: Set failed for Key: ' . $key
+            );
         }
 
         return $this;
@@ -191,15 +199,19 @@ class Memcached extends AbstractAdapter implements CacheInterface
             } elseif (phpMemcached::RES_NOTFOUND == $results) {
             } else {
                 throw new RuntimeException
-                (sprintf(
-                    'Unable to remove cache entry for %s. Error message `%s`.',
-                    $key,
-                    $this->memcached->getResultMessage()
-                ));
+                (
+                    sprintf(
+                        'Unable to remove cache entry for %s. Error message `%s`.',
+                        $key,
+                        $this->memcached->getResultMessage()
+                    )
+                );
             }
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Get Failed for Memcached ' . $key . $e->getMessage());
+            (
+                'Cache: Get Failed for Memcached ' . $key . $e->getMessage()
+            );
         }
 
         return $this;
@@ -226,7 +238,9 @@ class Memcached extends AbstractAdapter implements CacheInterface
             }
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Flush Failed for Memcached ' . $e->getMessage());
+            (
+                'Cache: Flush Failed for Memcached ' . $e->getMessage()
+            );
         }
     }
 }

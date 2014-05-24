@@ -119,7 +119,9 @@ class Database extends AbstractAdapter implements CacheInterface
             return new CacheItem($key, $value, $exists);
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Get Failed for Database ' . $this->db_adapter . '/' . $key . $e->getMessage());
+            (
+                'Cache: Get Failed for Database ' . $this->db_adapter . '/' . $key . $e->getMessage()
+            );
         }
     }
 
@@ -185,7 +187,9 @@ class Database extends AbstractAdapter implements CacheInterface
             new CacheItem($key, $value, $exists);
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Get Failed for Database ' . $this->db_adapter . '/' . $key . $e->getMessage());
+            (
+                'Cache: Get Failed for Database ' . $this->db_adapter . '/' . $key . $e->getMessage()
+            );
         }
 
         return $this;
@@ -215,7 +219,9 @@ class Database extends AbstractAdapter implements CacheInterface
             $this->execute();
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache Database Adapter: Delete failed' . $e->getMessage());
+            (
+                'Cache Database Adapter: Delete failed' . $e->getMessage()
+            );
         }
 
         return $this;

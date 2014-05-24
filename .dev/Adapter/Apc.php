@@ -1,6 +1,6 @@
 <?php
 /**
- * Redis Adapter
+ * Apc Cache Adapter
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
@@ -9,39 +9,30 @@
 namespace Molajo\Cache\Adapter;
 
 use Exception;
+use CommonApi\Exception\RuntimeException;
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
-use CommonApi\Exception\RuntimeException;
 
 /**
- * Redis Adapter
+ * Apc Cache Adapter
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
-class Redis extends AbstractAdapter implements CacheInterface
+class Apc extends AbstractAdapter implements CacheInterface
 {
-    /**
-     * Redis Database Connection
-     *
-     * @var    object
-     *
-     * @since  1.0
-     */
-    protected $redis;
-
     /**
      * Constructor
      *
-     * @param   string $cache_handler
+     * @param   array $options
      *
      * @since   1.0
      */
     public function __construct(array $options = array())
     {
-        $this->cache_handler = 'Redis';
+        $this->cache_handler = 'Apc';
 
         $this->connect($options);
     }
@@ -59,11 +50,11 @@ class Redis extends AbstractAdapter implements CacheInterface
     {
         parent::connect($options);
 
-        if (isset($options['redis'])) {
-            $this->redis = $options['redis'];
+        if (extension_loaded('apc')
+            && ini_get('apc.enabled')
+        ) {
         } else {
-            throw new RuntimeException
-            ('Cache Redis Adapter: Redis Database dependency not passed into Connect');
+            throw new RuntimeException('Cache APC: APC is not enabled');
         }
 
         return $this;
@@ -85,14 +76,14 @@ class Redis extends AbstractAdapter implements CacheInterface
         }
 
         try {
-            $value = $this->redis->get($key);
-
-            $exists = (boolean)$value;
-
+            $exists = apc_exists($key);
+            $value  = apc_fetch($key);
             return new CacheItem($key, $value, $exists);
         } catch (Exception $e) {
             throw new RuntimeException
-            ('Cache: Get Failed for Redis ' . $e->getMessage());
+            (
+                'Cache: Get Failed for Apc ' . $e->getMessage()
+            );
         }
     }
 
@@ -121,21 +112,22 @@ class Redis extends AbstractAdapter implements CacheInterface
             $ttl = (int)$this->cache_time;
         }
 
-        $this->redis->set($key, $value);
-
-        $results = $this->redis->expire($key, $ttl);
+        $results = apc_add($key, $value, (int)$ttl);
 
         if ($results === false) {
             throw new RuntimeException
-            ('Cache APC Adapter: Set failed for Key: ' . $key);
+            (
+                'Cache APC Adapter: Set failed.'
+            );
         }
+
         return $this;
     }
 
     /**
      * Remove cache for specified $key value
      *
-     * @param string $key
+     * @param   string $key
      *
      * @return  object
      * @since   1.0
@@ -143,11 +135,13 @@ class Redis extends AbstractAdapter implements CacheInterface
      */
     public function remove($key = null)
     {
-        $results = $this->redis->del($key);
+        $results = apc_delete($key);
 
         if ($results === false) {
             throw new RuntimeException
-            ('Cache: Remove cache entry failed');
+            (
+                'Cache APC Adapter: Remove cache failed.'
+            );
         }
 
         return $this;
@@ -161,8 +155,6 @@ class Redis extends AbstractAdapter implements CacheInterface
      */
     public function clear()
     {
-        $this->redis->flushdb();
-
-        return $this;
+        return apc_clear_cache('user');
     }
 }

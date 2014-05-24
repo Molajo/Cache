@@ -8,8 +8,8 @@
  */
 namespace Molajo\Cache\Test;
 
-use Molajo\Cache\Memory as MemoryCache;
-use Molajo\Cache\Adapter;
+use Molajo\Cache\Adapter\Memory as MemoryCache;
+use Molajo\Cache\Driver;
 
 /**
  * Cache Test
@@ -38,7 +38,12 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
     protected $options;
 
     /**
-     * Setup testing
+     * @covers  Molajo\Cache\Adapter\Memory::__construct
+     * @covers  Molajo\Cache\Adapter\Memory::connect
+     * @covers  Molajo\Cache\Adapter\Memory::get
+     * @covers  Molajo\Cache\Adapter\Memory::set
+     * @covers  Molajo\Cache\Adapter\Memory::remove
+     * @covers  Molajo\Cache\Adapter\Memory::clear
      *
      * @return  $this
      * @since   1.0
@@ -51,15 +56,18 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
 
         $adapter_handler = new MemoryCache($this->options);
 
-        $this->adapter = new Adapter($adapter_handler);
+        $this->adapter = new Driver($adapter_handler);
 
         return $this;
     }
 
     /**
-     * Connect to the Cache
-     *
-     * @param   array $options
+     * @covers  Molajo\Cache\Adapter\Memory::__construct
+     * @covers  Molajo\Cache\Adapter\Memory::connect
+     * @covers  Molajo\Cache\Adapter\Memory::get
+     * @covers  Molajo\Cache\Adapter\Memory::set
+     * @covers  Molajo\Cache\Adapter\Memory::remove
+     * @covers  Molajo\Cache\Adapter\Memory::clear
      *
      * @return  $this
      * @since   1.0
@@ -72,9 +80,12 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Create a cache entry
-     *
-     * @covers  Molajo\Cache\Memory::get
+     * @covers  Molajo\Cache\Adapter\Memory::__construct
+     * @covers  Molajo\Cache\Adapter\Memory::connect
+     * @covers  Molajo\Cache\Adapter\Memory::get
+     * @covers  Molajo\Cache\Adapter\Memory::set
+     * @covers  Molajo\Cache\Adapter\Memory::remove
+     * @covers  Molajo\Cache\Adapter\Memory::clear
      *
      * @return  $this
      * @since   1.0
@@ -95,9 +106,12 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Create a cache entry
-     *
-     * @covers  Molajo\Cache\Memory::connect
+     * @covers  Molajo\Cache\Adapter\Memory::__construct
+     * @covers  Molajo\Cache\Adapter\Memory::connect
+     * @covers  Molajo\Cache\Adapter\Memory::get
+     * @covers  Molajo\Cache\Adapter\Memory::set
+     * @covers  Molajo\Cache\Adapter\Memory::remove
+     * @covers  Molajo\Cache\Adapter\Memory::clear
      *
      * @return  $this
      * @since   1.0
@@ -118,9 +132,12 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Delete cache for specified $key value or expired cache
-     *
-     * @param   string $key
+     * @covers  Molajo\Cache\Adapter\Memory::__construct
+     * @covers  Molajo\Cache\Adapter\Memory::connect
+     * @covers  Molajo\Cache\Adapter\Memory::get
+     * @covers  Molajo\Cache\Adapter\Memory::set
+     * @covers  Molajo\Cache\Adapter\Memory::remove
+     * @covers  Molajo\Cache\Adapter\Memory::clear
      *
      * @return  bool
      * @since   1.0
@@ -137,7 +154,12 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Clear all cache
+     * @covers  Molajo\Cache\Adapter\Memory::__construct
+     * @covers  Molajo\Cache\Adapter\Memory::connect
+     * @covers  Molajo\Cache\Adapter\Memory::get
+     * @covers  Molajo\Cache\Adapter\Memory::set
+     * @covers  Molajo\Cache\Adapter\Memory::remove
+     * @covers  Molajo\Cache\Adapter\Memory::clear
      *
      * @return  bool
      * @since   1.0
@@ -202,15 +224,5 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
             $results = $this->adapter->get($key);
             $this->assertFalse($results->isHit());
         }
-    }
-
-    /**
-     * Tears Down
-     *
-     * @return $this
-     * @since 1.0
-     */
-    protected function tearDown()
-    {
     }
 }

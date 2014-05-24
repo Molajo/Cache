@@ -45,7 +45,7 @@ Cache Handlers available include:
 
     // 2. Instantiate the Adapter, injecting it with the Handler.
     use Molajo\Cache\Adapter;
-    $adapter = new Adapter($adapter_handler);
+    $adapter = new Driver($adapter_handler);
 
     // 3. Set cache.
     $adapter->set('key value', 'cache this value for seconds =>', 86400);
@@ -178,7 +178,7 @@ with *Molajo Cache* and can be used, as follows.
 
     // Instantiate Cache Adapter, injecting the Handler
     use Molajo\Cache\Adapter;
-    $adapter = new Adapter($adapter_handler);
+    $adapter = new Driver($adapter_handler);
 
 ```
 
@@ -207,7 +207,7 @@ the value for the RDBMS quote and name quote, as shown in this example.
 
     // Instantiate Cache Adapter, injecting the Handler
     use Molajo\Cache\Adapter;
-    $adapter = new Adapter($adapter_handler);
+    $adapter = new Driver($adapter_handler);
 
 ```
 
@@ -228,7 +228,7 @@ Use, as follows:
 
     // Instantiate Cache Adapter, injecting the Handler
     use Molajo\Cache\Adapter;
-    $adapter = new Adapter($adapter_handler);
+    $adapter = new Driver($adapter_handler);
 
 ```
 
@@ -252,7 +252,7 @@ Use, as follows:
 
     // Instantiate Cache Adapter, injecting the Handler
     use Molajo\Cache\Adapter;
-    $adapter = new Adapter($adapter_handler);
+    $adapter = new Driver($adapter_handler);
 
 ```
 
@@ -279,7 +279,7 @@ Use, as follows:
 
     // Instantiate Cache Adapter, injecting the Handler
     use Molajo\Cache\Adapter;
-    $adapter = new Adapter($adapter_handler);
+    $adapter = new Driver($adapter_handler);
 
 ```
 
@@ -301,7 +301,7 @@ to create persistence, if desired. Use, as follows:
 
     // Instantiate Cache Adapter, injecting the Handler
     use Molajo\Cache\Adapter;
-    $adapter = new Adapter($adapter_handler);
+    $adapter = new Driver($adapter_handler);
 
 ```
 
@@ -323,7 +323,7 @@ to create persistence, if desired. Use, as follows:
 
     // Instantiate Cache Adapter, injecting the Handler
     use Molajo\Cache\Adapter;
-    $adapter = new Adapter($adapter_handler);
+    $adapter = new Driver($adapter_handler);
 
 ```
 
@@ -346,7 +346,7 @@ using the Windows Operating System, there are no other configuration options req
 
     // Instantiate Cache Adapter, injecting the Handler
     use Molajo\Cache\Adapter;
-    $adapter = new Adapter($adapter_handler);
+    $adapter = new Driver($adapter_handler);
 
 ```
 
@@ -367,7 +367,7 @@ The *xCache Handler* requires the PHP extension `xcache` is loaded and that `xca
 
     // Instantiate Cache Adapter, injecting the Handler
     use Molajo\Cache\Adapter;
-    $adapter = new Adapter($adapter_handler);
+    $adapter = new Driver($adapter_handler);
 
 ```
 

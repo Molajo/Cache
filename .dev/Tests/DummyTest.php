@@ -8,8 +8,8 @@
  */
 namespace Molajo\Cache\Test;
 
-use Molajo\Cache\Dummy as DummyCache;
-use Molajo\Cache\Adapter;
+use Molajo\Cache\Adapter\Dummy as DummyCache;
+use Molajo\Cache\Driver;
 
 /**
  * Cache Test
@@ -38,7 +38,12 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     protected $options;
 
     /**
-     * Setup testing
+     * @covers  Molajo\Cache\Adapter\Dummy::__construct
+     * @covers  Molajo\Cache\Adapter\Dummy::connect
+     * @covers  Molajo\Cache\Adapter\Dummy::get
+     * @covers  Molajo\Cache\Adapter\Dummy::set
+     * @covers  Molajo\Cache\Adapter\Dummy::remove
+     * @covers  Molajo\Cache\Adapter\Dummy::clear
      *
      * @return  $this
      * @since   1.0
@@ -51,15 +56,18 @@ class DummyTest extends \PHPUnit_Framework_TestCase
 
         $adapter_handler = new DummyCache($this->options);
 
-        $this->adapter = new Adapter($adapter_handler);
+        $this->adapter = new Driver($adapter_handler);
 
         return $this;
     }
 
     /**
-     * Connect to the Cache
-     *
-     * @param   array $options
+     * @covers  Molajo\Cache\Adapter\Dummy::__construct
+     * @covers  Molajo\Cache\Adapter\Dummy::connect
+     * @covers  Molajo\Cache\Adapter\Dummy::get
+     * @covers  Molajo\Cache\Adapter\Dummy::set
+     * @covers  Molajo\Cache\Adapter\Dummy::remove
+     * @covers  Molajo\Cache\Adapter\Dummy::clear
      *
      * @return  $this
      * @since   1.0
@@ -72,10 +80,12 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Create a cache entry
-     *
-     * @covers  Molajo\Cache\Dummy::get
-     * @covers  Molajo\Cache\Dummy::set
+     * @covers  Molajo\Cache\Adapter\Dummy::__construct
+     * @covers  Molajo\Cache\Adapter\Dummy::connect
+     * @covers  Molajo\Cache\Adapter\Dummy::get
+     * @covers  Molajo\Cache\Adapter\Dummy::set
+     * @covers  Molajo\Cache\Adapter\Dummy::remove
+     * @covers  Molajo\Cache\Adapter\Dummy::clear
      *
      * @return  $this
      * @since   1.0
@@ -96,9 +106,12 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Delete cache for specified $key value or expired cache
-     *
-     * @param   string $key
+     * @covers  Molajo\Cache\Adapter\Dummy::__construct
+     * @covers  Molajo\Cache\Adapter\Dummy::connect
+     * @covers  Molajo\Cache\Adapter\Dummy::get
+     * @covers  Molajo\Cache\Adapter\Dummy::set
+     * @covers  Molajo\Cache\Adapter\Dummy::remove
+     * @covers  Molajo\Cache\Adapter\Dummy::clear
      *
      * @return  bool
      * @since   1.0
@@ -114,7 +127,12 @@ class DummyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Clear all cache
+     * @covers  Molajo\Cache\Adapter\Dummy::__construct
+     * @covers  Molajo\Cache\Adapter\Dummy::connect
+     * @covers  Molajo\Cache\Adapter\Dummy::get
+     * @covers  Molajo\Cache\Adapter\Dummy::set
+     * @covers  Molajo\Cache\Adapter\Dummy::remove
+     * @covers  Molajo\Cache\Adapter\Dummy::clear
      *
      * @return  bool
      * @since   1.0
@@ -179,15 +197,5 @@ class DummyTest extends \PHPUnit_Framework_TestCase
             $result = $this->adapter->get($key);
             $this->assertTrue(is_object($result));
         }
-    }
-
-    /**
-     * Tears Down
-     *
-     * @return $this
-     * @since 1.0
-     */
-    protected function tearDown()
-    {
     }
 }
