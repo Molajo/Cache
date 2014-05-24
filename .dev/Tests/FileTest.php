@@ -44,6 +44,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::set
      * @covers  Molajo\Cache\Adapter\File::remove
      * @covers  Molajo\Cache\Adapter\File::removeExpired
+     * @covers  Molajo\Cache\Adapter\File::removeExpiredFile
      * @covers  Molajo\Cache\Adapter\File::clear
      * @covers  Molajo\Cache\Adapter\File::close
      * @covers  Molajo\Cache\Adapter\File::filePut
@@ -95,6 +96,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::set
      * @covers  Molajo\Cache\Adapter\File::remove
      * @covers  Molajo\Cache\Adapter\File::removeExpired
+     * @covers  Molajo\Cache\Adapter\File::removeExpiredFile
      * @covers  Molajo\Cache\Adapter\File::clear
      * @covers  Molajo\Cache\Adapter\File::close
      * @covers  Molajo\Cache\Adapter\File::filePut
@@ -138,6 +140,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::set
      * @covers  Molajo\Cache\Adapter\File::remove
      * @covers  Molajo\Cache\Adapter\File::removeExpired
+     * @covers  Molajo\Cache\Adapter\File::removeExpiredFile
      * @covers  Molajo\Cache\Adapter\File::clear
      * @covers  Molajo\Cache\Adapter\File::close
      * @covers  Molajo\Cache\Adapter\File::filePut
@@ -189,6 +192,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::set
      * @covers  Molajo\Cache\Adapter\File::remove
      * @covers  Molajo\Cache\Adapter\File::removeExpired
+     * @covers  Molajo\Cache\Adapter\File::removeExpiredFile
      * @covers  Molajo\Cache\Adapter\File::clear
      * @covers  Molajo\Cache\Adapter\File::close
      * @covers  Molajo\Cache\Adapter\File::filePut
@@ -235,6 +239,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::set
      * @covers  Molajo\Cache\Adapter\File::remove
      * @covers  Molajo\Cache\Adapter\File::removeExpired
+     * @covers  Molajo\Cache\Adapter\File::removeExpiredFile
      * @covers  Molajo\Cache\Adapter\File::clear
      * @covers  Molajo\Cache\Adapter\File::close
      * @covers  Molajo\Cache\Adapter\File::filePut
@@ -280,6 +285,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::set
      * @covers  Molajo\Cache\Adapter\File::remove
      * @covers  Molajo\Cache\Adapter\File::removeExpired
+     * @covers  Molajo\Cache\Adapter\File::removeExpiredFile
      * @covers  Molajo\Cache\Adapter\File::clear
      * @covers  Molajo\Cache\Adapter\File::close
      * @covers  Molajo\Cache\Adapter\File::filePut
@@ -377,6 +383,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\File::set
      * @covers  Molajo\Cache\Adapter\File::remove
      * @covers  Molajo\Cache\Adapter\File::removeExpired
+     * @covers  Molajo\Cache\Adapter\File::removeExpiredFile
      * @covers  Molajo\Cache\Adapter\File::clear
      * @covers  Molajo\Cache\Adapter\File::close
      * @covers  Molajo\Cache\Adapter\File::filePut

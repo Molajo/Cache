@@ -155,7 +155,7 @@
         <line num="240" type="stmt" count="1"/>
         <line num="241" type="stmt" count="1"/>
         <line num="243" type="stmt" count="1"/>
-        <line num="254" type="method" name="RemoveExpiredFile" crap="12" count="0"/>
+        <line num="254" type="method" name="removeExpiredFile" crap="12" count="0"/>
         <line num="256" type="stmt" count="0"/>
         <line num="257" type="stmt" count="0"/>
         <line num="258" type="stmt" count="0"/>

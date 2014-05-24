@@ -120,7 +120,7 @@ class File extends AbstractAdapter implements CacheInterface
 
             if ($file->isDot()) {
             } else {
-                $this->RemoveExpiredFile($file);
+                $this->removeExpiredFile($file);
             }
         }
 
@@ -251,7 +251,7 @@ class File extends AbstractAdapter implements CacheInterface
      * @return  $this
      * @since   1.0
      */
-    protected function RemoveExpiredFile($file)
+    protected function removeExpiredFile($file)
     {
         if (file_exists($file->getPathname())
             && (time() - $this->cache_time)

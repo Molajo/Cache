@@ -111,10 +111,7 @@ abstract class AbstractAdapter implements CacheInterface
      * @return  $this
      * @since   1.0
      */
-    public function set($key, $value, $ttl = 0)
-    {
-        return $this;
-    }
+    abstract public function set($key, $value, $ttl = 0);
 
     /**
      * Remove cache for specified $key value
@@ -124,10 +121,7 @@ abstract class AbstractAdapter implements CacheInterface
      * @return  $this
      * @since   1.0
      */
-    public function remove($key = null)
-    {
-        return $this;
-    }
+    abstract public function remove($key = null);
 
     /**
      * Clear all cache
@@ -135,8 +129,15 @@ abstract class AbstractAdapter implements CacheInterface
      * @return  $this
      * @since   1.0
      */
-    public function clear()
-    {
-        return $this;
-    }
+    abstract public function clear();
+
+    /**
+     * Get File Contents
+     *
+     * @param   string $key
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    abstract protected function createCacheItem($key);
 }

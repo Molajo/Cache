@@ -41,6 +41,8 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\Memory::__construct
      * @covers  Molajo\Cache\Adapter\Memory::connect
      * @covers  Molajo\Cache\Adapter\Memory::get
+     * @covers  Molajo\Cache\Adapter\Memory::createCacheItem
+     * @covers  Molajo\Cache\Adapter\Memory::cacheItem
      * @covers  Molajo\Cache\Adapter\Memory::set
      * @covers  Molajo\Cache\Adapter\Memory::remove
      * @covers  Molajo\Cache\Adapter\Memory::clear
