@@ -18,7 +18,7 @@ use CommonApi\Cache\CacheItemInterface;
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
-Class CacheItem implements CacheItemInterface
+class CacheItem implements CacheItemInterface
 {
     /**
      * Cache Key

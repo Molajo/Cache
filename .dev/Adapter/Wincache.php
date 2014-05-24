@@ -112,7 +112,7 @@ class Wincache extends AbstractAdapter implements CacheInterface
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
-    public function set($key = null, $value = null, $ttl = 0)
+    public function set($key, $value = null, $ttl = 0)
     {
         if ($this->cache_enabled == 0) {
             return false;

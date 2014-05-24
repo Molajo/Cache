@@ -45,6 +45,25 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\Memory::remove
      * @covers  Molajo\Cache\Adapter\Memory::clear
      *
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::get
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::set
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::remove
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::clear
+     *
+     * @covers  Molajo\Cache\Driver::__construct
+     * @covers  Molajo\Cache\Driver::get
+     * @covers  Molajo\Cache\Driver::set
+     * @covers  Molajo\Cache\Driver::remove
+     * @covers  Molajo\Cache\Driver::clear
+     *
+     * @covers  Molajo\Cache\CacheItem::__construct
+     * @covers  Molajo\Cache\CacheItem::getKey
+     * @covers  Molajo\Cache\CacheItem::getValue
+     * @covers  Molajo\Cache\CacheItem::setValue
+     * @covers  Molajo\Cache\CacheItem::isHit
+     *
      * @return  $this
      * @since   1.0
      */
@@ -69,6 +88,25 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\Memory::remove
      * @covers  Molajo\Cache\Adapter\Memory::clear
      *
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::get
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::set
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::remove
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::clear
+     *
+     * @covers  Molajo\Cache\Driver::__construct
+     * @covers  Molajo\Cache\Driver::get
+     * @covers  Molajo\Cache\Driver::set
+     * @covers  Molajo\Cache\Driver::remove
+     * @covers  Molajo\Cache\Driver::clear
+     *
+     * @covers  Molajo\Cache\CacheItem::__construct
+     * @covers  Molajo\Cache\CacheItem::getKey
+     * @covers  Molajo\Cache\CacheItem::getValue
+     * @covers  Molajo\Cache\CacheItem::setValue
+     * @covers  Molajo\Cache\CacheItem::isHit
+     *
      * @return  $this
      * @since   1.0
      */
@@ -86,6 +124,25 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\Memory::set
      * @covers  Molajo\Cache\Adapter\Memory::remove
      * @covers  Molajo\Cache\Adapter\Memory::clear
+     *
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::get
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::set
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::remove
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::clear
+     *
+     * @covers  Molajo\Cache\Driver::__construct
+     * @covers  Molajo\Cache\Driver::get
+     * @covers  Molajo\Cache\Driver::set
+     * @covers  Molajo\Cache\Driver::remove
+     * @covers  Molajo\Cache\Driver::clear
+     *
+     * @covers  Molajo\Cache\CacheItem::__construct
+     * @covers  Molajo\Cache\CacheItem::getKey
+     * @covers  Molajo\Cache\CacheItem::getValue
+     * @covers  Molajo\Cache\CacheItem::setValue
+     * @covers  Molajo\Cache\CacheItem::isHit
      *
      * @return  $this
      * @since   1.0
@@ -113,6 +170,25 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\Memory::remove
      * @covers  Molajo\Cache\Adapter\Memory::clear
      *
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::get
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::set
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::remove
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::clear
+     *
+     * @covers  Molajo\Cache\Driver::__construct
+     * @covers  Molajo\Cache\Driver::get
+     * @covers  Molajo\Cache\Driver::set
+     * @covers  Molajo\Cache\Driver::remove
+     * @covers  Molajo\Cache\Driver::clear
+     *
+     * @covers  Molajo\Cache\CacheItem::__construct
+     * @covers  Molajo\Cache\CacheItem::getKey
+     * @covers  Molajo\Cache\CacheItem::getValue
+     * @covers  Molajo\Cache\CacheItem::setValue
+     * @covers  Molajo\Cache\CacheItem::isHit
+     *
      * @return  $this
      * @since   1.0
      */
@@ -139,6 +215,25 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\Memory::remove
      * @covers  Molajo\Cache\Adapter\Memory::clear
      *
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::get
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::set
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::remove
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::clear
+     *
+     * @covers  Molajo\Cache\Driver::__construct
+     * @covers  Molajo\Cache\Driver::get
+     * @covers  Molajo\Cache\Driver::set
+     * @covers  Molajo\Cache\Driver::remove
+     * @covers  Molajo\Cache\Driver::clear
+     *
+     * @covers  Molajo\Cache\CacheItem::__construct
+     * @covers  Molajo\Cache\CacheItem::getKey
+     * @covers  Molajo\Cache\CacheItem::getValue
+     * @covers  Molajo\Cache\CacheItem::setValue
+     * @covers  Molajo\Cache\CacheItem::isHit
+     *
      * @return  bool
      * @since   1.0
      */
@@ -160,6 +255,25 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\Adapter\Memory::set
      * @covers  Molajo\Cache\Adapter\Memory::remove
      * @covers  Molajo\Cache\Adapter\Memory::clear
+     *
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::__construct
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::connect
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::get
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::set
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::remove
+     * @covers  Molajo\Cache\Adapter\AbstractAdapter::clear
+     *
+     * @covers  Molajo\Cache\Driver::__construct
+     * @covers  Molajo\Cache\Driver::get
+     * @covers  Molajo\Cache\Driver::set
+     * @covers  Molajo\Cache\Driver::remove
+     * @covers  Molajo\Cache\Driver::clear
+     *
+     * @covers  Molajo\Cache\CacheItem::__construct
+     * @covers  Molajo\Cache\CacheItem::getKey
+     * @covers  Molajo\Cache\CacheItem::getValue
+     * @covers  Molajo\Cache\CacheItem::setValue
+     * @covers  Molajo\Cache\CacheItem::isHit
      *
      * @return  bool
      * @since   1.0

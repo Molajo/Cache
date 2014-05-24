@@ -63,7 +63,7 @@ class Driver implements CacheInterface
      * @return  bool
      * @since   1.0
      */
-    public function set($key = null, $value, $ttl = 0)
+    public function set($key, $value, $ttl = 0)
     {
         return $this->adapter->set($key, $value, $ttl);
     }

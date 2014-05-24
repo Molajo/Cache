@@ -72,8 +72,7 @@ class File extends AbstractAdapter implements CacheInterface
                 mkdir($this->cache_folder);
             }
         } catch (Exception $e) {
-            throw new RuntimeException
-            (
+            throw new RuntimeException(
                 'Cache: Failed creating File Adapter Folder ' . $this->cache_folder . $e->getMessage()
             );
         }
@@ -106,8 +105,7 @@ class File extends AbstractAdapter implements CacheInterface
                 $value  = unserialize(file_get_contents($this->cache_folder . '/' . $key));
             }
         } catch (Exception $e) {
-            throw new RuntimeException
-            (
+            throw new RuntimeException(
                 'Cache: Get Failed for File ' . $this->cache_folder . '/' . $key . $e->getMessage()
             );
         }
@@ -126,7 +124,7 @@ class File extends AbstractAdapter implements CacheInterface
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
-    public function set($key = null, $value, $ttl = 0)
+    public function set($key, $value, $ttl = 0)
     {
         if ($this->cache_enabled == 0) {
             return false;
@@ -141,8 +139,7 @@ class File extends AbstractAdapter implements CacheInterface
                 return $this;
             }
         } catch (Exception $e) {
-            throw new RuntimeException
-            (
+            throw new RuntimeException(
                 'Cache: Set file exists check Failed for File ' . $this->cache_folder . '/' . $key . $e->getMessage()
             );
         }
@@ -150,8 +147,7 @@ class File extends AbstractAdapter implements CacheInterface
         try {
             file_put_contents($this->cache_folder . '/' . $key, serialize($value));
         } catch (Exception $e) {
-            throw new RuntimeException
-            (
+            throw new RuntimeException(
                 'Cache: file_put_contents failed for ' . $this->cache_folder . '/' . $key . $e->getMessage()
             );
         }
@@ -159,8 +155,7 @@ class File extends AbstractAdapter implements CacheInterface
         try {
             chmod(($this->cache_folder . '/' . $key), 0644);
         } catch (Exception $e) {
-            throw new RuntimeException
-            (
+            throw new RuntimeException(
                 'Cache: Chmod failed ' . $this->cache_folder . '/' . $key . $e->getMessage()
             );
         }
@@ -233,8 +228,7 @@ class File extends AbstractAdapter implements CacheInterface
                 unlink($this->cache_folder . '/' . $key);
             }
         } catch (Exception $e) {
-            throw new RuntimeException
-            (
+            throw new RuntimeException(
                 'Cache: Remove cache entry failed ' . $this->cache_folder . '/' . $key . $e->getMessage()
             );
         }

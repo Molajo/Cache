@@ -77,7 +77,7 @@ class Dummy extends AbstractAdapter implements CacheInterface
      * @return  $this
      * @since   1.0
      */
-    public function set($key = null, $value = null, $ttl = 0)
+    public function set($key, $value = null, $ttl = 0)
     {
         return $this;
     }
