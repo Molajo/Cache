@@ -128,7 +128,7 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
         $options                  = array();
         $options['cache_time']    = $this->dependencies['Runtimedata']->application->parameters->cache_time;
         $options['cache_folder']  = $this->dependencies['Runtimedata']->site->cache_folder;
-        $options['cache_enabled'] = $this->dependencies['Runtimedata']->application->parameters->cache_enabled;
+//        $options['cache_enabled'] = $this->dependencies['Runtimedata']->application->parameters->cache_service;
         $options['cache_enabled'] = 1;
 
         $class = 'Molajo\\Cache\\Adapter\\File';
