@@ -51,10 +51,8 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      */
     public function setDependencies(array $reflection = array())
     {
-        $options['base_path'] = $this->options['base_path'];
-
         $this->dependencies                = array();
-        $this->dependencies['Runtimedata'] = $options;
+        $this->dependencies['Runtimedata'] = array();
 
         return $this->dependencies;
     }
@@ -124,9 +122,9 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
      */
     protected function getFileAdapter()
     {
-        $options                  = array();
-        $options['cache_time']    = $this->dependencies['Runtimedata']->application->parameters->cache_time;
-        $options['cache_folder']  = $this->dependencies['Runtimedata']->site->cache_folder;
+        $options                 = array();
+        $options['cache_time']   = $this->dependencies['Runtimedata']->application->parameters->cache_time;
+        $options['cache_folder'] = $this->dependencies['Runtimedata']->site->cache_folder;
 //        $options['cache_enabled'] = $this->dependencies['Runtimedata']->application->parameters->cache_service;
         $options['cache_enabled'] = 1;
 
@@ -137,7 +135,9 @@ class CacheFactoryMethod extends FactoryMethodBase implements FactoryInterface, 
         } catch (Exception $e) {
 
             throw new RuntimeException
-            ('Cache: Could not instantiate Cache Adapter Adapter: File');
+            (
+                'Cache: Could not instantiate Cache Adapter Adapter: File'
+            );
         }
     }
 

@@ -48,7 +48,7 @@ abstract class AbstractAdapter implements CacheInterface
     /**
      * Constructor
      *
-     * @param   array  $options
+     * @param   array $options
      *
      * @since   1.0
      */
