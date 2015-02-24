@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.4",
-        "commonapi/cache": "dev-master"
+        "commonapi/cache": "~0.4"
     },
 
     "support": {
