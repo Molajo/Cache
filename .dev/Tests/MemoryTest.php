@@ -4,7 +4,7 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Test;
 
@@ -16,7 +16,7 @@ use Molajo\Cache\Driver;
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
 class MemoryTest extends \PHPUnit_Framework_TestCase
@@ -67,7 +67,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\CacheItem::isHit
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     protected function setUp()
     {
@@ -110,7 +110,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\CacheItem::isHit
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function testConnect()
     {
@@ -147,7 +147,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\CacheItem::isHit
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function testGet()
     {
@@ -192,7 +192,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\CacheItem::isHit
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function testSet()
     {
@@ -237,7 +237,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\CacheItem::isHit
      *
      * @return  bool
-     * @since   1.0
+     * @since   1.0.0
      */
     public function testRemove()
     {
@@ -278,7 +278,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
      * @covers  Molajo\Cache\CacheItem::isHit
      *
      * @return  bool
-     * @since   1.0
+     * @since   1.0.0
      */
     public function testClear()
     {

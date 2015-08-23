@@ -4,7 +4,7 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Adapter;
 
@@ -17,10 +17,10 @@ use CommonApi\Cache\CacheInterface;
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
-class File extends AbstractAdapter implements CacheInterface
+final class File extends AbstractAdapter implements CacheInterface
 {
     /**
      * Cache Path from Root
@@ -50,7 +50,7 @@ class File extends AbstractAdapter implements CacheInterface
      * @param   array $options
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function connect($options = array())
     {
@@ -73,7 +73,7 @@ class File extends AbstractAdapter implements CacheInterface
      * @param   string $key
      *
      * @return  bool|CacheItem
-     * @since   1.0
+     * @since   1.0.0
      */
     public function get($key)
     {
@@ -88,7 +88,7 @@ class File extends AbstractAdapter implements CacheInterface
      * @param   integer $ttl
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function set($key, $value, $ttl = 0)
     {
@@ -108,29 +108,10 @@ class File extends AbstractAdapter implements CacheInterface
     }
 
     /**
-     * Remove cache if it has expired
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    protected function removeExpired()
-    {
-        foreach (new DirectoryIterator($this->cache_folder) as $file) {
-
-            if ($file->isDot()) {
-            } else {
-                $this->removeExpiredFile($file);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * Clear all cache
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function clear()
     {
@@ -150,7 +131,7 @@ class File extends AbstractAdapter implements CacheInterface
      * @param string $key
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function remove($key = null)
     {
@@ -165,10 +146,29 @@ class File extends AbstractAdapter implements CacheInterface
      * Close the Connection
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function close()
     {
+        return $this;
+    }
+
+    /**
+     * Remove cache if it has expired
+     *
+     * @return  $this
+     * @since   1.0.0
+     */
+    protected function removeExpired()
+    {
+        foreach (new DirectoryIterator($this->cache_folder) as $file) {
+
+            if ($file->isDot()) {
+            } else {
+                $this->removeExpiredFile($file);
+            }
+        }
+
         return $this;
     }
 
@@ -179,7 +179,7 @@ class File extends AbstractAdapter implements CacheInterface
      * @param   mixed  $value
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     protected function filePut($key, $value)
     {
@@ -194,7 +194,7 @@ class File extends AbstractAdapter implements CacheInterface
      * @param   string $key
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     protected function chmodFile($key)
     {
@@ -208,7 +208,7 @@ class File extends AbstractAdapter implements CacheInterface
      *
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     protected function createFolder()
     {
@@ -226,7 +226,7 @@ class File extends AbstractAdapter implements CacheInterface
      * @param   string $key
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     protected function createCacheItem($key)
     {
@@ -248,7 +248,7 @@ class File extends AbstractAdapter implements CacheInterface
      * @param DirectoryIterator $file
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     protected function removeExpiredFile($file)
     {

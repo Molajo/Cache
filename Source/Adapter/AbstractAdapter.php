@@ -4,7 +4,7 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Adapter;
 
@@ -16,7 +16,7 @@ use CommonApi\Cache\CacheInterface;
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
 abstract class AbstractAdapter implements CacheInterface
@@ -50,7 +50,7 @@ abstract class AbstractAdapter implements CacheInterface
      *
      * @param   array $options
      *
-     * @since   1.0
+     * @since   1.0.0
      */
     public function __construct(array $options = array())
     {
@@ -63,7 +63,7 @@ abstract class AbstractAdapter implements CacheInterface
      * @param   array $options
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function connect($options = array())
     {
@@ -88,7 +88,7 @@ abstract class AbstractAdapter implements CacheInterface
      * @param   string $key
      *
      * @return  CacheItem
-     * @since   1.0
+     * @since   1.0.0
      */
     public function get($key)
     {
@@ -109,7 +109,7 @@ abstract class AbstractAdapter implements CacheInterface
      * @param   integer $ttl (number of seconds)
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     abstract public function set($key, $value, $ttl = 0);
 
@@ -119,7 +119,7 @@ abstract class AbstractAdapter implements CacheInterface
      * @param   string $key
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     abstract public function remove($key = null);
 
@@ -127,7 +127,7 @@ abstract class AbstractAdapter implements CacheInterface
      * Clear all cache
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     abstract public function clear();
 
@@ -137,7 +137,7 @@ abstract class AbstractAdapter implements CacheInterface
      * @param   string $key
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     abstract protected function createCacheItem($key);
 }

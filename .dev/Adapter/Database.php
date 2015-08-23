@@ -4,7 +4,7 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Adapter;
 
@@ -18,7 +18,7 @@ use CommonApi\Cache\CacheInterface;
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
 class Database extends AbstractAdapter implements CacheInterface
@@ -44,7 +44,7 @@ class Database extends AbstractAdapter implements CacheInterface
      *
      * @param   array $options
      *
-     * @since   1.0
+     * @since   1.0.0
      */
     public function __construct(array $options = array())
     {
@@ -59,7 +59,7 @@ class Database extends AbstractAdapter implements CacheInterface
      * @param   array $options
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function connect($options = array())
     {
@@ -84,7 +84,7 @@ class Database extends AbstractAdapter implements CacheInterface
      * @param   string $key
      *
      * @return  bool|CacheItem
-     * @since   1.0
+     * @since   1.0.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
     public function get($key)
@@ -133,7 +133,7 @@ class Database extends AbstractAdapter implements CacheInterface
      * @param   integer $ttl (number of seconds)
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
     public function set($key, $value = null, $ttl = 0)
@@ -201,7 +201,7 @@ class Database extends AbstractAdapter implements CacheInterface
      * @param   string $key
      *
      * @return  object
-     * @since   1.0
+     * @since   1.0.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
     public function remove($key = null)
@@ -231,7 +231,7 @@ class Database extends AbstractAdapter implements CacheInterface
      * Clear all cache
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function clear()
     {

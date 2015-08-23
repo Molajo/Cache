@@ -4,22 +4,23 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Adapter;
 
 use Molajo\Cache\CacheItem;
 use CommonApi\Cache\CacheInterface;
+use stdClass;
 
 /**
  * Memory Cache
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
-class Memory extends AbstractAdapter implements CacheInterface
+final class Memory extends AbstractAdapter implements CacheInterface
 {
     /**
      * Cache Container
@@ -48,7 +49,7 @@ class Memory extends AbstractAdapter implements CacheInterface
      * @param   array $options
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function connect($options = array())
     {
@@ -65,7 +66,7 @@ class Memory extends AbstractAdapter implements CacheInterface
      * @param   string $key
      *
      * @return  CacheItem
-     * @since   1.0
+     * @since   1.0.0
      */
     public function get($key)
     {
@@ -78,7 +79,7 @@ class Memory extends AbstractAdapter implements CacheInterface
      * @param   string $key
      *
      * @return  CacheItem
-     * @since   1.0
+     * @since   1.0.0
      */
     protected function createCacheItem($key)
     {
@@ -102,7 +103,7 @@ class Memory extends AbstractAdapter implements CacheInterface
      * @param   integer $ttl (number of seconds)
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function set($key, $value = null, $ttl = 0)
     {
@@ -127,7 +128,7 @@ class Memory extends AbstractAdapter implements CacheInterface
      * @param   integer $ttl
      *
      * @return  object
-     * @since   1.0
+     * @since   1.0.0
      */
     protected function cacheItem($key, $value, $ttl)
     {
@@ -135,7 +136,7 @@ class Memory extends AbstractAdapter implements CacheInterface
             $key = serialize($value);
         }
 
-        $entry          = new \stdClass();
+        $entry          = new stdClass();
         $entry->value   = $value;
         $entry->expires = $ttl;
 
@@ -148,7 +149,7 @@ class Memory extends AbstractAdapter implements CacheInterface
      * @param   string $key
      *
      * @return  Memory
-     * @since   1.0
+     * @since   1.0.0
      */
     public function remove($key = null)
     {
@@ -163,7 +164,7 @@ class Memory extends AbstractAdapter implements CacheInterface
      * Clear all cache
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function clear()
     {

@@ -4,7 +4,7 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Cache\Adapter;
 
@@ -17,7 +17,7 @@ use CommonApi\Exception\RuntimeException;
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  * @since      1.0.0
  */
 class Dummy extends AbstractAdapter implements CacheInterface
@@ -30,7 +30,7 @@ class Dummy extends AbstractAdapter implements CacheInterface
      * @covers  Molajo\Cache\Adapter\Dummy::remove
      * @covers  Molajo\Cache\Adapter\Dummy::clear
      *
-     * @since   1.0
+     * @since   1.0.0
      */
     public function __construct(array $options = array())
     {
@@ -45,7 +45,7 @@ class Dummy extends AbstractAdapter implements CacheInterface
      * @param   array $options
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function connect($options = array())
     {
@@ -60,7 +60,7 @@ class Dummy extends AbstractAdapter implements CacheInterface
      * @param   string $key
      *
      * @return  bool|CacheItem
-     * @since   1.0
+     * @since   1.0.0
      */
     public function get($key)
     {
@@ -75,7 +75,7 @@ class Dummy extends AbstractAdapter implements CacheInterface
      * @param   integer $ttl (number of seconds)
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function set($key, $value = null, $ttl = 0)
     {
@@ -88,7 +88,7 @@ class Dummy extends AbstractAdapter implements CacheInterface
      * @param string $key
      *
      * @return  object
-     * @since   1.0
+     * @since   1.0.0
      */
     public function remove($key = null)
     {
@@ -99,7 +99,7 @@ class Dummy extends AbstractAdapter implements CacheInterface
      * Clear all cache
      *
      * @return  $this
-     * @since   1.0
+     * @since   1.0.0
      */
     public function clear()
     {

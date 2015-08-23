@@ -1,7 +1,16 @@
 {
     "name": "molajo/cache",
     "description": "Cache API for PHP applications with APC, Database, File, Memcached, In-memory, Redis, Wincache, and xCache handlers.",
-    "keywords": ["Cache", "Molajo", "CommonApi", "APC", "Memcached", "Redis", "Wincache", "xCache"],
+    "keywords": [
+        "Cache",
+        "Molajo",
+        "CommonApi",
+        "APC",
+        "Memcached",
+        "Redis",
+        "Wincache",
+        "xCache"
+    ],
     "homepage": "http://github.com/Molajo/Cache",
     "type": "molajo-package",
     "license": "MIT",
